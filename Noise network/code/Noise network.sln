@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Noise network", "Noise network\Noise network.vcxproj", "{9E5D0D9F-E5A4-480B-A4EC-DB5B315C03F7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core", "Core\Core.vcxproj", "{2F88C71C-0F44-468D-854F-F99EDF54E89E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NoiseNetwork", "NoiseNetwork\NoiseNetwork.vcxproj", "{2F88C71C-0F44-468D-854F-F99EDF54E89E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

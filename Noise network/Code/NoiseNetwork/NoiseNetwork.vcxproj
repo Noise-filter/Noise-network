@@ -22,6 +22,7 @@
     <ProjectGuid>{2F88C71C-0F44-468D-854F-F99EDF54E89E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Core</RootNamespace>
+    <ProjectName>NoiseNetwork</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -148,6 +149,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core\Socket.h" />
+    <ClInclude Include="Core\WinsockFunctions.h" />
+    <ClInclude Include="Core\WinsockIncludes.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Core\Socket.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
