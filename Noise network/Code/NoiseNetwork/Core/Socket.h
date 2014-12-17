@@ -2,6 +2,7 @@
 #define SOCKET_H
 
 #include "WinsockIncludes.h"
+#include <vector>
 
 class Socket
 {
@@ -26,6 +27,12 @@ public:
 
 	//Closes the socket
 	void Close();
+
+	//Will 
+	int Send(std::vector<char>& buffer, int bufLength);
+
+	//Will not clear or resize the buffer
+	int Recv(std::vector<char>& buffer, int bufLength);
 
 	//Returns true if SOCKET is not an INVALID_SOCKET
 	bool IsInitialized();

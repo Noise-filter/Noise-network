@@ -36,7 +36,7 @@ bool Socket::Connect(const char* address, unsigned short port)
 
 	struct hostent* hostent;
 
-	//TODO: gethostbyname() is depricated, change it to getaddrinfo
+	//TODO: gethostbyname() is depricated, change it to getaddrinfo()
 	hostent = gethostbyname(address);
 	if (hostent == NULL)
 	{
@@ -65,7 +65,7 @@ bool Socket::Bind(unsigned short port)
 		return false;
 	}
 
-	//TODO: Change it to getaddrinfo
+	//TODO: Change it to getaddrinfo()
 	struct sockaddr_in server;
 	server.sin_family = AF_INET;
 	server.sin_port = htons(port);
@@ -133,6 +133,18 @@ bool Socket::Shutdown(int flag)
 void Socket::Close()
 {
 	closesocket(socket);
+}
+
+int Socket::Send(std::vector<char>& buffer, int bufLength)
+{
+	int result = send(socket, &buffer[0], bufLength, 0);
+	return result;
+}
+
+int Socket::Recv(std::vector<char>& buffer, int bufLength)
+{
+	int result = recv(socket, &buffer[0], bufLength, 0);
+	return result;
 }
 
 bool Socket::IsInitialized()

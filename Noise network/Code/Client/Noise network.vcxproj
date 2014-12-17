@@ -22,7 +22,6 @@
     <ProjectGuid>{9E5D0D9F-E5A4-480B-A4EC-DB5B315C03F7}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Noisenetwork</RootNamespace>
-    <ProjectName>Client</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

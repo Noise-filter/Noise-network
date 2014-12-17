@@ -19,10 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{9E5D0D9F-E5A4-480B-A4EC-DB5B315C03F7}</ProjectGuid>
+    <ProjectGuid>{4241BA26-B94B-4BC8-8044-6628713FBFCC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Noisenetwork</RootNamespace>
-    <ProjectName>Client</ProjectName>
+    <RootNamespace>Server</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -160,7 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="client.cpp" />
+    <ClCompile Include="server.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NoiseNetwork\NoiseNetwork.vcxproj">

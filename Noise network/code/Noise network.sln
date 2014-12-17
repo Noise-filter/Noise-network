@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Noise network", "Noise netw
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NoiseNetwork", "NoiseNetwork\NoiseNetwork.vcxproj", "{2F88C71C-0F44-468D-854F-F99EDF54E89E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Server", "Server\Server.vcxproj", "{4241BA26-B94B-4BC8-8044-6628713FBFCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +33,14 @@ Global
 		{2F88C71C-0F44-468D-854F-F99EDF54E89E}.Release|Win32.Build.0 = Release|Win32
 		{2F88C71C-0F44-468D-854F-F99EDF54E89E}.Release|x64.ActiveCfg = Release|x64
 		{2F88C71C-0F44-468D-854F-F99EDF54E89E}.Release|x64.Build.0 = Release|x64
+		{4241BA26-B94B-4BC8-8044-6628713FBFCC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4241BA26-B94B-4BC8-8044-6628713FBFCC}.Debug|Win32.Build.0 = Debug|Win32
+		{4241BA26-B94B-4BC8-8044-6628713FBFCC}.Debug|x64.ActiveCfg = Debug|x64
+		{4241BA26-B94B-4BC8-8044-6628713FBFCC}.Debug|x64.Build.0 = Debug|x64
+		{4241BA26-B94B-4BC8-8044-6628713FBFCC}.Release|Win32.ActiveCfg = Release|Win32
+		{4241BA26-B94B-4BC8-8044-6628713FBFCC}.Release|Win32.Build.0 = Release|Win32
+		{4241BA26-B94B-4BC8-8044-6628713FBFCC}.Release|x64.ActiveCfg = Release|x64
+		{4241BA26-B94B-4BC8-8044-6628713FBFCC}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
