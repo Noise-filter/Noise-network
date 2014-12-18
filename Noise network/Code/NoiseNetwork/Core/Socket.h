@@ -14,7 +14,7 @@ public:
 	//Creates a SOCKET
 	bool Init(int family, int type, int protocol);
 
-	bool Connect(const char* address, unsigned short port);
+	bool Connect(std::string address, unsigned short port);
 
 	bool Bind(unsigned short port);
 	bool Listen();

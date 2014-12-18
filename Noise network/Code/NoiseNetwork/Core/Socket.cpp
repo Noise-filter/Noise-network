@@ -27,7 +27,7 @@ bool Socket::Init(int family, int type, int protocol)
 	return true;
 }
 
-bool Socket::Connect(const char* address, unsigned short port)
+bool Socket::Connect(std::string address, unsigned short port)
 {
 	if (socket == INVALID_SOCKET)
 	{
@@ -37,7 +37,7 @@ bool Socket::Connect(const char* address, unsigned short port)
 	struct hostent* hostent;
 
 	//TODO: gethostbyname() is depricated, change it to getaddrinfo()
-	hostent = gethostbyname(address);
+	hostent = gethostbyname(address.c_str());
 	if (hostent == NULL)
 	{
 		return false;
