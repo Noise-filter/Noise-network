@@ -151,12 +151,14 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core\AcceptSocket.h" />
     <ClInclude Include="Core\Connection.h" />
     <ClInclude Include="Core\Socket.h" />
     <ClInclude Include="Core\WinsockFunctions.h" />
     <ClInclude Include="Core\WinsockIncludes.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Core\AcceptSocket.cpp" />
     <ClCompile Include="Core\Connection.cpp" />
     <ClCompile Include="Core\Socket.cpp" />
   </ItemGroup>

@@ -5,7 +5,6 @@ Socket::Socket()
 	socket = INVALID_SOCKET;
 }
 
-
 Socket::Socket(SOCKET socket)
 {
 	this->socket = socket;
@@ -133,6 +132,7 @@ bool Socket::Shutdown(int flag)
 void Socket::Close()
 {
 	closesocket(socket);
+	socket = INVALID_SOCKET;
 }
 
 int Socket::Send(std::vector<char>& buffer, int bufLength)

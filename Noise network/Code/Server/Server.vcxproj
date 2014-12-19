@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Examples\SimpleEchoServer_ImplementedWithAcceptSocket.cpp" />
     <ClCompile Include="Examples\SimpleEchoServer_ImplementedWithSocket.cpp" />
     <ClCompile Include="server.cpp" />
   </ItemGroup>

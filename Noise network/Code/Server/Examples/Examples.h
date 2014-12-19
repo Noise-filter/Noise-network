@@ -4,6 +4,7 @@
 namespace Examples
 {
 	void SimpleEchoServer_ImplementedWithSocket();
+	void SimpleEchoServer_ImplementedWithAcceptSocket();
 
 }
 
