@@ -7,6 +7,7 @@ class Connection
 {
 public:
 	Connection();
+	Connection(SOCKET socket);
 	~Connection();
 
 	bool Connect(std::string address, unsigned short port);

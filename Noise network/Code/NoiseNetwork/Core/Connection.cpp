@@ -9,6 +9,23 @@ Connection::Connection()
 	connected = false;
 }
 
+Connection::Connection(SOCKET socket)
+{
+	this->socket = Socket(socket);
+	if (socket != INVALID_SOCKET)
+	{
+		connected = true;
+
+		//Get the ip address and port
+	}
+	else
+	{
+		address = "";
+		port = 0;
+		connected = false;
+	}
+}
+
 Connection::~Connection()
 {}
 
