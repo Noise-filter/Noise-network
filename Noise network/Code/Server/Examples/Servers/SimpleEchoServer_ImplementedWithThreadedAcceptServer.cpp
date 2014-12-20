@@ -35,9 +35,8 @@ namespace Examples
 
 		cout << "Waiting to accept a client" << std::endl;
 
-
 		SOCKET clientSocket = INVALID_SOCKET;
-		
+
 		//Wait for connection
 		do
 		{

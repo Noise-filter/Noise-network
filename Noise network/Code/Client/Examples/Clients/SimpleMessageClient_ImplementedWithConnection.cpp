@@ -1,12 +1,12 @@
-#include "ClientExamples.h"
+#include "../ClientExamples.h"
 
 #include <iostream>
 #include <string>
 
 #include "Core\WinsockFunctions.h"
-#include "Core\Socket.h"
+#include "Core\Connection.h"
 
-void ClientExamples::SimpleMessageClient_ImplementedWithSocket()
+void ClientExamples::SimpleMessageClient_ImplementedWithConnection()
 {
 	if (InitWinSock())
 	{
@@ -15,15 +15,9 @@ void ClientExamples::SimpleMessageClient_ImplementedWithSocket()
 
 	std::cout << "Hello World!" << std::endl;
 
-	Socket socket;
+	Connection con;
 
-	if (!socket.Init(AF_INET, SOCK_STREAM, IPPROTO_TCP))
-	{
-		std::cout << "Error initializing socket" << std::endl;
-		return;
-	}
-
-	if (!socket.Connect("localhost", 7878))
+	if (!con.Connect("localhost", 7878))
 	{
 		std::cout << "Error connecting" << std::endl;
 		return;
@@ -46,7 +40,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithSocket()
 		buffer.clear();
 		buffer.assign(text.begin(), text.end());
 
-		result = socket.Send(buffer, (int)text.size());
+		result = con.Send(buffer, (int)text.size());
 		if (result == SOCKET_ERROR)
 		{
 			std::cout << "Send failed with error: " << WSAGetLastError() << std::endl;
@@ -58,7 +52,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithSocket()
 		buffer.clear();
 		buffer.resize(MAX_BUFFER_LENGTH);
 
-		result = socket.Recv(buffer, MAX_BUFFER_LENGTH);
+		result = con.Recv(buffer, MAX_BUFFER_LENGTH);
 		if (result > 0)
 		{
 			std::cout << "Bytes received: " << result << std::endl;
@@ -77,13 +71,11 @@ void ClientExamples::SimpleMessageClient_ImplementedWithSocket()
 
 	} while (text.size() > 0);
 
-	result = socket.Shutdown(SD_SEND);
+	result = con.Disconnect();
 	if (result == SOCKET_ERROR)
 	{
 		std::cout << "Shutdown failed with error: " << WSAGetLastError() << std::endl;
 	}
-
-	socket.Close();
 
 	ShutdownWinSock();
 }

@@ -29,7 +29,10 @@ void ThreadedAcceptServer::Stop(bool wait)
 
 	if (wait)
 	{
-		thread.join();
+		if (thread.joinable())
+		{
+			thread.join();
+		}
 	}
 }
 

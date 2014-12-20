@@ -18,10 +18,10 @@
     <ClCompile Include="client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Examples\SimpleMessageClient_ImplementedWithConnection.cpp">
+    <ClCompile Include="Examples\Clients\SimpleMessageClient_ImplementedWithSocket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Examples\SimpleMessageClient_ImplementedWithSocket.cpp">
+    <ClCompile Include="Examples\Clients\SimpleMessageClient_ImplementedWithConnection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
