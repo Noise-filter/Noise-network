@@ -159,7 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Examples\Servers\EchoServerMultipleClients_EventBased.cpp" />
+    <ClCompile Include="Examples\Servers\EchoServerMultipleClients_Select.cpp" />
     <ClCompile Include="Examples\Servers\SimpleEchoServer_ImplementedWithAcceptSocket.cpp" />
     <ClCompile Include="Examples\Servers\SimpleEchoServer_ImplementedWithSocket.cpp" />
     <ClCompile Include="Examples\Servers\SimpleEchoServer_ImplementedWithThreadedAcceptServer.cpp" />

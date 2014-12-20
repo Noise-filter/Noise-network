@@ -27,7 +27,7 @@
     <ClCompile Include="Examples\Servers\SimpleEchoServer_ImplementedWithSocket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Examples\Servers\EchoServerMultipleClients_EventBased.cpp">
+    <ClCompile Include="Examples\Servers\EchoServerMultipleClients_Select.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

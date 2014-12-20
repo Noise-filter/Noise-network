@@ -6,7 +6,7 @@ int main()
 	//Examples::SimpleEchoServer_ImplementedWithAcceptSocket();
 	//Examples::SimpleEchoServer_ImplementedWithThreadedAcceptServer();
 	
-	Examples::EchoServerMultipleClients_EventBased();
+	Examples::EchoServerMultipleClients_Select();
 
 	return 0;
 }

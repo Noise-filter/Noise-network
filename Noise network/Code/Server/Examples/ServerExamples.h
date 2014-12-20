@@ -7,7 +7,7 @@ namespace Examples
 	void SimpleEchoServer_ImplementedWithAcceptSocket();
 	void SimpleEchoServer_ImplementedWithThreadedAcceptServer();
 
-	void EchoServerMultipleClients_EventBased();
+	void EchoServerMultipleClients_Select();
 
 }
 
