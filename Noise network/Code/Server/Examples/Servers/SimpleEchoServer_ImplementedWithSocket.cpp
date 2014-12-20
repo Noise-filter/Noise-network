@@ -7,7 +7,7 @@ const int MAX_BUFFER_LENGTH = 512;
 
 namespace Examples
 {
-	void SimpleEchoServer_ImplementedWithSocket()
+	void SimpleEchoServer_ImplementedWithSocket(unsigned short port)
 	{
 		if (InitWinSock())
 		{
@@ -26,7 +26,7 @@ namespace Examples
 			return;
 		}
 
-		if (!socket.Bind(7878))
+		if (!socket.Bind(port))
 		{
 			std::cout << "Error binding socket" << std::endl;
 			socket.Close();

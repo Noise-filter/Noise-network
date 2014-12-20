@@ -9,7 +9,7 @@ const int MAX_BUFFER_LENGTH = 512;
 
 namespace Examples
 {
-	void EchoServerMultipleClients_Select()
+	void EchoServerMultipleClients_Select(unsigned short port)
 	{
 		if (InitWinSock())
 		{
@@ -22,7 +22,7 @@ namespace Examples
 
 		//Initialize the AcceptSocket
 		//It's that easy
-		if (!acceptServer.Init(7878))
+		if (!acceptServer.Init(port))
 		{
 			cout << "Error initializing accept socket" << std::endl;
 			acceptServer.Stop();
@@ -59,10 +59,10 @@ namespace Examples
 			if (readSet.fd_count > 0)
 			{
 				result = select(0, &readSet, NULL, NULL, &timeout);
-			}
-			if (result == SOCKET_ERROR)
-			{
-				cout << "Select failed with error: " << WSAGetLastError() << endl;
+				if (result == SOCKET_ERROR)
+				{
+					cout << "Select failed with error: " << WSAGetLastError() << endl;
+				}
 			}
 
 			for (unsigned int i = 0; i < readSet.fd_count; i++)
@@ -75,8 +75,8 @@ namespace Examples
 				result = recv(clientSocket, &buffer[0], MAX_BUFFER_LENGTH, 0);
 				if (result > 0)
 				{
-					cout << "Bytes: " << result;
-					cout << " Client: " << clientSocket << " Message: " << &buffer[0] << std::endl;
+					//cout << "Bytes: " << result;
+					//cout << " Client: " << clientSocket << " Message: " << &buffer[0] << std::endl;
 
 					result = send(clientSocket, &buffer[0], result, 0);
 					if (result == SOCKET_ERROR)
@@ -85,7 +85,7 @@ namespace Examples
 					}
 					else
 					{
-						cout << "Bytes send: " << result << std::endl;
+						//cout << "Bytes send: " << result << std::endl;
 					}
 				}
 				else if (result == 0)

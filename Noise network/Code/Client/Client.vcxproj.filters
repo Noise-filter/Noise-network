@@ -24,6 +24,9 @@
     <ClCompile Include="Examples\Clients\SimpleMessageClient_ImplementedWithConnection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Examples\Clients\SimpleSpamClient_ImplementedWithConnection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Examples\ClientExamples.h">

@@ -9,7 +9,7 @@ const int MAX_BUFFER_LENGTH = 512;
 
 namespace Examples
 {
-	void SimpleEchoServer_ImplementedWithThreadedAcceptServer()
+	void SimpleEchoServer_ImplementedWithThreadedAcceptServer(unsigned short port)
 	{
 		if (InitWinSock())
 		{
@@ -22,7 +22,7 @@ namespace Examples
 
 		//Initialize the AcceptSocket
 		//It's that easy
-		if (!acceptServer.Init(7878))
+		if (!acceptServer.Init(port))
 		{
 			cout << "Error initializing accept socket" << std::endl;
 			acceptServer.Stop();

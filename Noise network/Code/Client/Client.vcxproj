@@ -163,6 +163,7 @@
     <ClCompile Include="client.cpp" />
     <ClCompile Include="Examples\Clients\SimpleMessageClient_ImplementedWithConnection.cpp" />
     <ClCompile Include="Examples\Clients\SimpleMessageClient_ImplementedWithSocket.cpp" />
+    <ClCompile Include="Examples\Clients\SimpleSpamClient_ImplementedWithConnection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Examples\ClientExamples.h" />

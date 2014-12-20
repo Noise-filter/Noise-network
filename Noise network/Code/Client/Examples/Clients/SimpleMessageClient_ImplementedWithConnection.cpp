@@ -6,7 +6,7 @@
 #include "Core\WinsockFunctions.h"
 #include "Core\Connection.h"
 
-void ClientExamples::SimpleMessageClient_ImplementedWithConnection()
+void ClientExamples::SimpleMessageClient_ImplementedWithConnection(std::string address, unsigned short port)
 {
 	if (InitWinSock())
 	{
@@ -17,7 +17,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithConnection()
 
 	Connection con;
 
-	if (!con.Connect("localhost", 7878))
+	if (!con.Connect(address, port))
 	{
 		std::cout << "Error connecting" << std::endl;
 		return;
