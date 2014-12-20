@@ -1,98 +1,89 @@
+#include "ClientExamples.h"
+
 #include <iostream>
 #include <string>
 
-namespace
-{
-	#include "Core\WinsockFunctions.h"
-}
-
+#include "Core\WinsockFunctions.h"
 #include "Core\Socket.h"
 
-using namespace std;
-
-const int MAX_BUFFER_LENGTH = 512;
-
-namespace Examples
+void ClientExamples::SimpleMessageClient_ImplementedWithSocket()
 {
-	void SimpleMessageClient_ImplementedWithSocket()
+	if (InitWinSock())
 	{
-		if (InitWinSock())
+		return;
+	}
+
+	std::cout << "Hello World!" << std::endl;
+
+	Socket socket;
+
+	if (!socket.Init(AF_INET, SOCK_STREAM, IPPROTO_TCP))
+	{
+		std::cout << "Error initializing socket" << std::endl;
+		return;
+	}
+
+	if (!socket.Connect("localhost", 7878))
+	{
+		std::cout << "Error connecting" << std::endl;
+		return;
+	}
+
+	std::string text;
+	std::vector<char> buffer;
+
+	int result = 0;
+	do
+	{
+		std::cout << "> ";
+		getline(std::cin, text);
+
+		if (text.size() == 0)
 		{
-			return;
+			break;
 		}
 
-		cout << "Hello World!" << endl;
+		buffer.clear();
+		buffer.assign(text.begin(), text.end());
 
-		Socket socket;
-
-		if (!socket.Init(AF_INET, SOCK_STREAM, IPPROTO_TCP))
-		{
-			cout << "Error initializing socket" << endl;
-			return;
-		}
-
-		if (!socket.Connect("localhost", 7878))
-		{
-			cout << "Error connecting" << endl;
-			return;
-		}
-
-		string text;
-		vector<char> buffer;
-
-		int result = 0;
-		do
-		{
-			cout << "> ";
-			getline(cin, text);
-
-			if (text.size() == 0)
-			{
-				break;
-			}
-
-			buffer.clear();
-			buffer.assign(text.begin(), text.end());
-
-			result = socket.Send(buffer, (int)text.size());
-			if (result == SOCKET_ERROR)
-			{
-				cout << "Send failed with error: " << WSAGetLastError() << endl;
-				break;
-			}
-
-			cout << "Bytes sent: " << result << endl;
-
-			buffer.clear();
-			buffer.resize(MAX_BUFFER_LENGTH);
-
-			result = socket.Recv(buffer, MAX_BUFFER_LENGTH);
-			if (result > 0)
-			{
-				cout << "Bytes received: " << result << endl;
-				cout << "Message received: " << buffer.data() << endl;
-			}
-			else if (result == 0)
-			{
-				cout << "Connection closed" << endl;
-				return;
-			}
-			else
-			{
-				cout << "Recv failed with error: " << WSAGetLastError() << endl;
-				return;
-			}
-
-		} while (text.size() > 0);
-
-		result = socket.Shutdown(SD_SEND);
+		result = socket.Send(buffer, (int)text.size());
 		if (result == SOCKET_ERROR)
 		{
-			cout << "Shutdown failed with error: " << WSAGetLastError() << endl;
+			std::cout << "Send failed with error: " << WSAGetLastError() << std::endl;
+			break;
 		}
 
-		socket.Close();
+		std::cout << "Bytes sent: " << result << std::endl;
 
-		ShutdownWinSock();
+		buffer.clear();
+		buffer.resize(MAX_BUFFER_LENGTH);
+
+		result = socket.Recv(buffer, MAX_BUFFER_LENGTH);
+		if (result > 0)
+		{
+			std::cout << "Bytes received: " << result << std::endl;
+			std::cout << "Message received: " << buffer.data() << std::endl;
+		}
+		else if (result == 0)
+		{
+			std::cout << "Connection closed" << std::endl;
+			return;
+		}
+		else
+		{
+			std::cout << "Recv failed with error: " << WSAGetLastError() << std::endl;
+			return;
+		}
+
+	} while (text.size() > 0);
+
+	result = socket.Shutdown(SD_SEND);
+	if (result == SOCKET_ERROR)
+	{
+		std::cout << "Shutdown failed with error: " << WSAGetLastError() << std::endl;
 	}
+
+	socket.Close();
+
+	ShutdownWinSock();
 }

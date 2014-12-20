@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClCompile Include="Examples\SimpleEchoServer_ImplementedWithAcceptSocket.cpp" />
     <ClCompile Include="Examples\SimpleEchoServer_ImplementedWithSocket.cpp" />
+    <ClCompile Include="Examples\SimpleEchoServer_ImplementedWithThreadedAcceptServer.cpp" />
     <ClCompile Include="server.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -169,7 +170,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Examples\Examples.h" />
+    <ClInclude Include="Examples\ServerExamples.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

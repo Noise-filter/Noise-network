@@ -165,7 +165,7 @@
     <ClCompile Include="Examples\SimpleMessageClient_ImplementedWithSocket.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Examples\Examples.h" />
+    <ClInclude Include="Examples\ClientExamples.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NoiseNetwork\NoiseNetwork.vcxproj">

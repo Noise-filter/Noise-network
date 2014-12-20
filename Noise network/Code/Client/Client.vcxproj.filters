@@ -26,7 +26,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Examples\Examples.h">
+    <ClInclude Include="Examples\ClientExamples.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

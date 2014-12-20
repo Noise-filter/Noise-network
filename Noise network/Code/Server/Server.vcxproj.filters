@@ -24,9 +24,12 @@
     <ClCompile Include="Examples\SimpleEchoServer_ImplementedWithAcceptSocket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Examples\SimpleEchoServer_ImplementedWithThreadedAcceptServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Examples\Examples.h">
+    <ClInclude Include="Examples\ServerExamples.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,5 @@
 #include "Connection.h"
 
-using namespace std;
-
 Connection::Connection()
 {
 	address = "";
@@ -29,7 +27,7 @@ Connection::Connection(SOCKET socket)
 Connection::~Connection()
 {}
 
-bool Connection::Connect(string address, unsigned short port)
+bool Connection::Connect(std::string address, unsigned short port)
 {
 	this->address = address;
 	this->port = port;
@@ -105,7 +103,7 @@ unsigned short Connection::GetPort()
 	return port;
 }
 
-string Connection::GetAddress()
+std::string Connection::GetAddress()
 {
 	return address;
 }

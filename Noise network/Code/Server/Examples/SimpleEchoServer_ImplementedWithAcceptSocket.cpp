@@ -1,10 +1,6 @@
 #include <iostream>
-using namespace std;
 
-namespace
-{
-	#include "Core\WinsockFunctions.h"
-}
+#include "Core\WinsockFunctions.h"
 #include "Core\AcceptSocket.h"
 
 const int MAX_BUFFER_LENGTH = 512;
@@ -18,7 +14,7 @@ namespace Examples
 			return;
 		}
 
-		cout << "Hello World!" << endl;
+		std::cout << "Hello World!" << std::endl;
 
 		AcceptSocket socket;
 
@@ -26,13 +22,13 @@ namespace Examples
 		//It's that easy
 		if (!socket.Init(7878))
 		{
-			cout << "Error initializing accept socket" << endl;
+			std::cout << "Error initializing accept socket" << std::endl;
 			socket.Close();
 			ShutdownWinSock();
 			return;
 		}
 
-		cout << "Waiting to accept a client" << endl;
+		std::cout << "Waiting to accept a client" << std::endl;
 
 		SOCKET clientSocket;
 
@@ -40,13 +36,13 @@ namespace Examples
 		clientSocket = socket.Accept();
 		if (clientSocket == INVALID_SOCKET)
 		{
-			cout << "Error accepting client " << clientSocket << endl;
+			std::cout << "Error accepting client " << clientSocket << std::endl;
 			socket.Close();
 			ShutdownWinSock();
 			return;
 		}
 
-		cout << "Client connected: " << clientSocket << endl;
+		std::cout << "Client connected: " << clientSocket << std::endl;
 
 		//No longer need server socket
 		socket.Close();
@@ -62,26 +58,26 @@ namespace Examples
 			result = client.Recv(buffer, MAX_BUFFER_LENGTH);
 			if (result > 0)
 			{
-				cout << "Bytes received: " << result << endl;
-				cout << "Message received: " << &buffer[0] << endl;
+				std::cout << "Bytes received: " << result << std::endl;
+				std::cout << "Message received: " << &buffer[0] << std::endl;
 
 				result = client.Send(buffer, result);
 				if (result == SOCKET_ERROR)
 				{
-					cout << "Send failed with error: " << WSAGetLastError() << endl;
+					std::cout << "Send failed with error: " << WSAGetLastError() << std::endl;
 				}
 				else
 				{
-					cout << "Bytes send: " << result << endl;
+					std::cout << "Bytes send: " << result << std::endl;
 				}
 			}
 			else if (result == 0)
 			{
-				cout << "Connection closing..." << endl;
+				std::cout << "Connection closing..." << std::endl;
 			}
 			else
 			{
-				cout << "Recv failed with error: " << WSAGetLastError() << endl;
+				std::cout << "Recv failed with error: " << WSAGetLastError() << std::endl;
 				client.Close();
 			}
 
@@ -90,7 +86,7 @@ namespace Examples
 		result = client.Shutdown(SD_SEND);
 		if (result == SOCKET_ERROR)
 		{
-			cout << "Shutdown failed with error: " << WSAGetLastError() << endl;
+			std::cout << "Shutdown failed with error: " << WSAGetLastError() << std::endl;
 			client.Close();
 		}
 

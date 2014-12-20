@@ -1,9 +1,9 @@
-#include "Examples\Examples.h"
+#include "Examples\ClientExamples.h"
 
 int main()
 {
-	Examples::SimpleMessageClient_ImplementedWithSocket();
-	Examples::SimpleMessageClient_ImplementedWithConnection();
+	//ClientExamples::SimpleMessageClient_ImplementedWithSocket();
+	ClientExamples::SimpleMessageClient_ImplementedWithConnection();
 
 
 
