@@ -153,7 +153,7 @@
   <ItemGroup>
     <ClInclude Include="Core\AcceptSocket.h" />
     <ClInclude Include="Core\Connection.h" />
-    <ClInclude Include="Core\Socket.h" />
+    <ClInclude Include="Core\StreamSocket.h" />
     <ClInclude Include="Core\ThreadedAcceptServer.h" />
     <ClInclude Include="Core\WinsockFunctions.h" />
     <ClInclude Include="Core\WinsockIncludes.h" />
@@ -161,7 +161,7 @@
   <ItemGroup>
     <ClCompile Include="Core\AcceptSocket.cpp" />
     <ClCompile Include="Core\Connection.cpp" />
-    <ClCompile Include="Core\Socket.cpp" />
+    <ClCompile Include="Core\StreamSocket.cpp" />
     <ClCompile Include="Core\ThreadedAcceptServer.cpp" />
     <ClCompile Include="Core\WinsockFunctions.cpp" />
   </ItemGroup>

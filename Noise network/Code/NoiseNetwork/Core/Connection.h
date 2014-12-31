@@ -1,7 +1,7 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
-#include "Socket.h"
+#include "StreamSocket.h"
 
 class Connection
 {
@@ -23,7 +23,7 @@ public:
 	std::string GetAddress();
 
 private:
-	Socket socket;
+	StreamSocket socket;
 	
 	std::string address;
 	unsigned short port;

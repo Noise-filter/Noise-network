@@ -52,7 +52,7 @@ namespace Examples
 		//Stop the accept thread
 		acceptServer.Stop();
 
-		Socket client(clientSocket);
+		StreamSocket client(clientSocket);
 		std::vector<char> buffer;
 
 		int result = 0;

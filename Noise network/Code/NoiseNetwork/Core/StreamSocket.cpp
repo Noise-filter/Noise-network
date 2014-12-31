@@ -1,21 +1,21 @@
-#include "Socket.h"
+#include "StreamSocket.h"
 
-Socket::Socket()
+StreamSocket::StreamSocket()
 {
 	socket = INVALID_SOCKET;
 }
 
-Socket::Socket(SOCKET socket)
+StreamSocket::StreamSocket(SOCKET socket)
 {
 	this->socket = socket;
 }
 
-Socket::~Socket()
+StreamSocket::~StreamSocket()
 {
 	this->Close();
 }
 
-bool Socket::Init(int family, int type, int protocol)
+bool StreamSocket::Init(int family, int type, int protocol)
 {
 	socket = ::socket(family, type, protocol);
 	if (socket == INVALID_SOCKET)
@@ -26,7 +26,7 @@ bool Socket::Init(int family, int type, int protocol)
 	return true;
 }
 
-bool Socket::Connect(std::string address, unsigned short port)
+bool StreamSocket::Connect(std::string address, unsigned short port)
 {
 	if (socket == INVALID_SOCKET)
 	{
@@ -57,7 +57,7 @@ bool Socket::Connect(std::string address, unsigned short port)
 	return true;
 }
 
-bool Socket::Bind(unsigned short port)
+bool StreamSocket::Bind(unsigned short port)
 {
 	if (socket == INVALID_SOCKET)
 	{
@@ -79,7 +79,7 @@ bool Socket::Bind(unsigned short port)
 	return true;
 }
 
-bool Socket::Listen()
+bool StreamSocket::Listen()
 {
 	if (socket == INVALID_SOCKET)
 	{
@@ -95,7 +95,7 @@ bool Socket::Listen()
 	return true;
 }
 
-SOCKET Socket::Accept()
+SOCKET StreamSocket::Accept()
 {
 	if (socket == INVALID_SOCKET)
 	{
@@ -113,7 +113,7 @@ SOCKET Socket::Accept()
 	return clientSocket;
 }
 
-bool Socket::Shutdown(int flag)
+bool StreamSocket::Shutdown(int flag)
 {
 	if (socket == INVALID_SOCKET)
 	{
@@ -129,35 +129,35 @@ bool Socket::Shutdown(int flag)
 	return true;
 }
 
-void Socket::Close()
+void StreamSocket::Close()
 {
 	closesocket(socket);
 	socket = INVALID_SOCKET;
 }
 
-int Socket::Send(std::vector<char>& buffer, int bufLength)
+int StreamSocket::Send(std::vector<char>& buffer, int bufLength)
 {
 	int result = send(socket, &buffer[0], bufLength, 0);
 	return result;
 }
 
-int Socket::Recv(std::vector<char>& buffer, int bufLength)
+int StreamSocket::Recv(std::vector<char>& buffer, int bufLength)
 {
 	int result = recv(socket, &buffer[0], bufLength, 0);
 	return result;
 }
 
-bool Socket::IsInitialized()
+bool StreamSocket::IsInitialized()
 {
 	return (socket != INVALID_SOCKET);
 }
 
-void Socket::SetSocket(SOCKET socket)
+void StreamSocket::SetSocket(SOCKET socket)
 {
 	this->socket = socket;
 }
 
-SOCKET Socket::GetSocket()
+SOCKET StreamSocket::GetSocket()
 {
 	return socket;
 }

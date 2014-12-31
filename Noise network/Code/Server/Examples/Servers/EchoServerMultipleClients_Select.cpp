@@ -35,7 +35,7 @@ namespace Examples
 		cout << "Accept thread started" << endl;
 
 		SOCKET clientSocket = INVALID_SOCKET;
-		vector<Socket> clients;
+		vector<StreamSocket> clients;
 
 		vector<char> buffer;
 

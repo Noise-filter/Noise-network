@@ -1,7 +1,7 @@
 #ifndef ACCEPT_SOCKET_H
 #define ACCEPT_SOCKET_H
 
-#include "Socket.h"
+#include "StreamSocket.h"
 
 /*
 *	AcceptSocket
@@ -10,7 +10,7 @@
 *
 *
 */
-class Socket;
+class StreamSocket;
 class AcceptSocket
 {
 public:
@@ -26,7 +26,7 @@ public:
 	SOCKET GetSocket();
 
 private:
-	Socket socket;
+	StreamSocket socket;
 
 };
 

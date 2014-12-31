@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "Core\WinsockFunctions.h"
-#include "Core\Socket.h"
+#include "Core\StreamSocket.h"
 
 const int MAX_BUFFER_LENGTH = 512;
 
@@ -16,7 +16,7 @@ namespace Examples
 
 		std::cout << "Hello World!" << std::endl;
 
-		Socket socket;
+		StreamSocket socket;
 
 		if (!socket.Init(AF_INET, SOCK_STREAM, IPPROTO_TCP))
 		{
@@ -59,7 +59,7 @@ namespace Examples
 		//No longer need server socket
 		socket.Close();
 
-		Socket client(clientSocket);
+		StreamSocket client(clientSocket);
 		std::vector<char> buffer;
 
 		int result = 0;

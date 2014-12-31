@@ -9,7 +9,7 @@ Connection::Connection()
 
 Connection::Connection(SOCKET socket)
 {
-	this->socket = Socket(socket);
+	this->socket = StreamSocket(socket);
 	if (socket != INVALID_SOCKET)
 	{
 		connected = true;

@@ -4,12 +4,12 @@
 #include "WinsockIncludes.h"
 #include <vector>
 
-class Socket
+class StreamSocket
 {
 public:
-	Socket();
-	Socket(SOCKET socket);
-	virtual ~Socket();
+	StreamSocket();
+	StreamSocket(SOCKET socket);
+	virtual ~StreamSocket();
 
 	//Creates a SOCKET
 	bool Init(int family, int type, int protocol);

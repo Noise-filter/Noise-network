@@ -4,7 +4,7 @@
 #include <string>
 
 #include "Core\WinsockFunctions.h"
-#include "Core\Socket.h"
+#include "Core\StreamSocket.h"
 
 void ClientExamples::SimpleMessageClient_ImplementedWithSocket(std::string address, unsigned short port)
 {
@@ -15,7 +15,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithSocket(std::string addre
 
 	std::cout << "Hello World!" << std::endl;
 
-	Socket socket;
+	StreamSocket socket;
 
 	if (!socket.Init(AF_INET, SOCK_STREAM, IPPROTO_TCP))
 	{
