@@ -9,7 +9,7 @@ const int MAX_BUFFER_LENGTH = 512;
 
 namespace Examples
 {
-	void SimpleEchoServer_ImplementedWithThreadedAcceptServer(unsigned short port)
+	void SimpleStreamEchoServer_ImplementedWithThreadedAcceptServer(unsigned short port)
 	{
 		if (InitWinSock())
 		{

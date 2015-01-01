@@ -12,7 +12,7 @@ AcceptSocket::~AcceptSocket()
 
 bool AcceptSocket::Init(unsigned short port)
 {
-	bool result = socket.Init(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	bool result = socket.Init(AF_INET);
 	if (!result)
 	{
 		return result;

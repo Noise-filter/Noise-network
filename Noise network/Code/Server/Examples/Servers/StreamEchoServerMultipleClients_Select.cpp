@@ -9,7 +9,7 @@ const int MAX_BUFFER_LENGTH = 512;
 
 namespace Examples
 {
-	void EchoServerMultipleClients_Select(unsigned short port)
+	void StreamEchoServerMultipleClients_Select(unsigned short port)
 	{
 		if (InitWinSock())
 		{

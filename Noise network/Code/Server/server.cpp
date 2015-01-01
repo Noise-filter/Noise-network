@@ -4,11 +4,11 @@ const unsigned short PORT = 7878;
 
 int main()
 {
-	//Examples::SimpleEchoServer_ImplementedWithSocket(PORT);
-	//Examples::SimpleEchoServer_ImplementedWithAcceptSocket(PORT);
-	//Examples::SimpleEchoServer_ImplementedWithThreadedAcceptServer(PORT);
+	//Examples::SimpleStreamEchoServer_ImplementedWithSocket(PORT);
+	//Examples::SimpleStreamEchoServer_ImplementedWithAcceptSocket(PORT);
+	//Examples::SimpleStreamEchoServer_ImplementedWithThreadedAcceptServer(PORT);
 	
-	Examples::EchoServerMultipleClients_Select(PORT);
+	Examples::StreamEchoServerMultipleClients_Select(PORT);
 
 	return 0;
 }

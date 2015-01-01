@@ -5,9 +5,9 @@ const unsigned short PORT = 7878;
 
 int main()
 {
-	//ClientExamples::SimpleMessageClient_ImplementedWithSocket(IP_ADDRESS, PORT);
-	//ClientExamples::SimpleMessageClient_ImplementedWithConnection(IP_ADDRESS, PORT);
-	ClientExamples::SimpleSpamClient_ImplementedWithConnection(IP_ADDRESS, PORT);
+	//ClientExamples::SimpleMessageClient_ImplementedWithStreamSocket(IP_ADDRESS, PORT);
+	//ClientExamples::SimpleMessageClient_ImplementedWithStreamConnection(IP_ADDRESS, PORT);
+	ClientExamples::SimpleSpamClient_ImplementedWithStreamConnection(IP_ADDRESS, PORT);
 
 
 

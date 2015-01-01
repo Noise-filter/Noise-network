@@ -1,13 +1,13 @@
-#include "Connection.h"
+#include "StreamConnection.h"
 
-Connection::Connection()
+StreamConnection::StreamConnection()
 {
 	address = "";
 	port = 0;
 	connected = false;
 }
 
-Connection::Connection(SOCKET socket)
+StreamConnection::StreamConnection(SOCKET socket)
 {
 	this->socket = StreamSocket(socket);
 	if (socket != INVALID_SOCKET)
@@ -24,10 +24,10 @@ Connection::Connection(SOCKET socket)
 	}
 }
 
-Connection::~Connection()
+StreamConnection::~StreamConnection()
 {}
 
-bool Connection::Connect(std::string address, unsigned short port)
+bool StreamConnection::Connect(std::string address, unsigned short port)
 {
 	this->address = address;
 	this->port = port;
@@ -35,7 +35,7 @@ bool Connection::Connect(std::string address, unsigned short port)
 	//Try to initialize socket if it isn't already initialized
 	if (!socket.IsInitialized())
 	{
-		if (!socket.Init(AF_INET, SOCK_STREAM, IPPROTO_TCP))
+		if (!socket.Init(AF_INET))
 		{
 			return false;
 		}
@@ -49,7 +49,7 @@ bool Connection::Connect(std::string address, unsigned short port)
 	return result;
 }
 
-bool Connection::Reconnect()
+bool StreamConnection::Reconnect()
 {
 	//Return true if already connected
 	if (connected)
@@ -66,7 +66,7 @@ bool Connection::Reconnect()
 	return false;
 }
 
-bool Connection::Disconnect()
+bool StreamConnection::Disconnect()
 {
 	if (connected)
 	{
@@ -78,7 +78,7 @@ bool Connection::Disconnect()
 	return true;
 }
 
-int Connection::Send(std::vector<char>& buffer, int bufLength)
+int StreamConnection::Send(std::vector<char>& buffer, int bufLength)
 {
 	if (connected)
 	{
@@ -88,7 +88,7 @@ int Connection::Send(std::vector<char>& buffer, int bufLength)
 	return 0;
 }
 
-int Connection::Recv(std::vector<char>& buffer, int bufLength)
+int StreamConnection::Recv(std::vector<char>& buffer, int bufLength)
 {
 	if (connected)
 	{
@@ -98,12 +98,12 @@ int Connection::Recv(std::vector<char>& buffer, int bufLength)
 	return 0;
 }
 
-unsigned short Connection::GetPort()
+unsigned short StreamConnection::GetPort()
 {
 	return port;
 }
 
-std::string Connection::GetAddress()
+std::string StreamConnection::GetAddress()
 {
 	return address;
 }

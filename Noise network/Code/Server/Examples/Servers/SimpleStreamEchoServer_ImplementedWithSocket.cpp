@@ -1,13 +1,13 @@
 #include <iostream>
 
 #include "Core\WinsockFunctions.h"
-#include "Core\AcceptSocket.h"
+#include "Core\StreamSocket.h"
 
 const int MAX_BUFFER_LENGTH = 512;
 
 namespace Examples
 {
-	void SimpleEchoServer_ImplementedWithAcceptSocket(unsigned short port)
+	void SimpleStreamEchoServer_ImplementedWithSocket(unsigned short port)
 	{
 		if (InitWinSock())
 		{
@@ -16,13 +16,27 @@ namespace Examples
 
 		std::cout << "Hello World!" << std::endl;
 
-		AcceptSocket socket;
+		StreamSocket socket;
 
-		//Initialize the AcceptSocket
-		//It's that easy
-		if (!socket.Init(port))
+		if (!socket.Init(AF_INET))
 		{
-			std::cout << "Error initializing accept socket" << std::endl;
+			std::cout << "Error initializing socket" << std::endl;
+			socket.Close();
+			ShutdownWinSock();
+			return;
+		}
+
+		if (!socket.Bind(port))
+		{
+			std::cout << "Error binding socket" << std::endl;
+			socket.Close();
+			ShutdownWinSock();
+			return;
+		}
+
+		if (!socket.Listen())
+		{
+			std::cout << "Error listening on socket" << std::endl;
 			socket.Close();
 			ShutdownWinSock();
 			return;
@@ -31,8 +45,6 @@ namespace Examples
 		std::cout << "Waiting to accept a client" << std::endl;
 
 		SOCKET clientSocket;
-
-		//Wait for a new connection
 		clientSocket = socket.Accept();
 		if (clientSocket == INVALID_SOCKET)
 		{
@@ -73,7 +85,7 @@ namespace Examples
 			}
 			else if (result == 0)
 			{
-				std::cout << "Connection closing..." << std::endl;
+				std::cout << "StreamConnection closing..." << std::endl;
 			}
 			else
 			{

@@ -18,16 +18,16 @@
     <ClCompile Include="server.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Examples\Servers\SimpleEchoServer_ImplementedWithThreadedAcceptServer.cpp">
+    <ClCompile Include="Examples\Servers\StreamEchoServerMultipleClients_Select.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Examples\Servers\SimpleEchoServer_ImplementedWithAcceptSocket.cpp">
+    <ClCompile Include="Examples\Servers\SimpleStreamEchoServer_ImplementedWithAcceptSocket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Examples\Servers\SimpleEchoServer_ImplementedWithSocket.cpp">
+    <ClCompile Include="Examples\Servers\SimpleStreamEchoServer_ImplementedWithSocket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Examples\Servers\EchoServerMultipleClients_Select.cpp">
+    <ClCompile Include="Examples\Servers\SimpleStreamEchoServer_ImplementedWithThreadedAcceptServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -12,7 +12,7 @@ public:
 	virtual ~StreamSocket();
 
 	//Creates a SOCKET
-	bool Init(int family, int type, int protocol);
+	bool Init(int family);
 
 	bool Connect(std::string address, unsigned short port);
 

@@ -159,10 +159,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Examples\Servers\EchoServerMultipleClients_Select.cpp" />
-    <ClCompile Include="Examples\Servers\SimpleEchoServer_ImplementedWithAcceptSocket.cpp" />
-    <ClCompile Include="Examples\Servers\SimpleEchoServer_ImplementedWithSocket.cpp" />
-    <ClCompile Include="Examples\Servers\SimpleEchoServer_ImplementedWithThreadedAcceptServer.cpp" />
+    <ClCompile Include="Examples\Servers\StreamEchoServerMultipleClients_Select.cpp" />
+    <ClCompile Include="Examples\Servers\SimpleStreamEchoServer_ImplementedWithAcceptSocket.cpp" />
+    <ClCompile Include="Examples\Servers\SimpleStreamEchoServer_ImplementedWithSocket.cpp" />
+    <ClCompile Include="Examples\Servers\SimpleStreamEchoServer_ImplementedWithThreadedAcceptServer.cpp" />
     <ClCompile Include="server.cpp" />
   </ItemGroup>
   <ItemGroup>

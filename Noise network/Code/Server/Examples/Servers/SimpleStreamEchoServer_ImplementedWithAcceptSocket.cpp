@@ -1,13 +1,13 @@
 #include <iostream>
 
 #include "Core\WinsockFunctions.h"
-#include "Core\StreamSocket.h"
+#include "Core\AcceptSocket.h"
 
 const int MAX_BUFFER_LENGTH = 512;
 
 namespace Examples
 {
-	void SimpleEchoServer_ImplementedWithSocket(unsigned short port)
+	void SimpleStreamEchoServer_ImplementedWithAcceptSocket(unsigned short port)
 	{
 		if (InitWinSock())
 		{
@@ -16,27 +16,13 @@ namespace Examples
 
 		std::cout << "Hello World!" << std::endl;
 
-		StreamSocket socket;
+		AcceptSocket socket;
 
-		if (!socket.Init(AF_INET, SOCK_STREAM, IPPROTO_TCP))
+		//Initialize the AcceptSocket
+		//It's that easy
+		if (!socket.Init(port))
 		{
-			std::cout << "Error initializing socket" << std::endl;
-			socket.Close();
-			ShutdownWinSock();
-			return;
-		}
-
-		if (!socket.Bind(port))
-		{
-			std::cout << "Error binding socket" << std::endl;
-			socket.Close();
-			ShutdownWinSock();
-			return;
-		}
-
-		if (!socket.Listen())
-		{
-			std::cout << "Error listening on socket" << std::endl;
+			std::cout << "Error initializing accept socket" << std::endl;
 			socket.Close();
 			ShutdownWinSock();
 			return;
@@ -45,6 +31,8 @@ namespace Examples
 		std::cout << "Waiting to accept a client" << std::endl;
 
 		SOCKET clientSocket;
+
+		//Wait for a new connection
 		clientSocket = socket.Accept();
 		if (clientSocket == INVALID_SOCKET)
 		{

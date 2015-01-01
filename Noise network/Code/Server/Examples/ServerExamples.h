@@ -3,11 +3,11 @@
 
 namespace Examples
 {
-	void SimpleEchoServer_ImplementedWithSocket(unsigned short port);
-	void SimpleEchoServer_ImplementedWithAcceptSocket(unsigned short port);
-	void SimpleEchoServer_ImplementedWithThreadedAcceptServer(unsigned short port);
+	void SimpleStreamEchoServer_ImplementedWithSocket(unsigned short port);
+	void SimpleStreamEchoServer_ImplementedWithAcceptSocket(unsigned short port);
+	void SimpleStreamEchoServer_ImplementedWithThreadedAcceptServer(unsigned short port);
 
-	void EchoServerMultipleClients_Select(unsigned short port);
+	void StreamEchoServerMultipleClients_Select(unsigned short port);
 
 }
 

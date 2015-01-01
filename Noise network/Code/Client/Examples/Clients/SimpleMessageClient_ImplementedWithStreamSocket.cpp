@@ -4,9 +4,9 @@
 #include <string>
 
 #include "Core\WinsockFunctions.h"
-#include "Core\Connection.h"
+#include "Core\StreamSocket.h"
 
-void ClientExamples::SimpleMessageClient_ImplementedWithConnection(std::string address, unsigned short port)
+void ClientExamples::SimpleMessageClient_ImplementedWithStreamSocket(std::string address, unsigned short port)
 {
 	if (InitWinSock())
 	{
@@ -15,9 +15,15 @@ void ClientExamples::SimpleMessageClient_ImplementedWithConnection(std::string a
 
 	std::cout << "Hello World!" << std::endl;
 
-	Connection con;
+	StreamSocket socket;
 
-	if (!con.Connect(address, port))
+	if (!socket.Init(AF_INET))
+	{
+		std::cout << "Error initializing socket" << std::endl;
+		return;
+	}
+
+	if (!socket.Connect(address, port))
 	{
 		std::cout << "Error connecting" << std::endl;
 		return;
@@ -40,7 +46,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithConnection(std::string a
 		buffer.clear();
 		buffer.assign(text.begin(), text.end());
 
-		result = con.Send(buffer, (int)text.size());
+		result = socket.Send(buffer, (int)text.size());
 		if (result == SOCKET_ERROR)
 		{
 			std::cout << "Send failed with error: " << WSAGetLastError() << std::endl;
@@ -52,7 +58,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithConnection(std::string a
 		buffer.clear();
 		buffer.resize(MAX_BUFFER_LENGTH);
 
-		result = con.Recv(buffer, MAX_BUFFER_LENGTH);
+		result = socket.Recv(buffer, MAX_BUFFER_LENGTH);
 		if (result > 0)
 		{
 			std::cout << "Bytes received: " << result << std::endl;
@@ -71,11 +77,13 @@ void ClientExamples::SimpleMessageClient_ImplementedWithConnection(std::string a
 
 	} while (text.size() > 0);
 
-	result = con.Disconnect();
+	result = socket.Shutdown(SD_SEND);
 	if (result == SOCKET_ERROR)
 	{
 		std::cout << "Shutdown failed with error: " << WSAGetLastError() << std::endl;
 	}
+
+	socket.Close();
 
 	ShutdownWinSock();
 }

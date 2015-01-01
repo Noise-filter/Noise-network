@@ -3,12 +3,12 @@
 
 #include "StreamSocket.h"
 
-class Connection
+class StreamConnection
 {
 public:
-	Connection();
-	Connection(SOCKET socket);
-	~Connection();
+	StreamConnection();
+	StreamConnection(SOCKET socket);
+	~StreamConnection();
 
 	bool Connect(std::string address, unsigned short port);
 

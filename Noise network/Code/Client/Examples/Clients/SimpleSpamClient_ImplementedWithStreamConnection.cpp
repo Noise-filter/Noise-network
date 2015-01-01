@@ -4,11 +4,11 @@
 #include <string>
 
 #include "Core\WinsockFunctions.h"
-#include "Core\Connection.h"
+#include "Core\StreamConnection.h"
 
 using namespace std;
 
-void ClientExamples::SimpleSpamClient_ImplementedWithConnection(std::string address, unsigned short port)
+void ClientExamples::SimpleSpamClient_ImplementedWithStreamConnection(std::string address, unsigned short port)
 {
 	if (InitWinSock())
 	{
@@ -17,7 +17,7 @@ void ClientExamples::SimpleSpamClient_ImplementedWithConnection(std::string addr
 
 	std::cout << "Hello World!" << std::endl;
 
-	Connection con;
+	StreamConnection con;
 
 	if (!con.Connect(address, port))
 	{

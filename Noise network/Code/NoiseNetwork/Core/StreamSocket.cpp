@@ -15,9 +15,9 @@ StreamSocket::~StreamSocket()
 	this->Close();
 }
 
-bool StreamSocket::Init(int family, int type, int protocol)
+bool StreamSocket::Init(int family)
 {
-	socket = ::socket(family, type, protocol);
+	socket = ::socket(family, SOCK_STREAM, IPPROTO_TCP);
 	if (socket == INVALID_SOCKET)
 	{
 		return false;
@@ -53,7 +53,7 @@ bool StreamSocket::Connect(std::string address, unsigned short port)
 		return false;
 	}
 
-	//Connection successful!
+	//StreamConnection successful!
 	return true;
 }
 
