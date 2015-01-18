@@ -27,6 +27,9 @@
     <ClCompile Include="Examples\Clients\SimpleSpamClient_ImplementedWithStreamConnection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Examples\Clients\SimpleMessageClient_ImplementedWithDatagramSocket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Examples\ClientExamples.h">

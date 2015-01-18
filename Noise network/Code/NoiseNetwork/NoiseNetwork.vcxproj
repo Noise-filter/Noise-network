@@ -152,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\AcceptSocket.h" />
+    <ClInclude Include="Core\DatagramSocket.h" />
     <ClInclude Include="Core\StreamConnection.h" />
     <ClInclude Include="Core\StreamSocket.h" />
     <ClInclude Include="Core\ThreadedAcceptServer.h" />
@@ -160,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\AcceptSocket.cpp" />
+    <ClCompile Include="Core\DatagramSocket.cpp" />
     <ClCompile Include="Core\StreamConnection.cpp" />
     <ClCompile Include="Core\StreamSocket.cpp" />
     <ClCompile Include="Core\ThreadedAcceptServer.cpp" />

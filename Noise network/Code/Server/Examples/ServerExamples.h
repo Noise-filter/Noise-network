@@ -9,6 +9,8 @@ namespace Examples
 
 	void StreamEchoServerMultipleClients_Select(unsigned short port);
 
+
+	void SimpleDatagramEchoServer_ImplemntedWithSocket(unsigned short port);
 }
 
 #endif

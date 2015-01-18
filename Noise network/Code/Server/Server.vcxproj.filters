@@ -30,6 +30,9 @@
     <ClCompile Include="Examples\Servers\SimpleStreamEchoServer_ImplementedWithThreadedAcceptServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Examples\Servers\SimpleDatagramEchoServer_ImplemntedWithSocket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Examples\ServerExamples.h">
