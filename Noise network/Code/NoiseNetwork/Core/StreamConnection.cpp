@@ -98,6 +98,11 @@ int StreamConnection::Recv(std::vector<char>& buffer, int bufLength)
 	return 0;
 }
 
+bool StreamConnection::IsConnected()
+{
+	return connected;
+}
+
 unsigned short StreamConnection::GetPort()
 {
 	return port;

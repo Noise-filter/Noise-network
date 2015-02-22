@@ -32,10 +32,11 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramSocket(std::stri
 	std::string text;
 	std::vector<char> buffer;
 	sockaddr_in serverAddr;
-	hostent* hp;
+	hostent* hp = NULL;
 
 	serverAddr.sin_family = AF_INET;
-	hp = gethostbyname(address.c_str());
+	//TODO: Fix gethostbyname
+	//hp = gethostbyname(address.c_str());
 	if (hp == NULL)
 	{
 		std::cout << "Unknown host" << std::endl;
