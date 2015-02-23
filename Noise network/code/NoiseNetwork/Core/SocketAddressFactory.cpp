@@ -10,23 +10,24 @@ SocketAddressInterface* SocketAddressFactory::Create(const std::string ip, const
 	int result = getaddrinfo(ip.c_str(), NULL, NULL, &addrResult);
 	if (result == 0)
 	{
-		//Check if it is an IPv4 address
-		if (addrResult->ai_family == AF_INET)
+		//Check what family the ip address corresponds to
+		switch (addrResult->ai_family)
 		{
+		case AF_INET:
 			sockaddr_in sa;
 			sa = *(sockaddr_in*)(addrResult->ai_addr);
 			sa.sin_port = htons(port);
 			return new SocketAddressIPv4(sa);
-		}
-
-		//Check if it is an IPv6 address
-		sockaddr_in6 sa6;
-		result = inet_pton(AF_INET6, addrResult->ai_addr->sa_data, &(sa6.sin6_addr));
-		if (addrResult->ai_family == AF_INET6)
-		{
-			sa6.sin6_family = AF_INET6;
+			break;
+		case AF_INET6:
+			sockaddr_in6 sa6;
+			sa6 = *(sockaddr_in6*)(addrResult->ai_addr);
 			sa6.sin6_port = htons(port);
 			return new SocketAddressIPv6(sa6);
+			break;
+		default:
+			return NULL;
+			break;
 		}
 	}
 	//Did not match either IPv4 or IPv6
