@@ -5,26 +5,30 @@
 
 SocketAddressInterface* SocketAddressFactory::Create(const std::string ip, const unsigned short port)
 {
-	//Check if it is an IPv4 address
-	sockaddr_in sa;
-	int result = inet_pton(AF_INET, ip.c_str(), &(sa.sin_addr));
-	if (result == 1)
-	{
-		sa.sin_family = AF_INET;
-		sa.sin_port = htons(port);
-		return new SocketAddressIPv4(sa);
-	}
+	addrinfo* addrResult = NULL;
 
-	//Check if it is an IPv6 address
-	sockaddr_in6 sa6;
-	result = inet_pton(AF_INET6, ip.c_str(), &(sa6.sin6_addr));
-	if (result == 1)
+	int result = getaddrinfo(ip.c_str(), NULL, NULL, &addrResult);
+	if (result == 0)
 	{
-		sa6.sin6_family = AF_INET6;
-		sa6.sin6_port = htons(port);
-		return new SocketAddressIPv6(sa6);
-	}
+		//Check if it is an IPv4 address
+		if (addrResult->ai_family == AF_INET)
+		{
+			sockaddr_in sa;
+			sa = *(sockaddr_in*)(addrResult->ai_addr);
+			sa.sin_port = htons(port);
+			return new SocketAddressIPv4(sa);
+		}
 
+		//Check if it is an IPv6 address
+		sockaddr_in6 sa6;
+		result = inet_pton(AF_INET6, addrResult->ai_addr->sa_data, &(sa6.sin6_addr));
+		if (addrResult->ai_family == AF_INET6)
+		{
+			sa6.sin6_family = AF_INET6;
+			sa6.sin6_port = htons(port);
+			return new SocketAddressIPv6(sa6);
+		}
+	}
 	//Did not match either IPv4 or IPv6
 	return NULL;
 }
