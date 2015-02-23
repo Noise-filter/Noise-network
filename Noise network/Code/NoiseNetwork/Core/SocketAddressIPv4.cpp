@@ -7,7 +7,7 @@ SocketAddressIPv4::SocketAddressIPv4()
 
 SocketAddressIPv4::SocketAddressIPv4(const SOCKADDR& addr)
 { 
-	memcpy((SOCKADDR*)this, &addr, sizeof(SOCKADDR)); 
+	memcpy((SOCKADDR_IN*)this, (SOCKADDR_IN*)&addr, sizeof(SOCKADDR_IN));
 }
 
 SocketAddressIPv4::SocketAddressIPv4(const SOCKADDR_IN& addr)
@@ -55,7 +55,7 @@ void SocketAddressIPv4::SetIP(std::string ip)
 
 const SocketAddressIPv4& SocketAddressIPv4::operator=(const SOCKADDR& addr)
 {
-	memcpy((SOCKADDR*)this, &addr, sizeof(SOCKADDR));
+	memcpy((SOCKADDR_IN*)this, (SOCKADDR_IN*)&addr, sizeof(SOCKADDR_IN));
 	return *this;
 }
 const SocketAddressIPv4& SocketAddressIPv4::operator=(const SOCKADDR_IN& addr)
@@ -71,15 +71,15 @@ SocketAddressIPv4::operator std::string()
 
 SocketAddressIPv4::operator SOCKADDR()
 {
-	return *((LPSOCKADDR) this);
+	return *(LPSOCKADDR)(LPSOCKADDR_IN)this;
 }
 
 SocketAddressIPv4::operator LPSOCKADDR()
 {
-	return (LPSOCKADDR) this;
+	return (LPSOCKADDR)(LPSOCKADDR_IN)this;
 }
 
 SocketAddressIPv4::operator LPSOCKADDR_IN()
 {
-	return (LPSOCKADDR_IN) this;
+	return (LPSOCKADDR_IN)this;
 }

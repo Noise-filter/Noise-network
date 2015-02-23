@@ -7,12 +7,7 @@ SocketAddressIPv6::SocketAddressIPv6()
 
 SocketAddressIPv6::SocketAddressIPv6(const SOCKADDR& addr)
 {
-	memcpy((SOCKADDR*)this, &addr, sizeof(SOCKADDR));
-}
-
-SocketAddressIPv6::SocketAddressIPv6(const SOCKADDR_IN& addr)
-{
-	memcpy((SOCKADDR_IN*)this, &addr, sizeof(SOCKADDR_IN));
+	memcpy((SOCKADDR_IN6*)this, (SOCKADDR_IN6*)&addr, sizeof(SOCKADDR_IN6));
 }
 
 SocketAddressIPv6::SocketAddressIPv6(const SOCKADDR_IN6& addr)
@@ -64,12 +59,6 @@ const SocketAddressIPv6& SocketAddressIPv6::operator=(const SOCKADDR& addr)
 	return *this;
 }
 
-const SocketAddressIPv6& SocketAddressIPv6::operator=(const SOCKADDR_IN& addr)
-{
-	memcpy((SOCKADDR_IN*)this, &addr, sizeof(SOCKADDR_IN));
-	return *this;
-}
-
 const SocketAddressIPv6& SocketAddressIPv6::operator=(const SOCKADDR_IN6& addr)
 {
 	memcpy((SOCKADDR_IN6*)this, &addr, sizeof(SOCKADDR_IN6));
@@ -83,20 +72,15 @@ SocketAddressIPv6::operator std::string()
 
 SocketAddressIPv6::operator SOCKADDR()
 {
-	return *((LPSOCKADDR) this);
+	return *(LPSOCKADDR)(LPSOCKADDR_IN6)this;
 }
 
 SocketAddressIPv6::operator LPSOCKADDR()
 {
-	return (LPSOCKADDR) this;
-}
-
-SocketAddressIPv6::operator LPSOCKADDR_IN()
-{
-	return (LPSOCKADDR_IN) this;
+	return (LPSOCKADDR)(LPSOCKADDR_IN6)this;
 }
 
 SocketAddressIPv6::operator LPSOCKADDR_IN6()
 {
-	return (LPSOCKADDR_IN6) this;
+	return (LPSOCKADDR_IN6)this;
 }

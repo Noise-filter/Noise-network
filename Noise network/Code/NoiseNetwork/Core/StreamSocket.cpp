@@ -1,13 +1,16 @@
 #include "StreamSocket.h"
-
+#include "SocketAddressIPv4.h"
 StreamSocket::StreamSocket()
 {
 	socket = INVALID_SOCKET;
+	addr = nullptr;
 }
 
 StreamSocket::StreamSocket(SOCKET socket)
 {
 	this->socket = socket;
+
+	//TODO: Get address from socket and put it in the SocketAddressInterface
 }
 
 StreamSocket::~StreamSocket()
@@ -26,32 +29,20 @@ bool StreamSocket::Init(int family)
 	return true;
 }
 
-bool StreamSocket::Connect(std::string address, unsigned short port)
+bool StreamSocket::Connect(SocketAddress addr)
 {
 	if (socket == INVALID_SOCKET)
 	{
 		return false;
 	}
 
-	struct hostent* hostent;
-
-	//TODO: gethostbyname() is depricated, change it to getaddrinfo()
-	hostent = gethostbyname(address.c_str());
-	if (hostent == NULL)
-	{
-		return false;
-	}
-
-	struct sockaddr_in server;
-	server.sin_family = AF_INET;
-	server.sin_port = htons(port);
-	server.sin_addr.s_addr = *(unsigned long*)hostent->h_addr;
-
-	int result = connect(socket, (sockaddr*)&server, sizeof(server));
+	int result = connect(socket, (sockaddr*)*addr, sizeof((sockaddr)*addr));
 	if (result == SOCKET_ERROR)
 	{
 		return false;
 	}
+
+	this->addr = addr;
 
 	//StreamConnection successful!
 	return true;
@@ -133,6 +124,7 @@ void StreamSocket::Close()
 {
 	closesocket(socket);
 	socket = INVALID_SOCKET;
+	addr = nullptr;
 }
 
 int StreamSocket::Send(std::vector<char>& buffer, int bufLength)
@@ -155,6 +147,8 @@ bool StreamSocket::IsInitialized()
 void StreamSocket::SetSocket(SOCKET socket)
 {
 	this->socket = socket;
+
+	//TODO: Get address from socket and put it in the SocketAddressInterface
 }
 
 SOCKET StreamSocket::GetSocket()

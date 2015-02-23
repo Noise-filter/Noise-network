@@ -3,7 +3,7 @@
 #include "SocketAddressIPv4.h"
 #include "SocketAddressIPv6.h"
 
-SocketAddressInterface* SocketAddressFactory::Create(const std::string ip, const unsigned short port)
+SocketAddress SocketAddressFactory::Create(const std::string ip, const unsigned short port)
 {
 	addrinfo* addrResult = NULL;
 
@@ -17,32 +17,34 @@ SocketAddressInterface* SocketAddressFactory::Create(const std::string ip, const
 			sockaddr_in sa;
 			sa = *(sockaddr_in*)(addrResult->ai_addr);
 			sa.sin_port = htons(port);
-			return new SocketAddressIPv4(sa);
+			return (SocketAddress) new SocketAddressIPv4(sa);
 			break;
 		case AF_INET6:
 			sockaddr_in6 sa6;
 			sa6 = *(sockaddr_in6*)(addrResult->ai_addr);
 			sa6.sin6_port = htons(port);
-			return new SocketAddressIPv6(sa6);
+			return (SocketAddress) new SocketAddressIPv6(sa6);
 			break;
 		default:
+			//Did not match either IPv4 or IPv6
 			return NULL;
 			break;
 		}
 	}
+
 	//Did not match either IPv4 or IPv6
 	return NULL;
 }
 
-SocketAddressInterface* SocketAddressFactory::Create(const sockaddr& addr)
+SocketAddress SocketAddressFactory::Create(const sockaddr& addr)
 {
 	switch (addr.sa_family)
 	{
 	case AF_INET:
-		return new SocketAddressIPv4(addr);
+		return (SocketAddress) new SocketAddressIPv4(addr);
 		break;
 	case AF_INET6:
-		return new SocketAddressIPv6(addr);
+		return (SocketAddress) new SocketAddressIPv6(addr);
 		break;
 	default:
 		return NULL;
@@ -51,15 +53,12 @@ SocketAddressInterface* SocketAddressFactory::Create(const sockaddr& addr)
 	return NULL;
 }
 
-SocketAddressInterface* SocketAddressFactory::Create(const sockaddr_in& addr)
+SocketAddress SocketAddressFactory::Create(const sockaddr_in& addr)
 {
 	switch (addr.sin_family)
 	{
 	case AF_INET:
-		return new SocketAddressIPv4(addr);
-		break;
-	case AF_INET6:
-		return new SocketAddressIPv6((const sockaddr_in6&)addr);
+		return (SocketAddress) new SocketAddressIPv4(addr);
 		break;
 	default:
 		return NULL;
@@ -68,12 +67,12 @@ SocketAddressInterface* SocketAddressFactory::Create(const sockaddr_in& addr)
 	return NULL;
 }
 
-SocketAddressInterface* SocketAddressFactory::Create(const sockaddr_in6& addr)
+SocketAddress SocketAddressFactory::Create(const sockaddr_in6& addr)
 {
 	switch (addr.sin6_family)
 	{
 	case AF_INET6:
-		return new SocketAddressIPv6(addr);
+		return (SocketAddress) new SocketAddressIPv6(addr);
 		break;
 	default:
 		return NULL;
