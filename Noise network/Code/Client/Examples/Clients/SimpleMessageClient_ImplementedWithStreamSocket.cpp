@@ -6,6 +6,8 @@
 #include "Core\WinsockFunctions.h"
 #include "Core\StreamSocket.h"
 
+#include "Core\SocketAddressFactory.h"
+
 void ClientExamples::SimpleMessageClient_ImplementedWithStreamSocket(std::string address, unsigned short port)
 {
 	if (InitWinSock())
@@ -23,7 +25,9 @@ void ClientExamples::SimpleMessageClient_ImplementedWithStreamSocket(std::string
 		return;
 	}
 
-	if (!socket.Connect(address, port))
+	SocketAddress addr = SocketAddressFactory::Create(address, port);
+
+	if (!socket.Connect(addr))
 	{
 		std::cout << "Error connecting" << std::endl;
 		return;

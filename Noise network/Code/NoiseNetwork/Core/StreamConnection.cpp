@@ -42,11 +42,11 @@ bool StreamConnection::Connect(std::string address, unsigned short port)
 	}
 
 	//Try to connect
-	bool result = socket.Connect(address, port);
+	//bool result = socket.Connect(address, port);
 
-	connected = result;
+	//connected = result;
 
-	return result;
+	return 0;
 }
 
 bool StreamConnection::Reconnect()

@@ -4,6 +4,8 @@
 #include "WinsockIncludes.h"
 #include <vector>
 
+#include "SocketAddressInterface.h"
+
 class StreamSocket
 {
 public:
@@ -14,7 +16,7 @@ public:
 	//Creates a SOCKET
 	bool Init(int family);
 
-	bool Connect(std::string address, unsigned short port);
+	bool Connect(SocketAddress addr);
 
 	bool Bind(unsigned short port);
 	bool Listen();
@@ -42,7 +44,7 @@ public:
 
 private:
 	SOCKET socket;
-	struct sockaddr_in server;
+	SocketAddress addr;
 
 };
 

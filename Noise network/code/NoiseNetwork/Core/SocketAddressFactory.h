@@ -10,10 +10,10 @@
 class SocketAddressFactory
 {
 public:
-	static SocketAddressInterface* Create(const std::string ip, const unsigned short port = 0);
-	static SocketAddressInterface* Create(const sockaddr& addr);
-	static SocketAddressInterface* Create(const sockaddr_in& addr);
-	static SocketAddressInterface* Create(const sockaddr_in6& addr);
+	static SocketAddress Create(const std::string ip, const unsigned short port = 0);
+	static SocketAddress Create(const sockaddr& addr);
+	static SocketAddress Create(const sockaddr_in& addr);
+	static SocketAddress Create(const sockaddr_in6& addr);
 };
 
 #endif
