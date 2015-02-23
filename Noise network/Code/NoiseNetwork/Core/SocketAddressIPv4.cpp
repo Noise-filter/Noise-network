@@ -7,12 +7,12 @@ SocketAddressIPv4::SocketAddressIPv4()
 
 SocketAddressIPv4::SocketAddressIPv4(const SOCKADDR& addr)
 { 
-	memcpy(this, &addr, sizeof(SOCKADDR)); 
+	memcpy((SOCKADDR*)this, &addr, sizeof(SOCKADDR)); 
 }
 
 SocketAddressIPv4::SocketAddressIPv4(const SOCKADDR_IN& addr)
-{ 
-	memcpy(this, &addr, sizeof(SOCKADDR_IN)); 
+{
+	memcpy((SOCKADDR_IN*)this, &addr, sizeof(SOCKADDR_IN)); 
 }
 
 SocketAddressIPv4::SocketAddressIPv4(const std::string ip, const unsigned short port)
@@ -55,12 +55,12 @@ void SocketAddressIPv4::SetIP(std::string ip)
 
 const SocketAddressIPv4& SocketAddressIPv4::operator=(const SOCKADDR& addr)
 {
-	memcpy(this, &addr, sizeof(SOCKADDR));
+	memcpy((SOCKADDR*)this, &addr, sizeof(SOCKADDR));
 	return *this;
 }
 const SocketAddressIPv4& SocketAddressIPv4::operator=(const SOCKADDR_IN& addr)
 {
-	memcpy(this, &addr, sizeof(SOCKADDR_IN));
+	memcpy((SOCKADDR_IN*)this, &addr, sizeof(SOCKADDR_IN));
 	return *this;
 }
 

@@ -6,31 +6,31 @@
 /*
 	Inherits from sockaddr_in and works with IPv4 only.
 */
-class SocketAddressIPv4 : public SocketAddressInterface, sockaddr_in
+class SocketAddressIPv4 : public SocketAddressInterface, public sockaddr_in
 {
 public:
 	SocketAddressIPv4();
 	SocketAddressIPv4(const SOCKADDR& addr);
 	SocketAddressIPv4(const SOCKADDR_IN& addr);
 	SocketAddressIPv4(const std::string ip, const unsigned short port = 0);
-	~SocketAddressIPv4();
+	virtual ~SocketAddressIPv4();
 
-	std::string GetIP();
-	unsigned short GetPort();
+	virtual std::string GetIP();
+	virtual unsigned short GetPort();
 
 	//Returns the ip family being used, either AF_INET or AF_INET6 
-	short GetFamily();
+	virtual short GetFamily();
 
-	void SetPort(unsigned short port);
-	void SetIP(std::string ip);
+	virtual void SetPort(unsigned short port);
+	virtual void SetIP(std::string ip);
 
-	const SocketAddressIPv4& operator=(const SOCKADDR& addr);
-	const SocketAddressIPv4& operator=(const SOCKADDR_IN& addr);
+	virtual const SocketAddressIPv4& operator=(const SOCKADDR& addr);
+	virtual const SocketAddressIPv4& operator=(const SOCKADDR_IN& addr);
 
-	operator std::string();
-	operator SOCKADDR();
-	operator LPSOCKADDR();
-	operator LPSOCKADDR_IN();
+	virtual operator std::string();
+	virtual operator SOCKADDR();
+	virtual operator LPSOCKADDR();
+	virtual operator LPSOCKADDR_IN();
 };
 
 #endif

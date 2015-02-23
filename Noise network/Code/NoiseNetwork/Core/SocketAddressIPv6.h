@@ -14,26 +14,26 @@ public:
 	SocketAddressIPv6(const SOCKADDR_IN& addr);
 	SocketAddressIPv6(const SOCKADDR_IN6& addr);
 	SocketAddressIPv6(const std::string ip, const unsigned short port = 0);
-	~SocketAddressIPv6();
+	virtual ~SocketAddressIPv6();
 
-	std::string GetIP();
-	unsigned short GetPort();
+	virtual std::string GetIP();
+	virtual unsigned short GetPort();
 
 	//Returns the ip family being used, either AF_INET or AF_INET6 
-	short GetFamily();
+	virtual short GetFamily();
 
-	void SetPort(unsigned short port);
-	void SetIP(std::string ip);
+	virtual void SetPort(unsigned short port);
+	virtual void SetIP(std::string ip);
 
-	const SocketAddressIPv6& operator=(const SOCKADDR& addr);
-	const SocketAddressIPv6& operator=(const SOCKADDR_IN& addr);
-	const SocketAddressIPv6& operator=(const SOCKADDR_IN6& addr);
+	virtual const SocketAddressIPv6& operator=(const SOCKADDR& addr);
+	virtual const SocketAddressIPv6& operator=(const SOCKADDR_IN& addr);
+	virtual const SocketAddressIPv6& operator=(const SOCKADDR_IN6& addr);
 
-	operator std::string();
-	operator SOCKADDR();
-	operator LPSOCKADDR();
-	operator LPSOCKADDR_IN();
-	operator LPSOCKADDR_IN6();
+	virtual operator std::string();
+	virtual operator SOCKADDR();
+	virtual operator LPSOCKADDR();
+	virtual operator LPSOCKADDR_IN();
+	virtual operator LPSOCKADDR_IN6();
 };
 
 #endif

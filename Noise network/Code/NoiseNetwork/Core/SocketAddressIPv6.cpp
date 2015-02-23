@@ -1,6 +1,5 @@
 #include "SocketAddressIPv6.h"
 
-
 SocketAddressIPv6::SocketAddressIPv6()
 {
 	sin6_family = AF_INET6;
@@ -8,17 +7,17 @@ SocketAddressIPv6::SocketAddressIPv6()
 
 SocketAddressIPv6::SocketAddressIPv6(const SOCKADDR& addr)
 {
-	memcpy(this, &addr, sizeof(SOCKADDR));
+	memcpy((SOCKADDR*)this, &addr, sizeof(SOCKADDR));
 }
 
 SocketAddressIPv6::SocketAddressIPv6(const SOCKADDR_IN& addr)
 {
-	memcpy(this, &addr, sizeof(SOCKADDR_IN));
+	memcpy((SOCKADDR_IN*)this, &addr, sizeof(SOCKADDR_IN));
 }
 
 SocketAddressIPv6::SocketAddressIPv6(const SOCKADDR_IN6& addr)
 {
-	memcpy(this, &addr, sizeof(SOCKADDR_IN6));
+	memcpy((SOCKADDR_IN6*)this, &addr, sizeof(SOCKADDR_IN6));
 }
 
 SocketAddressIPv6::SocketAddressIPv6(const std::string ip, const unsigned short port)
@@ -61,19 +60,19 @@ void SocketAddressIPv6::SetIP(std::string ip)
 
 const SocketAddressIPv6& SocketAddressIPv6::operator=(const SOCKADDR& addr)
 {
-	memcpy(this, &addr, sizeof(SOCKADDR));
+	memcpy((SOCKADDR*)this, &addr, sizeof(SOCKADDR));
 	return *this;
 }
 
 const SocketAddressIPv6& SocketAddressIPv6::operator=(const SOCKADDR_IN& addr)
 {
-	memcpy(this, &addr, sizeof(SOCKADDR_IN));
+	memcpy((SOCKADDR_IN*)this, &addr, sizeof(SOCKADDR_IN));
 	return *this;
 }
 
 const SocketAddressIPv6& SocketAddressIPv6::operator=(const SOCKADDR_IN6& addr)
 {
-	memcpy(this, &addr, sizeof(SOCKADDR_IN6));
+	memcpy((SOCKADDR_IN6*)this, &addr, sizeof(SOCKADDR_IN6));
 	return *this;
 }
 

@@ -154,6 +154,7 @@
     <ClInclude Include="Core\AcceptSocket.h" />
     <ClInclude Include="Core\DatagramConnection.h" />
     <ClInclude Include="Core\DatagramSocket.h" />
+    <ClInclude Include="Core\SocketAddressFactory.h" />
     <ClInclude Include="Core\SocketAddressIPv4.h" />
     <ClInclude Include="Core\SocketAddressInterface.h" />
     <ClInclude Include="Core\SocketAddressIPv6.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="Core\AcceptSocket.cpp" />
     <ClCompile Include="Core\DatagramConnection.cpp" />
     <ClCompile Include="Core\DatagramSocket.cpp" />
+    <ClCompile Include="Core\SocketAddressFactory.cpp" />
     <ClCompile Include="Core\SocketAddressIPv4.cpp" />
     <ClCompile Include="Core\SocketAddressIPv6.cpp" />
     <ClCompile Include="Core\StreamConnection.cpp" />

@@ -13,6 +13,8 @@
 class SocketAddressInterface
 {
 public:
+	virtual ~SocketAddressInterface() {}
+
 	//Returns the ip address in decimal dotted or hexadecimal format based on which family is used (IPv4 or IPv6)
 	virtual std::string GetIP() = 0;
 	virtual unsigned short GetPort() = 0;
