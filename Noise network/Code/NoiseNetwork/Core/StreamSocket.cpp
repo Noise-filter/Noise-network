@@ -155,3 +155,8 @@ SOCKET StreamSocket::GetSocket()
 {
 	return socket;
 }
+
+SocketAddress StreamSocket::GetAddress()
+{
+	return addr;
+}

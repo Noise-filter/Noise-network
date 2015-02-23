@@ -40,7 +40,9 @@ public:
 	bool IsInitialized();
 
 	void SetSocket(SOCKET socket);
+
 	SOCKET GetSocket();
+	SocketAddress GetAddress();
 
 private:
 	SOCKET socket;
