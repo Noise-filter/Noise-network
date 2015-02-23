@@ -18,7 +18,7 @@ public:
 
 	bool Connect(SocketAddress addr);
 
-	bool Bind(unsigned short port);
+	bool Bind(SocketAddress addr);
 	bool Listen();
 	SOCKET Accept();
 

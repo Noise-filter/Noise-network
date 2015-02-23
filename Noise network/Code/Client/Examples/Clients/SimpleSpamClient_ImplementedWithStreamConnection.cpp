@@ -6,6 +6,8 @@
 #include "Core\WinsockFunctions.h"
 #include "Core\StreamConnection.h"
 
+#include "Core\SocketAddressFactory.h"
+
 using namespace std;
 
 void ClientExamples::SimpleSpamClient_ImplementedWithStreamConnection(std::string address, unsigned short port)
@@ -19,7 +21,9 @@ void ClientExamples::SimpleSpamClient_ImplementedWithStreamConnection(std::strin
 
 	StreamConnection con;
 
-	if (!con.Connect(address, port))
+	SocketAddress addr = SocketAddressFactory::Create(address, port);
+
+	if (!con.Connect(addr))
 	{
 		std::cout << "Error connecting" << std::endl;
 		return;

@@ -14,7 +14,7 @@ public:
 	~ThreadedAcceptServer();
 
 	//Initializes the socket
-	bool Init(unsigned short port);
+	bool Init(SocketAddress bindAddress);
 
 	//Starts the thread
 	void Start();

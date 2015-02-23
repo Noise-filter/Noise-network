@@ -11,9 +11,9 @@ ThreadedAcceptServer::~ThreadedAcceptServer()
 }
 
 //Initializes the socket
-bool ThreadedAcceptServer::Init(unsigned short port)
+bool ThreadedAcceptServer::Init(SocketAddress bindAddress)
 {
-	return socket.Init(port);
+	return socket.Init(bindAddress);
 }
 
 //Starts the thread

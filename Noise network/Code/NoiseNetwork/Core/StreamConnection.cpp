@@ -2,8 +2,7 @@
 
 StreamConnection::StreamConnection()
 {
-	address = "";
-	port = 0;
+	addr = nullptr;
 	connected = false;
 }
 
@@ -14,12 +13,11 @@ StreamConnection::StreamConnection(SOCKET socket)
 	{
 		connected = true;
 
-		//Get the ip address and port
+		//TODO: Get address from socket and put it in the SocketAddressInterface
 	}
 	else
 	{
-		address = "";
-		port = 0;
+		addr = nullptr;
 		connected = false;
 	}
 }
@@ -27,26 +25,25 @@ StreamConnection::StreamConnection(SOCKET socket)
 StreamConnection::~StreamConnection()
 {}
 
-bool StreamConnection::Connect(std::string address, unsigned short port)
+bool StreamConnection::Connect(SocketAddress addr)
 {
-	this->address = address;
-	this->port = port;
+	this->addr = addr;
 
 	//Try to initialize socket if it isn't already initialized
 	if (!socket.IsInitialized())
 	{
-		if (!socket.Init(AF_INET))
+		if (!socket.Init(addr->GetFamily()))
 		{
 			return false;
 		}
 	}
 
 	//Try to connect
-	//bool result = socket.Connect(address, port);
+	bool result = socket.Connect(addr);
 
-	//connected = result;
+	connected = result;
 
-	return 0;
+	return connected;
 }
 
 bool StreamConnection::Reconnect()
@@ -58,9 +55,9 @@ bool StreamConnection::Reconnect()
 	}
 
 	//Only try to reconnect if connect has already been called 
-	if (port != 0 && address != "")
+	if (addr)
 	{
-		return Connect(this->address, this->port);
+		return Connect(addr);
 	}
 	
 	return false;
@@ -103,12 +100,7 @@ bool StreamConnection::IsConnected()
 	return connected;
 }
 
-unsigned short StreamConnection::GetPort()
+SocketAddress StreamConnection::GetAddress()
 {
-	return port;
-}
-
-std::string StreamConnection::GetAddress()
-{
-	return address;
+	return addr;
 }

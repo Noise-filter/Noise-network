@@ -3,6 +3,8 @@
 #include "Core\WinsockFunctions.h"
 #include "Core\AcceptSocket.h"
 
+#include "Core\SocketAddressFactory.h"
+
 const int MAX_BUFFER_LENGTH = 512;
 
 namespace Examples
@@ -18,9 +20,11 @@ namespace Examples
 
 		AcceptSocket socket;
 
+		SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", port);
+
 		//Initialize the AcceptSocket
 		//It's that easy
-		if (!socket.Init(port))
+		if (!socket.Init(bindAddress))
 		{
 			std::cout << "Error initializing accept socket" << std::endl;
 			socket.Close();

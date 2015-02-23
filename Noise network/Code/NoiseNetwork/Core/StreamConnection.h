@@ -10,7 +10,7 @@ public:
 	StreamConnection(SOCKET socket);
 	~StreamConnection();
 
-	bool Connect(std::string address, unsigned short port);
+	bool Connect(SocketAddress addr);
 
 	bool Reconnect();
 	bool Disconnect();
@@ -19,14 +19,12 @@ public:
 	int Recv(std::vector<char>& buffer, int bufLength);
 
 	bool IsConnected();
-	unsigned short GetPort();
-	std::string GetAddress();
+	SocketAddress GetAddress();
 
 private:
 	StreamSocket socket;
 	
-	std::string address;
-	unsigned short port;
+	SocketAddress addr;
 	bool connected;
 
 };

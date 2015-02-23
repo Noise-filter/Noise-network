@@ -3,6 +3,8 @@
 #include "Core\WinsockFunctions.h"
 #include "Core\StreamSocket.h"
 
+#include "Core\SocketAddressFactory.h"
+
 const int MAX_BUFFER_LENGTH = 512;
 
 namespace Examples
@@ -18,7 +20,9 @@ namespace Examples
 
 		StreamSocket socket;
 
-		if (!socket.Init(AF_INET))
+		SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", port);
+
+		if (!socket.Init(bindAddress->GetFamily()))
 		{
 			std::cout << "Error initializing socket" << std::endl;
 			socket.Close();
@@ -26,7 +30,7 @@ namespace Examples
 			return;
 		}
 
-		if (!socket.Bind(port))
+		if (!socket.Bind(bindAddress))
 		{
 			std::cout << "Error binding socket" << std::endl;
 			socket.Close();

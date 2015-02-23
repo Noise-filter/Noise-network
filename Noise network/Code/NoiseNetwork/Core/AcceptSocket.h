@@ -17,7 +17,7 @@ public:
 	AcceptSocket();
 	~AcceptSocket();
 
-	bool Init(unsigned short port);
+	bool Init(SocketAddress bindAddress);
 	void Close();
 
 	SOCKET Accept();

@@ -48,20 +48,14 @@ bool StreamSocket::Connect(SocketAddress addr)
 	return true;
 }
 
-bool StreamSocket::Bind(unsigned short port)
+bool StreamSocket::Bind(SocketAddress addr)
 {
 	if (socket == INVALID_SOCKET)
 	{
 		return false;
 	}
 
-	//TODO: Change it to getaddrinfo()
-	struct sockaddr_in server;
-	server.sin_family = AF_INET;
-	server.sin_port = htons(port);
-	server.sin_addr.s_addr = INADDR_ANY;
-
-	int result = bind(socket, (sockaddr*)&server, sizeof(server));
+	int result = bind(socket, (sockaddr*)*addr, sizeof((sockaddr)*addr));
 	if (result == SOCKET_ERROR)
 	{
 		return false;

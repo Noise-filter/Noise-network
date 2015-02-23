@@ -10,15 +10,15 @@ AcceptSocket::~AcceptSocket()
 	Close();
 }
 
-bool AcceptSocket::Init(unsigned short port)
+bool AcceptSocket::Init(SocketAddress bindAddress)
 {
-	bool result = socket.Init(AF_INET);
+	bool result = socket.Init(bindAddress->GetFamily());
 	if (!result)
 	{
 		return result;
 	}
 
-	result = socket.Bind(port);
+	result = socket.Bind(bindAddress);
 	if (!result)
 	{
 		Close();
