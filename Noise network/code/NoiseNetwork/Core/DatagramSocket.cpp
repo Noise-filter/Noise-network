@@ -21,20 +21,14 @@ bool DatagramSocket::Init(int family)
 	return true;
 }
 
-bool DatagramSocket::Bind(unsigned short port)
+bool DatagramSocket::Bind(SocketAddress bindAddress)
 {
 	if (socket == INVALID_SOCKET)
 	{
 		return false;
 	}
 
-	//TODO: Change it to getaddrinfo()
-	struct sockaddr_in server;
-	server.sin_family = AF_INET;
-	server.sin_port = htons(port);
-	server.sin_addr.s_addr = INADDR_ANY;
-
-	int result = bind(socket, (sockaddr*)&server, sizeof(server));
+	int result = bind(socket, (sockaddr*)*bindAddress, sizeof(sockaddr_in));
 	if (result == SOCKET_ERROR)
 	{
 		return false;
@@ -49,28 +43,16 @@ void DatagramSocket::Close()
 	socket = INVALID_SOCKET;
 }
 
-int DatagramSocket::Send(std::string ip, unsigned short port, std::vector<char>& buffer, int bufLength)
+int DatagramSocket::Send(const SocketAddress address, std::vector<char>& buffer, int bufLength)
 {
-	int result;
+	int result = sendto(socket, &buffer[0], bufLength, 0, (sockaddr*)*address, sizeof(sockaddr_in));
 	return result;
 }
 
-int DatagramSocket::Recv(std::string ip, unsigned short port, std::vector<char>& buffer, int bufLength)
+int DatagramSocket::Recv(SocketAddress address, std::vector<char>& buffer, int bufLength)
 {
-	int result;
-	return result;
-}
-
-int DatagramSocket::Send(const sockaddr_in address, std::vector<char>& buffer, int bufLength)
-{
-	int result = sendto(socket, &buffer[0], bufLength, 0, (sockaddr*)&address, sizeof(sockaddr_in));
-	return result;
-}
-
-int DatagramSocket::Recv(sockaddr_in& address, std::vector<char>& buffer, int bufLength)
-{
-	int fromLen = sizeof(address);
-	int result = recvfrom(socket, &buffer[0], bufLength, 0, (sockaddr*)&address, &fromLen);
+	int fromLen = sizeof(sockaddr_in);
+	int result = recvfrom(socket, &buffer[0], bufLength, 0, (sockaddr*)*address, &fromLen);
 	return result;
 }
 

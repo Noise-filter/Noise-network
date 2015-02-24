@@ -1,5 +1,7 @@
 #include "StreamSocket.h"
-#include "SocketAddressIPv4.h"
+
+#include "SocketAddressFactory.h"
+
 StreamSocket::StreamSocket()
 {
 	socket = INVALID_SOCKET;
@@ -88,12 +90,16 @@ SOCKET StreamSocket::Accept()
 	}
 
 	SOCKET clientSocket = INVALID_SOCKET;
+	sockaddr addr;
+	int addrLen = sizeof(addr);
 
-	clientSocket = accept(socket, NULL, NULL);
+	clientSocket = accept(socket, &addr, &addrLen);
 	if (clientSocket == INVALID_SOCKET)
 	{
 		return INVALID_SOCKET;
 	}
+
+	SocketAddress sockAddr = SocketAddressFactory::Create(addr);
 
 	return clientSocket;
 }

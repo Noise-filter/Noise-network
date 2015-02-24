@@ -14,6 +14,8 @@ public:
 	static void SimpleSpamClient_ImplementedWithStreamConnection(std::string address, unsigned short port);
 
 	static void SimpleMessageClient_ImplementedWithDatagramSocket(std::string address, unsigned short port);
+	static void SimpleMessageClient_ImplementedWithDatagramConnection(std::string address, unsigned short port);
+	static void SimpleSpamClient_ImplementedWithDatagramConnection(std::string address, unsigned short port);
 };
 
 #endif

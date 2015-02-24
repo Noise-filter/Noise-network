@@ -10,6 +10,9 @@
 class SocketAddressFactory
 {
 public:
+	//Creates a empty SocketAddress of the family parameter.
+	//Supports AF_INET and AF_INET6
+	static SocketAddress Create(const unsigned short family);
 	static SocketAddress Create(const std::string ip, const unsigned short port = 0);
 	static SocketAddress Create(const sockaddr& addr);
 	static SocketAddress Create(const sockaddr_in& addr);

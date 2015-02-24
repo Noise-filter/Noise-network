@@ -161,9 +161,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="client.cpp" />
+    <ClCompile Include="Examples\Clients\SimpleMessageClient_ImplementedWithDatagramConnection.cpp" />
     <ClCompile Include="Examples\Clients\SimpleMessageClient_ImplementedWithDatagramSocket.cpp" />
     <ClCompile Include="Examples\Clients\SimpleMessageClient_ImplementedWithStreamConnection.cpp" />
     <ClCompile Include="Examples\Clients\SimpleMessageClient_ImplementedWithStreamSocket.cpp" />
+    <ClCompile Include="Examples\Clients\SimpleSpamClient_ImplementedWithDatagramConnection.cpp" />
     <ClCompile Include="Examples\Clients\SimpleSpamClient_ImplementedWithStreamConnection.cpp" />
   </ItemGroup>
   <ItemGroup>

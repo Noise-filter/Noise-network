@@ -9,25 +9,22 @@ public:
 	DatagramConnection();
 	virtual ~DatagramConnection();
 
-	bool Connect(std::string address, unsigned short port);
+	//If bindAddress port == 0, the socket will bind on the same port found in the addr parameter.
+	bool Connect(SocketAddress addr, SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", 0));
 
 	void Disconnect();
 
 	int Send(std::vector<char>& buffer, int bufLength);
-	int Recv(std::vector<char>& buffer, int bufLength);
+	int Recv(SocketAddress addr, std::vector<char>& buffer, int bufLength);
 
 	bool IsConnected();
-	unsigned short GetPort();
-	std::string GetAddress();
+	SocketAddress GetAddress();
 
 private:
 	DatagramSocket socket;
 
-	std::string address;
-	unsigned short port;
+	SocketAddress addr;
 	bool connected;
-
-
 
 };
 

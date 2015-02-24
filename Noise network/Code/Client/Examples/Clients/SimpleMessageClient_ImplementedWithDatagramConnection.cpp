@@ -4,9 +4,9 @@
 #include <string>
 
 #include "Core\WinsockFunctions.h"
-#include "Core\DatagramSocket.h"
+#include "Core\DatagramConnection.h"
 
-void ClientExamples::SimpleMessageClient_ImplementedWithDatagramSocket(std::string address, unsigned short port)
+void ClientExamples::SimpleMessageClient_ImplementedWithDatagramConnection(std::string address, unsigned short port)
 {
 	if (InitWinSock())
 	{
@@ -15,24 +15,19 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramSocket(std::stri
 
 	std::cout << "Hello World!" << std::endl;
 
-	DatagramSocket socket;
-	SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", port+1);
+	DatagramConnection socket;
+	SocketAddress serverAddr = SocketAddressFactory::Create(address, port);
+	SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", port + 1);
+	SocketAddress recvAddr = SocketAddressFactory::Create(AF_INET);
 
-	if (!socket.Init(bindAddress->GetFamily()))
+	if (!socket.Connect(serverAddr, bindAddress))
 	{
 		std::cout << "Error initializing socket" << std::endl;
 		return;
 	}
 
-	if (!socket.Bind(bindAddress))
-	{
-		std::cout << "Error binding" << std::endl;
-		return;
-	}
-
 	std::string text;
 	std::vector<char> buffer;
-	SocketAddress serverAddr = SocketAddressFactory::Create(address, port);
 
 	int result = 0;
 	do
@@ -48,7 +43,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramSocket(std::stri
 		buffer.clear();
 		buffer.assign(text.begin(), text.end());
 
-		result = socket.Send(serverAddr, buffer, (int)text.size());
+		result = socket.Send(buffer, (int)text.size());
 		if (result == SOCKET_ERROR)
 		{
 			std::cout << "Send failed with error: " << WSAGetLastError() << std::endl;
@@ -60,7 +55,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramSocket(std::stri
 		buffer.clear();
 		buffer.resize(MAX_BUFFER_LENGTH);
 
-		result = socket.Recv(serverAddr, buffer, MAX_BUFFER_LENGTH);
+		result = socket.Recv(recvAddr, buffer, MAX_BUFFER_LENGTH);
 		if (result > 0)
 		{
 			std::cout << "Bytes received: " << result << std::endl;
@@ -79,7 +74,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramSocket(std::stri
 
 	} while (text.size() > 0);
 
-	socket.Close();
+	socket.Disconnect();
 
 	ShutdownWinSock();
 }

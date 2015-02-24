@@ -3,6 +3,23 @@
 #include "SocketAddressIPv4.h"
 #include "SocketAddressIPv6.h"
 
+SocketAddress SocketAddressFactory::Create(const unsigned short family)
+{
+	switch (family)
+	{
+	case AF_INET:
+		return (SocketAddress)new SocketAddressIPv4();
+		break;
+	case AF_INET6:
+		return (SocketAddress)new SocketAddressIPv6();
+		break;
+	default:
+		return NULL;
+		break;
+	}
+	return NULL;
+}
+
 SocketAddress SocketAddressFactory::Create(const std::string ip, const unsigned short port)
 {
 	addrinfo* addrResult = NULL;

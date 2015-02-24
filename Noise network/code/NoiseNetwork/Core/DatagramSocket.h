@@ -3,6 +3,7 @@
 
 #include "WinsockIncludes.h"
 #include <vector>
+#include "SocketAddressFactory.h"
 
 class DatagramSocket
 {
@@ -12,15 +13,12 @@ public:
 
 	bool Init(int family);
 
-	bool Bind(unsigned short port);
+	bool Bind(SocketAddress bindAddress);
 
 	void Close();
 
-	int Send(std::string ip, unsigned short port, std::vector<char>& buffer, int bufLength);
-	int Recv(std::string ip, unsigned short port, std::vector<char>& buffer, int bufLength);
-
-	int Send(const sockaddr_in address, std::vector<char>& buffer, int bufLength);
-	int Recv(sockaddr_in& address, std::vector<char>& buffer, int bufLength);
+	int Send(const SocketAddress address, std::vector<char>& buffer, int bufLength);
+	int Recv(SocketAddress address, std::vector<char>& buffer, int bufLength);
 
 	bool IsInitialized();
 
