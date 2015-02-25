@@ -76,7 +76,7 @@ void ThreadedAcceptServer::Accept()
 			clientSockets.push(clientSocket);
 		}
 
-		//TODO: Should probably check what happened if Accept failes, not all failes should cause the thread to stop
+		//TODO: Should probably check what happened if Accept fails, not all fails should cause the thread to stop
 
 	} while (clientSocket != INVALID_SOCKET);
 
