@@ -75,10 +75,25 @@ void ThreadedAcceptServer::Accept()
 		{
 			clientSockets.push(clientSocket);
 		}
+		else
+		{
+			int errorCode = WSAGetLastError();
 
-		//TODO: Should probably check what happened if Accept fails, not all fails should cause the thread to stop
+			switch (errorCode)
+			{
+				//These errors should not make the thread to stop
+			case WSAEWOULDBLOCK:
+			case WSAECONNRESET:
+				break;
 
-	} while (clientSocket != INVALID_SOCKET);
+				//The rest of the errors should stop the thread
+			default:
+				running = false;
+				break;
+			}
+		}
+
+	} while (running);
 
 	socket.Close();
 
