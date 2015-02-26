@@ -161,6 +161,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="client.cpp" />
+    <ClCompile Include="Examples\Clients\SFTPDatagramClient.cpp" />
     <ClCompile Include="Examples\Clients\SimpleMessageClient_ImplementedWithDatagramConnection.cpp" />
     <ClCompile Include="Examples\Clients\SimpleMessageClient_ImplementedWithDatagramSocket.cpp" />
     <ClCompile Include="Examples\Clients\SimpleMessageClient_ImplementedWithStreamConnection.cpp" />

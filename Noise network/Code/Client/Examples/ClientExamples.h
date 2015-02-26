@@ -6,16 +6,19 @@
 class ClientExamples
 {
 public:
-	static const int MAX_BUFFER_LENGTH = 512;
+	static const int MAX_BUFFER_LENGTH = 1400;
 
 public:
+	//Stream clients
 	static void SimpleMessageClient_ImplementedWithStreamSocket(std::string address, unsigned short port);
 	static void SimpleMessageClient_ImplementedWithStreamConnection(std::string address, unsigned short port);
 	static void SimpleSpamClient_ImplementedWithStreamConnection(std::string address, unsigned short port);
 
+	//Datagram clients
 	static void SimpleMessageClient_ImplementedWithDatagramSocket(std::string address, unsigned short port);
 	static void SimpleMessageClient_ImplementedWithDatagramConnection(std::string address, unsigned short port);
 	static void SimpleSpamClient_ImplementedWithDatagramConnection(std::string address, unsigned short port);
+	static void SFTPDatagramClient(std::string address, unsigned short port);
 };
 
 #endif

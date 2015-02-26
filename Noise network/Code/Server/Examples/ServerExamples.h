@@ -3,6 +3,7 @@
 
 namespace Examples
 {
+	//Stream servers
 	void SimpleStreamEchoServer_ImplementedWithSocket(unsigned short port);
 	void SimpleStreamEchoServer_ImplementedWithAcceptSocket(unsigned short port);
 	void SimpleStreamEchoServer_ImplementedWithThreadedAcceptServer(unsigned short port);
@@ -10,7 +11,10 @@ namespace Examples
 	void StreamEchoServerMultipleClients_Select(unsigned short port);
 
 
+	//Datagram servers
 	void SimpleDatagramEchoServer_ImplemntedWithSocket(unsigned short port);
+
+	void SFTPDatagramServer(unsigned short port);
 }
 
 #endif

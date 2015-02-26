@@ -14,7 +14,9 @@ int main()
 	//Examples::StreamEchoServerMultipleClients_Select(PORT);
 
 
-	Examples::SimpleDatagramEchoServer_ImplemntedWithSocket(PORT);
+	//Examples::SimpleDatagramEchoServer_ImplemntedWithSocket(PORT);
+	Examples::SFTPDatagramServer(PORT);
+
 
 	return 0;
 }
