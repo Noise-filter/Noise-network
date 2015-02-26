@@ -2,7 +2,7 @@
 #include <crtdbg.h>
 #include <Windows.h>
 
-const std::string IP_ADDRESS = "192.168.1.190";
+const std::string IP_ADDRESS = "127.0.0.1";
 const unsigned short PORT = 7878;
 
 int main()
