@@ -30,55 +30,7 @@ void ClientExamples::SFTPDatagramClient(std::string address, unsigned short port
 		return;
 	}
 
-	sftpProtocol("E:/Visual Studio 2013 Professional 32-bit (English)/en_vs2013_rtm_pro_enu.iso", socket);
-
-	std::string text;
-	std::vector<char> buffer;
-
-	int result = 0;
-	do
-	{
-		/*std::cout << "> ";
-		getline(std::cin, text);
-
-		if (text.size() == 0)
-		{
-			break;
-		}
-
-		buffer.clear();
-		buffer.assign(text.begin(), text.end());
-
-		result = socket.Send(buffer, (int)text.size());
-		if (result == SOCKET_ERROR)
-		{
-			std::cout << "Send failed with error: " << WSAGetLastError() << std::endl;
-			break;
-		}
-
-		std::cout << "Bytes sent: " << result << std::endl;
-
-		buffer.clear();
-		buffer.resize(MAX_BUFFER_LENGTH);
-
-		result = socket.Recv(recvAddr, buffer, MAX_BUFFER_LENGTH);
-		if (result > 0)
-		{
-			std::cout << "Bytes received: " << result << std::endl;
-			std::cout << "Message received: " << buffer.data() << std::endl;
-		}
-		else if (result == 0)
-		{
-			std::cout << "Connection closed" << std::endl;
-			return;
-		}
-		else
-		{
-			std::cout << "Recv failed with error: " << WSAGetLastError() << std::endl;
-			return;
-		}*/
-
-	} while (text.size() > 0);
+	sftpProtocol("E:/Dropbox/Programming/Github/Noise-network/Noise network/docs/Simple file transfer protocol.pdf", socket);
 
 	socket.Disconnect();
 
