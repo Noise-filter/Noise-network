@@ -20,7 +20,7 @@ void ClientExamples::SFTPDatagramClient(std::string address, unsigned short port
 
 	DatagramConnection socket;
 	SocketAddress serverAddr = SocketAddressFactory::Create(address, port);
-	SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", port + 1);
+	SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", 0);
 	SocketAddress recvAddr = SocketAddressFactory::Create(AF_INET);
 
 

@@ -22,12 +22,6 @@ bool DatagramConnection::Connect(SocketAddress addr, SocketAddress bindAddress)
 			return false;
 		}
 
-		//If port == 0, set it to the same as addr->GetPort()
-		if (bindAddress->GetPort() == 0)
-		{
-			bindAddress->SetPort(addr->GetPort());
-		}
-
 		if (!socket.Bind(bindAddress))
 		{
 			return false;

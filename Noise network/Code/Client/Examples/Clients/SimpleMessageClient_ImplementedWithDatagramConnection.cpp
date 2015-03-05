@@ -17,7 +17,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramConnection(std::
 
 	DatagramConnection socket;
 	SocketAddress serverAddr = SocketAddressFactory::Create(address, port);
-	SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", port + 1);
+	SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", 0);
 	SocketAddress recvAddr = SocketAddressFactory::Create(AF_INET);
 
 	if (!socket.Connect(serverAddr, bindAddress))

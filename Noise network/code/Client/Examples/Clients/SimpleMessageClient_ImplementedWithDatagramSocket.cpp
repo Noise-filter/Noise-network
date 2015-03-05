@@ -16,7 +16,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramSocket(std::stri
 	std::cout << "Hello World!" << std::endl;
 
 	DatagramSocket socket;
-	SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", port+1);
+	SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", 0);
 
 	if (!socket.Init(bindAddress->GetFamily()))
 	{
