@@ -1,7 +1,7 @@
 #ifndef SOCKET_ADDRESS_INTERFACE_H
 #define SOCKET_ADDRESS_INTERFACE_H
 
-#include "WinsockIncludes.h"
+#include "..\WinsockIncludes.h"
 #include <string>
 
 /*

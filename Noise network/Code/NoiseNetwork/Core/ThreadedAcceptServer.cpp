@@ -77,20 +77,7 @@ void ThreadedAcceptServer::Accept()
 		}
 		else
 		{
-			int errorCode = WSAGetLastError();
-
-			switch (errorCode)
-			{
-				//These errors should not make the thread to stop
-			case WSAEWOULDBLOCK:
-			case WSAECONNRESET:
-				break;
-
-				//The rest of the errors should stop the thread
-			default:
-				running = false;
-				break;
-			}
+			running = CheckForAcceptError();
 		}
 
 	} while (running);
@@ -99,4 +86,26 @@ void ThreadedAcceptServer::Accept()
 
 	//Set running to false when the threads stops
 	running = false;
+}
+
+bool ThreadedAcceptServer::CheckForAcceptError()
+{
+	int errorCode = WSAGetLastError();
+
+	switch (errorCode)
+	{
+		//These errors should not make the thread to stop
+	case WSAEWOULDBLOCK:
+	case WSAECONNRESET:
+		return true;
+		break;
+
+		//The rest of the errors should stop the thread
+	default:
+		return false;
+		break;
+	}
+
+	//This should never happen
+	return true;
 }

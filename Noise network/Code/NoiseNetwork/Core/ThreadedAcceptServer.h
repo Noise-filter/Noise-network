@@ -36,6 +36,7 @@ public:
 
 private:
 	void Accept();
+	bool CheckForAcceptError();
 
 private:
 	AcceptSocket socket;

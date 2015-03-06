@@ -3,7 +3,7 @@
 #include "Core\WinsockFunctions.h"
 #include "Core\DatagramSocket.h"
 
-#include "Core\SocketAddressIPv4.h"
+#include "Core\SocketAddress.h"
 
 using namespace std;
 

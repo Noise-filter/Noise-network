@@ -3,7 +3,7 @@
 
 #include "WinsockIncludes.h"
 #include <vector>
-#include "SocketAddressFactory.h"
+#include "SocketAddress.h"
 
 class DatagramSocket
 {

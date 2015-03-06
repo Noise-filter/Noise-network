@@ -6,7 +6,7 @@
 #include "Core\WinsockFunctions.h"
 #include "Core\StreamConnection.h"
 
-#include "Core\SocketAddressFactory.h"
+#include "Core\SocketAddress.h"
 
 void ClientExamples::SimpleMessageClient_ImplementedWithStreamConnection(std::string address, unsigned short port)
 {

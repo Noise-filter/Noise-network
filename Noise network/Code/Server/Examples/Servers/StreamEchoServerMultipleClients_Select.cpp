@@ -3,7 +3,7 @@
 #include "Core\WinsockFunctions.h"
 #include "Core\ThreadedAcceptServer.h"
 
-#include "Core\SocketAddressFactory.h"
+#include "Core\SocketAddress.h"
 
 using namespace std;
 

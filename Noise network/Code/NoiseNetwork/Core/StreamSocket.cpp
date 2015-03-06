@@ -1,7 +1,5 @@
 #include "StreamSocket.h"
 
-#include "SocketAddressFactory.h"
-
 StreamSocket::StreamSocket()
 {
 	socket = INVALID_SOCKET;
@@ -99,6 +97,8 @@ SOCKET StreamSocket::Accept()
 		return INVALID_SOCKET;
 	}
 
+	//TODO: This sockAddr is never returned out in anyway
+	//Implement so that this address can be returned with the socket.
 	SocketAddress sockAddr = SocketAddressFactory::Create(addr);
 
 	return clientSocket;

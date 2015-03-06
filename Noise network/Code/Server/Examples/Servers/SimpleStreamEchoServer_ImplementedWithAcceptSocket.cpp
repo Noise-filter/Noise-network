@@ -3,7 +3,7 @@
 #include "Core\WinsockFunctions.h"
 #include "Core\AcceptSocket.h"
 
-#include "Core\SocketAddressFactory.h"
+#include "Core\SocketAddress.h"
 
 const int MAX_BUFFER_LENGTH = 512;
 

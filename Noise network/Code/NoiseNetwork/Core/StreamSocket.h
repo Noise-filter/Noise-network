@@ -4,7 +4,7 @@
 #include "WinsockIncludes.h"
 #include <vector>
 
-#include "SocketAddressInterface.h"
+#include "SocketAddress.h"
 
 class StreamSocket
 {
