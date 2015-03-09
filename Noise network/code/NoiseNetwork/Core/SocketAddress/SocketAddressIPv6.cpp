@@ -3,6 +3,8 @@
 SocketAddressIPv6::SocketAddressIPv6()
 {
 	sin6_family = AF_INET6;
+	sin6_port = htons(0);
+	inet_pton(AF_INET6, "::", &sin6_addr);
 }
 
 SocketAddressIPv6::SocketAddressIPv6(const SOCKADDR& addr)

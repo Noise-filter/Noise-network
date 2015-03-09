@@ -33,6 +33,7 @@ public:
 	virtual operator LPSOCKADDR() = 0;
 };
 
+//memory include for std::shared_ptr
 #include <memory>
 
 typedef std::shared_ptr<SocketAddressInterface> SocketAddress;

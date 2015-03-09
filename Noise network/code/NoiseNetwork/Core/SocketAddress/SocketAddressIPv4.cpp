@@ -3,6 +3,8 @@
 SocketAddressIPv4::SocketAddressIPv4()
 {
 	sin_family = AF_INET;
+	sin_port = htons(0);
+	inet_pton(AF_INET, "0.0.0.0", &sin_addr);
 }
 
 SocketAddressIPv4::SocketAddressIPv4(const SOCKADDR& addr)
