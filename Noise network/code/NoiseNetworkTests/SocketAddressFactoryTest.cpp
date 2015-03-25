@@ -97,6 +97,22 @@ namespace NoiseNetworkTests
 			AssertSocketAddress(addr, SocketAddressIPv4(), ip, port, family);
 		}
 
+		TEST_METHOD(CreateFromSockaddr_inInvalidFamily)
+		{
+			std::string ip("127.0.0.1");
+			unsigned short port = 12345;
+			short family = AF_INET6;
+
+			sockaddr_in sa;
+			inet_pton(family, ip.c_str(), &sa.sin_addr);
+			sa.sin_port = htons(port);
+			sa.sin_family = family;
+
+			SocketAddress addr = SocketAddressFactory::Create(sa);
+
+			Assert::IsNull(addr.get());
+		}
+
 		TEST_METHOD(CreateFromSockaddr_in6)
 		{
 			std::string ip("::1");
@@ -111,6 +127,22 @@ namespace NoiseNetworkTests
 			SocketAddress addr = SocketAddressFactory::Create(sa6);
 
 			AssertSocketAddress(addr, SocketAddressIPv6(), ip, port, family);
+		}
+
+		TEST_METHOD(CreateFromSockaddr_in6InvalidFamily)
+		{
+			std::string ip("::1");
+			unsigned short port = 12345;
+			short family = AF_INET;
+
+			sockaddr_in6 sa6;
+			inet_pton(family, ip.c_str(), &sa6.sin6_addr);
+			sa6.sin6_port = htons(port);
+			sa6.sin6_family = family;
+
+			SocketAddress addr = SocketAddressFactory::Create(sa6);
+
+			Assert::IsNull(addr.get());
 		}
 
 		TEST_METHOD(CreateIPv4FromSockaddr)
@@ -139,6 +171,22 @@ namespace NoiseNetworkTests
 			AssertSocketAddress(addr, SocketAddressIPv6(), ip, port, family);
 		}
 
+		TEST_METHOD(CreateSockaddr_InvalidFamily)
+		{
+			std::string ip("::1");
+			unsigned short port = 0;
+			short family = AF_UNSPEC;
+			addrinfo* addrResult = NULL;
+
+			int result = getaddrinfo(ip.c_str(), NULL, NULL, &addrResult);
+			addrResult->ai_addr->sa_family = family;
+
+			SocketAddress addr = SocketAddressFactory::Create(*addrResult->ai_addr);
+
+			Assert::IsNull(addr.get());
+		}
+
+	private:
 		//Helper function
 		template<class T>
 		void AssertSocketAddress(SocketAddress addr, T obj, std::string ip, unsigned short port, short family)

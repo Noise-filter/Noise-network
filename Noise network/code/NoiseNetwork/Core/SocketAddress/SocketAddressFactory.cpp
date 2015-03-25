@@ -17,7 +17,6 @@ SocketAddress SocketAddressFactory::Create(const unsigned short family)
 		return NULL;
 		break;
 	}
-	return NULL;
 }
 
 SocketAddress SocketAddressFactory::Create(const std::string ip, const unsigned short port)
@@ -42,10 +41,6 @@ SocketAddress SocketAddressFactory::Create(const std::string ip, const unsigned 
 			sa6.sin6_port = htons(port);
 			return (SocketAddress) new SocketAddressIPv6(sa6);
 			break;
-		default:
-			//Did not match either IPv4 or IPv6
-			return NULL;
-			break;
 		}
 	}
 
@@ -67,7 +62,6 @@ SocketAddress SocketAddressFactory::Create(const sockaddr& addr)
 		return NULL;
 		break;
 	}
-	return NULL;
 }
 
 SocketAddress SocketAddressFactory::Create(const sockaddr_in& addr)
@@ -81,7 +75,6 @@ SocketAddress SocketAddressFactory::Create(const sockaddr_in& addr)
 		return NULL;
 		break;
 	}
-	return NULL;
 }
 
 SocketAddress SocketAddressFactory::Create(const sockaddr_in6& addr)
@@ -95,5 +88,4 @@ SocketAddress SocketAddressFactory::Create(const sockaddr_in6& addr)
 		return NULL;
 		break;
 	}
-	return NULL;
 }
