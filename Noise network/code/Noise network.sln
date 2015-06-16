@@ -61,12 +61,14 @@ Global
 		{C59F864A-008E-4905-B51F-70F69D815A71}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{C59F864A-008E-4905-B51F-70F69D815A71}.Debug|Win32.ActiveCfg = Debug|Win32
 		{C59F864A-008E-4905-B51F-70F69D815A71}.Debug|Win32.Build.0 = Debug|Win32
-		{C59F864A-008E-4905-B51F-70F69D815A71}.Debug|x64.ActiveCfg = Debug|Win32
+		{C59F864A-008E-4905-B51F-70F69D815A71}.Debug|x64.ActiveCfg = Debug|x64
+		{C59F864A-008E-4905-B51F-70F69D815A71}.Debug|x64.Build.0 = Debug|x64
 		{C59F864A-008E-4905-B51F-70F69D815A71}.Release|Mixed Platforms.ActiveCfg = Release|Win32
 		{C59F864A-008E-4905-B51F-70F69D815A71}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{C59F864A-008E-4905-B51F-70F69D815A71}.Release|Win32.ActiveCfg = Release|Win32
 		{C59F864A-008E-4905-B51F-70F69D815A71}.Release|Win32.Build.0 = Release|Win32
-		{C59F864A-008E-4905-B51F-70F69D815A71}.Release|x64.ActiveCfg = Release|Win32
+		{C59F864A-008E-4905-B51F-70F69D815A71}.Release|x64.ActiveCfg = Release|x64
+		{C59F864A-008E-4905-B51F-70F69D815A71}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
