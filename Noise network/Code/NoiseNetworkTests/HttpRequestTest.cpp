@@ -12,28 +12,26 @@ namespace NoiseNetworkTests
 	public:
 		TEST_METHOD(GeneralHttpRequest)
 		{
-			unsigned int majorVersion = 1;
-			unsigned int minorVersion = 1;
+			HttpVersion version(1, 1);
 			string body = "{\"id\": \"file\"}";
 			HttpMethod method = POST;
 			string uri = "/devices/testDevice";
 
 			HttpRequest request("/devices/testDevice", method, body);
-			request.SetHttpVersion(majorVersion, minorVersion);
+			request.SetHttpVersion(version);
 			request.SetField("name", "value");
 			request.SetField("length", "123");
 			
-			Assert::AreEqual(request.GetRequestAsString(), string("POST /devices/testDevice HTTP/1.1\r\nlength: 123\r\nname: value\r\n\r\n{\"id\": \"file\"}"));
+			Assert::AreEqual(string("POST /devices/testDevice HTTP/1.1\r\nlength: 123\r\nname: value\r\n\r\n{\"id\": \"file\"}"), request.GetRequestAsString());
 			Assert::IsTrue(request.HasField("name"));
-			Assert::AreEqual(request.GetField("name"), string("value"));
+			Assert::AreEqual(string("value"), request.GetField("name"));
 			Assert::IsTrue(request.HasField("length"));
-			Assert::AreEqual(request.GetField("length"), string("123"));
+			Assert::AreEqual(string("123"), request.GetField("length"));
 			Assert::IsFalse(request.HasField("asd"));
-			Assert::AreEqual(request.getMajorVersion(), majorVersion);
-			Assert::AreEqual(request.getMinorVersion(), minorVersion);
-			Assert::AreEqual(request.GetBody(), body);
-			Assert::AreEqual((int)request.getMethod(), (int)method);
-			Assert::AreEqual(request.GetUri(), uri);
+			Assert::AreEqual(version, request.getVersion());
+			Assert::AreEqual(body, request.GetBody());
+			Assert::AreEqual((int)method, (int)request.getMethod());
+			Assert::AreEqual(uri, request.GetUri());
 		}
 
 		TEST_METHOD(EveryHttpMethod)
@@ -87,4 +85,32 @@ namespace NoiseNetworkTests
 			Assert::AreEqual(request.GetUri(), string("/devices/testDevice"));
 		}
 	};
+}
+
+namespace Microsoft
+{
+	namespace VisualStudio
+	{
+		namespace CppUnitTestFramework
+		{
+			template<>
+			static std::wstring ToString<type_info>(const type_info& t)
+			{
+				RETURN_WIDE_STRING(t.raw_name());
+			}
+
+			template<>
+			static std::wstring ToString<unsigned short>(const unsigned short& t)
+			{
+				RETURN_WIDE_STRING(t);
+			}
+
+			template<>
+			static std::wstring ToString<HttpVersion>(const HttpVersion& t)
+			{
+				wstring str = ToString(t.getMajorVersion()) + L"." + ToString(t.getMinorVersion());
+				RETURN_WIDE_STRING(str);
+			}
+		}
+	}
 }

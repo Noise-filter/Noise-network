@@ -173,6 +173,7 @@
     <ClInclude Include="Extended\Http\HttpRequest.h" />
     <ClInclude Include="Extended\Http\HttpResponse.h" />
     <ClInclude Include="Extended\Http\HttpUtilities.h" />
+    <ClInclude Include="Extended\Http\HttpVersion.h" />
     <ClInclude Include="Extended\Http\ParseException.h" />
     <ClInclude Include="Utilities\StringUtils.h" />
   </ItemGroup>
@@ -191,6 +192,7 @@
     <ClCompile Include="Extended\Http\HttpClient.cpp" />
     <ClCompile Include="Extended\Http\HttpRequest.cpp" />
     <ClCompile Include="Extended\Http\HttpResponse.cpp" />
+    <ClCompile Include="Extended\Http\HttpVersion.cpp" />
     <ClCompile Include="Utilities\StringUtils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

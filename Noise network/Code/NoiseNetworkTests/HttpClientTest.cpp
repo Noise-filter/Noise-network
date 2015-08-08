@@ -66,11 +66,12 @@ namespace NoiseNetworkTests
 
 		HttpRequest createRequest(HttpMethod method, string uri = "/")
 		{
+			HttpVersion version(1, 1);
 			unsigned int majorVersion = 1;
 			unsigned int minorVersion = 1;
 
 			HttpRequest request(uri, method);
-			request.SetHttpVersion(majorVersion, minorVersion);
+			request.SetHttpVersion(version);
 			return request;
 		}
 	};

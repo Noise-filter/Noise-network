@@ -5,7 +5,7 @@
 #include "Utilities/StringUtils.h"
 #include "ParseException.h"
 
-HttpResponse::HttpResponse() : status(InvalidResponse), majorVersion(0), minorVersion(0)
+HttpResponse::HttpResponse() : status(InvalidResponse), version(0, 0)
 {}
 
 HttpResponse::~HttpResponse()
@@ -26,14 +26,9 @@ HttpStatusCode HttpResponse::GetStatus() const
 	return status;
 }
 
-unsigned int HttpResponse::GetMajorHttpVersion() const
+HttpVersion HttpResponse::GetVersion() const
 {
-	return majorVersion;
-}
-
-unsigned int HttpResponse::GetMinorHttpVersion() const
-{
-	return minorVersion;
+	return version;
 }
 
 const std::string& HttpResponse::GetBody() const
@@ -105,8 +100,7 @@ void HttpResponse::extractVersion(std::istringstream& in)
 	{
 		if (isValidHttpVersion(version))
 		{
-			majorVersion = version[5] - '0';
-			minorVersion = version[7] - '0';
+			this->version.setVersion(version[5] - '0', version[7] - '0');
 		}
 		else
 		{

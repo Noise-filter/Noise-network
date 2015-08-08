@@ -9,7 +9,7 @@ static const char* const endLine = "\r\n";
 HttpRequest::HttpRequest(const std::string& uri, const HttpMethod method, const std::string& body)
 {
 	SetUri(uri);
-	SetHttpVersion(1, 0);
+	SetHttpVersion(HttpVersion(1, 0));
 	this->method = method;
 	this->body = body;
 }
@@ -30,7 +30,7 @@ std::string HttpRequest::GetRequestAsString()
 	}
 
 	out << method << " " << uri << " ";
-	out << "HTTP/" << majorVersion << "." << minorVersion << endLine;
+	out << "HTTP/" << version << endLine;
 
 	for (const auto field : fields)
 	{
@@ -58,14 +58,9 @@ HttpMethod HttpRequest::getMethod() const
 	return method;
 }
 
-unsigned int HttpRequest::getMajorVersion() const
+HttpVersion HttpRequest::getVersion() const
 {
-	return majorVersion;
-}
-
-unsigned int HttpRequest::getMinorVersion() const
-{
-	return minorVersion;
+	return version;
 }
 
 std::string HttpRequest::GetField(const std::string& key) const
@@ -99,10 +94,9 @@ void HttpRequest::SetMethod(const HttpMethod method)
 	this->method = method;
 }
 
-void HttpRequest::SetHttpVersion(const unsigned int majorVersion, const unsigned int minorVersion)
+void HttpRequest::SetHttpVersion(const HttpVersion& version)
 {
-	this->majorVersion = majorVersion;
-	this->minorVersion = minorVersion;
+	this->version = version;
 }
 
 void HttpRequest::SetField(const std::string& key, const std::string& value)

@@ -39,15 +39,12 @@ namespace NoiseNetworkTests
 			"</html>";
 			HttpResponse response;
 
-			unsigned int majorVersion = 1;
-			unsigned int minorVersion = 1;
+			HttpVersion version(1, 1);
 
 			response.parse(textResponse);
 			
 			Assert::AreEqual((int)Ok, (int)response.GetStatus());
-
-			Assert::AreEqual(majorVersion, response.GetMajorHttpVersion());
-			Assert::AreEqual(minorVersion, response.GetMinorHttpVersion());
+			Assert::AreEqual(version, response.GetVersion());
 
 			Assert::IsTrue(response.HasField("date"));
 			Assert::AreEqual(string("Fri, 31 Dec 1999 23:59:59 GMT"), response.GetField("date"));
@@ -117,4 +114,32 @@ namespace NoiseNetworkTests
 			Assert::AreEqual((int)InvalidResponse, (int)response.GetStatus());
 		}
 	};
+}
+
+namespace Microsoft
+{
+	namespace VisualStudio
+	{
+		namespace CppUnitTestFramework
+		{
+			template<>
+			static std::wstring ToString<type_info>(const type_info& t)
+			{
+				RETURN_WIDE_STRING(t.raw_name());
+			}
+
+			template<>
+			static std::wstring ToString<unsigned short>(const unsigned short& t)
+			{
+				RETURN_WIDE_STRING(t);
+			}
+
+			template<>
+			static std::wstring ToString<HttpVersion>(const HttpVersion& t)
+			{
+				wstring str = ToString(t.getMajorVersion()) + L"." + ToString(t.getMinorVersion());
+				RETURN_WIDE_STRING(str);
+			}
+		}
+	}
 }

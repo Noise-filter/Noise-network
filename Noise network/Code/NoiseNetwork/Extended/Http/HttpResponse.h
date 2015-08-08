@@ -5,6 +5,7 @@
 #include <map>
 
 #include "HttpUtilities.h"
+#include "HttpVersion.h"
 
 class HttpResponse
 {
@@ -15,8 +16,7 @@ public:
 	const bool HasField(const std::string& key) const;
 	const std::string& GetField(const std::string& key) const;
 	HttpStatusCode GetStatus() const;
-	unsigned int GetMajorHttpVersion() const;
-	unsigned int GetMinorHttpVersion() const;
+	HttpVersion GetVersion() const;
 	const std::string& GetBody() const;
 
 	void parse(const std::string& data);
@@ -29,8 +29,7 @@ private:
 private:
 	FieldTable fields;
 	HttpStatusCode status;
-	unsigned int majorVersion;
-	unsigned int minorVersion;
+	HttpVersion version;
 	std::string body;
 
 };

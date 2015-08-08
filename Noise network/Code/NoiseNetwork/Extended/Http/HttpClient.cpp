@@ -114,7 +114,8 @@ HttpRequest HttpClient::CorrectRequest(const HttpRequest& request)
 	{
 		toSend.SetField("Content-Type", "application/x-www-form-urlencoded");
 	}
-	if ((toSend.getMajorVersion() * 10 + toSend.getMinorVersion() >= 11) && !toSend.HasField("Connection"))
+	if ((toSend.getVersion().getMajorVersion() * 10 + toSend.getVersion().getMinorVersion() >= 11) 
+		&& !toSend.HasField("Connection"))
 	{
 		toSend.SetField("Connection", "close");
 	}
