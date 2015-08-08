@@ -163,6 +163,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="HttpClientTest.cpp" />
+    <ClCompile Include="HttpRequestTest.cpp" />
+    <ClCompile Include="HttpResponseTest.cpp" />
     <ClCompile Include="SocketAddressFactoryTest.cpp" />
   </ItemGroup>
   <ItemGroup>

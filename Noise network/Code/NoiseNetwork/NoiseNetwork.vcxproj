@@ -71,21 +71,25 @@
     <OutDir>$(SolutionDir)..\Bin\DLL\</OutDir>
     <IntDir>$(SolutionDir)..\Obj\$(ProjectName)\$(PlatformShortName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(PlatformShortName)D</TargetName>
+    <IncludePath>$(SolutionDir)/NoiseNetwork;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)..\Bin\DLL\</OutDir>
     <IntDir>$(SolutionDir)..\Obj\$(ProjectName)\$(PlatformShortName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(PlatformShortName)</TargetName>
+    <IncludePath>$(SolutionDir)/NoiseNetwork;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)..\Bin\DLL\</OutDir>
     <IntDir>$(SolutionDir)..\Obj\$(ProjectName)\$(PlatformShortName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(PlatformShortName)D</TargetName>
+    <IncludePath>$(SolutionDir)/NoiseNetwork;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)..\Bin\DLL\</OutDir>
     <IntDir>$(SolutionDir)..\Obj\$(ProjectName)\$(PlatformShortName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(PlatformShortName)</TargetName>
+    <IncludePath>$(SolutionDir)/NoiseNetwork;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -165,6 +169,12 @@
     <ClInclude Include="Core\ThreadedAcceptServer.h" />
     <ClInclude Include="Core\WinsockFunctions.h" />
     <ClInclude Include="Core\WinsockIncludes.h" />
+    <ClInclude Include="Extended\Http\HttpClient.h" />
+    <ClInclude Include="Extended\Http\HttpRequest.h" />
+    <ClInclude Include="Extended\Http\HttpResponse.h" />
+    <ClInclude Include="Extended\Http\HttpUtilities.h" />
+    <ClInclude Include="Extended\Http\ParseException.h" />
+    <ClInclude Include="Utilities\StringUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\AcceptSocket.cpp" />
@@ -178,6 +188,10 @@
     <ClCompile Include="Core\StreamSocket.cpp" />
     <ClCompile Include="Core\ThreadedAcceptServer.cpp" />
     <ClCompile Include="Core\WinsockFunctions.cpp" />
+    <ClCompile Include="Extended\Http\HttpClient.cpp" />
+    <ClCompile Include="Extended\Http\HttpRequest.cpp" />
+    <ClCompile Include="Extended\Http\HttpResponse.cpp" />
+    <ClCompile Include="Utilities\StringUtils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

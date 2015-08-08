@@ -43,6 +43,16 @@ namespace NoiseNetworkTests
 			AssertSocketAddress(addr, SocketAddressIPv6(), ip, port, family);
 		}
 
+		TEST_METHOD(CreateBroadcastAddress)
+		{
+			std::string ip("255.255.255.255");
+			unsigned short port = 0;
+			short family = AF_INET;
+			SocketAddress addr = SocketAddressFactory::Create(ip, port);
+
+			AssertSocketAddress(addr, SocketAddressIPv4(), ip, port, family);
+		}
+
 		TEST_METHOD(CreateFromInvalidFamily)
 		{
 			SocketAddress addr = SocketAddressFactory::Create(0);
