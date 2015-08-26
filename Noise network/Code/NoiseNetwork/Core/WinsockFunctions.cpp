@@ -4,6 +4,7 @@
 
 bool InitWinSock()
 {
+#ifdef _WIN32
 	WSADATA wsaData;
 	int error = WSAStartup(MAKEWORD(2, 2), &wsaData);
 
@@ -24,11 +25,15 @@ bool InitWinSock()
 	{
 		OutputDebugString(L"The Winsock 2.2 dll was found okay");
 	}
-
+#endif
 	return 0;
 }
 
 bool ShutdownWinSock()
 {
+#ifdef _WIN32
 	return WSACleanup() == NO_ERROR;
+#else
+	return 1;
+#endif
 }
