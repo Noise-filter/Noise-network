@@ -8,7 +8,7 @@ DatagramConnection::DatagramConnection()
 
 DatagramConnection::~DatagramConnection()
 {
-
+	Disconnect();
 }
 
 bool DatagramConnection::Connect(SocketAddress addr, SocketAddress bindAddress)

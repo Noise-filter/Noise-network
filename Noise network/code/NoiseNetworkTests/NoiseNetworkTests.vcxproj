@@ -163,10 +163,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="HttpClientTest.cpp" />
-    <ClCompile Include="HttpRequestTest.cpp" />
-    <ClCompile Include="HttpResponseTest.cpp" />
-    <ClCompile Include="SocketAddressFactoryTest.cpp" />
+    <ClCompile Include="Core\DatagramSocketTest.cpp" />
+    <ClCompile Include="Extended\Http\HttpClientTest.cpp" />
+    <ClCompile Include="Extended\Http\HttpRequestTest.cpp" />
+    <ClCompile Include="Extended\Http\HttpResponseTest.cpp" />
+    <ClCompile Include="Core\SocketAddress\SocketAddressFactoryTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NoiseNetwork\NoiseNetwork.vcxproj">

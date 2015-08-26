@@ -25,6 +25,10 @@ public:
 	SOCKET GetSocket();
 
 private:
+	DatagramSocket(const DatagramSocket&);
+	void operator =(const DatagramSocket&);
+
+private:
 	SOCKET socket;
 
 };

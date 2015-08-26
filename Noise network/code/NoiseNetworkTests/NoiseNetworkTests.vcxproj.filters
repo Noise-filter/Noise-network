@@ -15,16 +15,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SocketAddressFactoryTest.cpp">
+    <ClCompile Include="Extended\Http\HttpClientTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HttpRequestTest.cpp">
+    <ClCompile Include="Extended\Http\HttpRequestTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HttpResponseTest.cpp">
+    <ClCompile Include="Extended\Http\HttpResponseTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HttpClientTest.cpp">
+    <ClCompile Include="Core\SocketAddress\SocketAddressFactoryTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\DatagramSocketTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

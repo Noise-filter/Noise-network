@@ -7,7 +7,7 @@
 #include "Core\WinsockFunctions.h"
 #include "Core\DatagramConnection.h"
 
-void sftpProtocol(std::string filename, DatagramConnection socket);
+void sftpProtocol(std::string filename, DatagramConnection& socket);
 
 void ClientExamples::SFTPDatagramClient(std::string address, unsigned short port)
 {
@@ -37,7 +37,7 @@ void ClientExamples::SFTPDatagramClient(std::string address, unsigned short port
 	ShutdownWinSock();
 }
 
-void sftpProtocol(std::string filename, DatagramConnection socket)
+void sftpProtocol(std::string filename, DatagramConnection& socket)
 {
 	std::ifstream inFile(filename, std::ios::binary);
 	if (!inFile)
