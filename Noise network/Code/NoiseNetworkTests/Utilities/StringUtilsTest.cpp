@@ -12,13 +12,13 @@ namespace NoiseNetworkTests
 	public:
 		string testString = " !\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
-		TEST_METHOD(toUpperCaseTest)
+		TEST_METHOD(toUpperCaseASCIITest)
 		{
 			string result = toUpperCase(testString);
 			Assert::AreEqual(string(" !\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`ABCDEFGHIJKLMNOPQRSTUVWXYZ{|}~"), result);
 		}
 
-		TEST_METHOD(toLowerCaseTest)
+		TEST_METHOD(toLowerCaseASCIITest)
 		{
 			string result = toLowerCase(testString);
 			Assert::AreEqual(string(" !\"#$%&\'()*+,-./0123456789:;<=>?@abcdefghijklmnopqrstuvwxyz[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"), result);
