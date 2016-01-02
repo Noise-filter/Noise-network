@@ -168,6 +168,7 @@
     <ClCompile Include="Extended\Http\HttpRequestTest.cpp" />
     <ClCompile Include="Extended\Http\HttpResponseTest.cpp" />
     <ClCompile Include="Core\SocketAddress\SocketAddressFactoryTest.cpp" />
+    <ClCompile Include="Utilities\Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NoiseNetwork\NoiseNetwork.vcxproj">
