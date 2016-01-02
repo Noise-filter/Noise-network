@@ -71,7 +71,7 @@ HttpResponse HttpClient::SendRequest(const HttpRequest& request)
 
 		if (!sendBuffer.empty())
 		{
-			if (connection.Send(sendBuffer, sendBuffer.size()) != -1)
+			if (connection.Send(sendBuffer, (int)sendBuffer.size()) != -1)
 			{
 				vector<char> recvBuffer(1024);
 				string receivedStr;

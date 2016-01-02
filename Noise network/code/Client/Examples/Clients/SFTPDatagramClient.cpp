@@ -61,7 +61,7 @@ void sftpProtocol(std::string filename, DatagramConnection& socket)
 	{
 		inFile.read(&data[0], readSize);
 
-		int result = socket.Send(data, inFile.gcount());
+		int result = socket.Send(data, (int)inFile.gcount());
 		if (result == -1)
 		{
 			std::cout << "ERROR" << std::endl;
