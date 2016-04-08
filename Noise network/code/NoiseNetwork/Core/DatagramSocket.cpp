@@ -7,7 +7,6 @@ DatagramSocket::DatagramSocket()
 
 DatagramSocket::~DatagramSocket()
 {
-	this->Close();
 }
 
 bool DatagramSocket::Init(int family)

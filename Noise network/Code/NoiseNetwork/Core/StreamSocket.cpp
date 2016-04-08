@@ -15,7 +15,6 @@ StreamSocket::StreamSocket(SOCKET socket)
 
 StreamSocket::~StreamSocket()
 {
-	this->Close();
 }
 
 bool StreamSocket::Init(int family)

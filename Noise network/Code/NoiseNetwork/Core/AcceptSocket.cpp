@@ -7,7 +7,6 @@ AcceptSocket::AcceptSocket()
 
 AcceptSocket::~AcceptSocket()
 {
-	Close();
 }
 
 bool AcceptSocket::Init(SocketAddress bindAddress)
