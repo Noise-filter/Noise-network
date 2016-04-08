@@ -30,7 +30,7 @@
     <ClCompile Include="Core\DatagramSocketTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities\Source.cpp">
+    <ClCompile Include="Utilities\StringUtilsTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
