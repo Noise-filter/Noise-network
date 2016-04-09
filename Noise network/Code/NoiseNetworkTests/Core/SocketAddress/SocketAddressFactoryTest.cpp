@@ -196,6 +196,18 @@ namespace NoiseNetworkTests
 			Assert::IsNull(addr.get());
 		}
 
+		TEST_METHOD(CreateFromSocket_InvalidSocket)
+		{
+			SocketAddress addr = SocketAddressFactory::CreateFromSocket(INVALID_SOCKET);
+			Assert::IsNull(addr.get());
+		}
+
+		TEST_METHOD(CreateFromSocket_NotValidSocket)
+		{
+			SocketAddress addr = SocketAddressFactory::CreateFromSocket(-5);
+			Assert::IsNull(addr.get());
+		}
+
 	private:
 		//Helper function
 		template<class T>
