@@ -39,24 +39,23 @@ namespace Examples
 
 		cout << "Waiting to accept a client" << std::endl;
 
-		SOCKET clientSocket = INVALID_SOCKET;
+		StreamConnection client;
 
 		//Wait for connection
 		do
 		{
 			if (acceptServer.WaitingClients())
 			{
-				clientSocket = acceptServer.GetConnectedClient();
-				cout << "Client connected: " << clientSocket << std::endl;
+				client = acceptServer.GetConnectedClient();
+				cout << "Client connected: " << client.GetSocket().GetSocket() << std::endl;
 			}
 
-		} while (clientSocket == INVALID_SOCKET);
+		} while (!client.IsConnected());
 
 		//No longer need server socket
 		//Stop the accept thread
 		acceptServer.Stop();
 
-		StreamSocket client(clientSocket);
 		std::vector<char> buffer;
 
 		int result = 0;
@@ -87,17 +86,12 @@ namespace Examples
 			else
 			{
 				cout << "Recv failed with error: " << WSAGetLastError() << std::endl;
-				client.Close();
+				client.Disconnect();
 			}
 
 		} while (result > 0);
 
-		result = client.Shutdown(SD_SEND);
-		if (result == SOCKET_ERROR)
-		{
-			cout << "Shutdown failed with error: " << WSAGetLastError() << std::endl;
-			client.Close();
-		}
+		result = client.Disconnect();
 
 		ShutdownWinSock();
 	}

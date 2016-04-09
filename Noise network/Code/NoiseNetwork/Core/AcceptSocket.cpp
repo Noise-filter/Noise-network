@@ -1,5 +1,7 @@
 #include "AcceptSocket.h"
 
+#include "StreamConnection.h"
+
 AcceptSocket::AcceptSocket()
 {
 	
@@ -34,7 +36,7 @@ bool AcceptSocket::Init(SocketAddress bindAddress)
 	return result;
 }
 
-SOCKET AcceptSocket::Accept()
+StreamConnection AcceptSocket::Accept()
 {
 	return socket.Accept();
 }

@@ -2,6 +2,7 @@
 #define THREADED_ACCEPT_SERVER_H
 
 #include "AcceptSocket.h"
+#include "StreamConnection.h"
 
 #include <thread>
 #include <atomic>
@@ -26,7 +27,7 @@ public:
 
 	//Returns the first client in the queue
 	//If there are non it returns INVALID_SOCKET
-	SOCKET GetConnectedClient();
+	StreamConnection GetConnectedClient();
 
 	//Returns true if there are any clients in the queue waiting
 	bool WaitingClients();
@@ -44,7 +45,7 @@ private:
 	std::thread thread;
 	std::atomic<bool> running;
 
-	Concurrency::concurrent_queue<SOCKET> clientSockets;
+	Concurrency::concurrent_queue<StreamConnection> clientSockets;
 
 };
 

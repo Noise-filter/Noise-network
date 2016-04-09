@@ -36,9 +36,9 @@ void ThreadedAcceptServer::Stop(bool wait)
 	}
 }
 
-SOCKET ThreadedAcceptServer::GetConnectedClient()
+StreamConnection ThreadedAcceptServer::GetConnectedClient()
 {
-	SOCKET client = INVALID_SOCKET;
+	StreamConnection client;
 
 	bool result = clientSockets.try_pop(client);
 
@@ -65,15 +65,14 @@ void ThreadedAcceptServer::Accept()
 	//Set running to true when the thread starts
 	running = true;
 
-	SOCKET clientSocket = INVALID_SOCKET;
 	do
 	{
-		clientSocket = socket.Accept();
+		StreamConnection client = socket.Accept();
 
 		//Add the client if it is a valid socket
-		if (clientSocket != INVALID_SOCKET)
+		if (!client.IsConnected())
 		{
-			clientSockets.push(clientSocket);
+			clientSockets.push(client);
 		}
 		else
 		{

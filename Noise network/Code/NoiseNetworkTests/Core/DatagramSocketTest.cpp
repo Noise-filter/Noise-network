@@ -68,7 +68,7 @@ namespace NoiseNetworkTests
 			vector<char> buffer;
 			buffer.assign(message.begin(), message.end());
 
-			int result = socket.Send(serverAddress, buffer, buffer.size());
+			int result = socket.Send(serverAddress, buffer, (int)buffer.size());
 			if (result == SOCKET_ERROR)
 			{
 				Assert::Fail(L"Send failed with error code: " + WSAGetLastError());

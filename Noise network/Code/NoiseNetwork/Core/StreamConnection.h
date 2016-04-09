@@ -8,6 +8,7 @@ class StreamConnection
 public:
 	StreamConnection();
 	StreamConnection(SOCKET socket);
+	StreamConnection(SOCKET socket, SocketAddress addr);
 	~StreamConnection();
 
 	bool Connect(SocketAddress addr);
@@ -19,12 +20,12 @@ public:
 	int Recv(std::vector<char>& buffer, int bufLength);
 
 	bool IsConnected();
-	SocketAddress GetAddress();
+
+	StreamSocket GetSocket();
 
 private:
 	StreamSocket socket;
-	
-	SocketAddress addr;
+
 	bool connected;
 
 };

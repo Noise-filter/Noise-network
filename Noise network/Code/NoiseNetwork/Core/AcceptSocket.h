@@ -11,6 +11,7 @@
 *
 */
 class StreamSocket;
+
 class AcceptSocket
 {
 public:
@@ -20,7 +21,7 @@ public:
 	bool Init(SocketAddress bindAddress);
 	void Close();
 
-	SOCKET Accept();
+	StreamConnection Accept();
 
 	bool IsInitialized();
 	SOCKET GetSocket();

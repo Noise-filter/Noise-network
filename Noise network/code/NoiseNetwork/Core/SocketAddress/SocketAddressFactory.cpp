@@ -96,8 +96,6 @@ SocketAddress SocketAddressFactory::CreateFromSocket(const SOCKET socket)
 	{
 		socklen_t len;
 		struct sockaddr_storage addr;
-		char ipstr[INET6_ADDRSTRLEN];
-		int port;
 
 		len = sizeof(addr);
 		int result = getpeername(socket, (struct sockaddr*)&addr, &len);

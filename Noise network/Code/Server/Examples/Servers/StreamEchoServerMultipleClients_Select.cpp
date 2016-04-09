@@ -113,7 +113,8 @@ namespace Examples
 			//Accept new clients
 			if (acceptServer.WaitingClients())
 			{
-				clientSocket = acceptServer.GetConnectedClient();
+				//TODO: This must be fixed. Write my own select server maybe?
+				//clientSocket = acceptServer.GetConnectedClient();
 				FD_SET(clientSocket, &masterSet);
 				clientCounter++;
 				cout << "Client connected: " << clientSocket << ' ' << clientCounter << std::endl;

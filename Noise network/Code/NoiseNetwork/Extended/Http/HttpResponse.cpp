@@ -40,12 +40,12 @@ void HttpResponse::parse(const std::string& data)
 {
 	std::istringstream in(data);
 
-	try 
+	try
 	{
 		extractVersion(in);
 		extractStatus(in);
 	}
-	catch (const ParseException& e)
+	catch (...)
 	{
 		return;
 	}

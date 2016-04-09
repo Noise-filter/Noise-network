@@ -70,7 +70,7 @@ namespace Examples
 				//std::cout << "Bytes received: " << result << std::endl;
 				//std::cout << "Message received: " << &buffer[0] << std::endl;
 				
-				result = socket.Send(from, ackBuffer, ackBuffer.size());
+				result = socket.Send(from, ackBuffer, (int)ackBuffer.size());
 				if (result == SOCKET_ERROR)
 				{
 					std::cout << "Send failed with error: " << WSAGetLastError() << std::endl;

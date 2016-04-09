@@ -47,7 +47,7 @@ void ClientExamples::SimpleSpamClient_ImplementedWithDatagramConnection(std::str
 			break;
 		}
 
-		//std::cout << "Bytes sent: " << result << std::endl;
+		std::cout << "Bytes sent: " << result << std::endl;
 
 		buffer.clear();
 		buffer.resize(MAX_BUFFER_LENGTH);

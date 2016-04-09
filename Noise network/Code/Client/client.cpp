@@ -19,8 +19,8 @@ int main()
 	//Datagram clients
 	//ClientExamples::SimpleMessageClient_ImplementedWithDatagramSocket(IP_ADDRESS, PORT);
 	//ClientExamples::SimpleMessageClient_ImplementedWithDatagramConnection(IP_ADDRESS, PORT);
-	//ClientExamples::SimpleSpamClient_ImplementedWithDatagramConnection(IP_ADDRESS, PORT);
-	ClientExamples::SFTPDatagramClient(IP_ADDRESS, PORT);
+	ClientExamples::SimpleSpamClient_ImplementedWithDatagramConnection(IP_ADDRESS, PORT);
+	//ClientExamples::SFTPDatagramClient(IP_ADDRESS, PORT);
 
 	return 0;
 }

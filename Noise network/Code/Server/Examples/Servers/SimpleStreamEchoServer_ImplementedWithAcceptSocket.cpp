@@ -2,6 +2,7 @@
 
 #include "Core\WinsockFunctions.h"
 #include "Core\AcceptSocket.h"
+#include "Core\StreamConnection.h"
 
 #include "Core\SocketAddress.h"
 
@@ -34,24 +35,21 @@ namespace Examples
 
 		std::cout << "Waiting to accept a client" << std::endl;
 
-		SOCKET clientSocket;
-
 		//Wait for a new connection
-		clientSocket = socket.Accept();
-		if (clientSocket == INVALID_SOCKET)
+		StreamConnection client = socket.Accept();
+		if (!client.IsConnected())
 		{
-			std::cout << "Error accepting client " << clientSocket << std::endl;
+			std::cout << "Error accepting client" << std::endl;
 			socket.Close();
 			ShutdownWinSock();
 			return;
 		}
 
-		std::cout << "Client connected: " << clientSocket << std::endl;
+		std::cout << "Client connected: " << client.GetSocket().GetSocket() << std::endl;
 
 		//No longer need server socket
 		socket.Close();
 
-		StreamSocket client(clientSocket);
 		std::vector<char> buffer;
 
 		int result = 0;
@@ -82,17 +80,12 @@ namespace Examples
 			else
 			{
 				std::cout << "Recv failed with error: " << WSAGetLastError() << std::endl;
-				client.Close();
+				client.Disconnect();
 			}
 
 		} while (result > 0);
 
-		result = client.Shutdown(SD_SEND);
-		if (result == SOCKET_ERROR)
-		{
-			std::cout << "Shutdown failed with error: " << WSAGetLastError() << std::endl;
-			client.Close();
-		}
+		result = client.Disconnect();
 
 		ShutdownWinSock();
 	}

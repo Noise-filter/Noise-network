@@ -6,11 +6,14 @@
 
 #include "SocketAddress.h"
 
+class StreamConnection;
+
 class StreamSocket
 {
 public:
 	StreamSocket();
 	StreamSocket(SOCKET socket);
+	StreamSocket(SOCKET socket, SocketAddress addr);
 	virtual ~StreamSocket();
 
 	//Creates a SOCKET
@@ -20,7 +23,7 @@ public:
 
 	bool Bind(SocketAddress addr);
 	bool Listen();
-	SOCKET Accept();
+	StreamConnection Accept();
 
 	//Shutdown socket with SD_RECEIVE, SD_SEND or SD_BOTH
 	//This will turn off receive, send or both for the socket
@@ -30,7 +33,7 @@ public:
 	//Closes the socket
 	void Close();
 
-	//Will 
+	//Will note clear or resize the buffer
 	int Send(std::vector<char>& buffer, int bufLength);
 
 	//Will not clear or resize the buffer

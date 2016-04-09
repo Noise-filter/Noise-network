@@ -2,7 +2,6 @@
 
 StreamConnection::StreamConnection()
 {
-	addr = nullptr;
 	connected = false;
 }
 
@@ -12,12 +11,22 @@ StreamConnection::StreamConnection(SOCKET socket)
 	if (socket != INVALID_SOCKET)
 	{
 		connected = true;
-
-		//TODO: Get address from socket and put it in the SocketAddressInterface
 	}
 	else
 	{
-		addr = nullptr;
+		connected = false;
+	}
+}
+
+StreamConnection::StreamConnection(SOCKET socket, SocketAddress addr)
+{
+	this->socket = StreamSocket(socket, addr);
+	if (socket != INVALID_SOCKET)
+	{
+		connected = true;
+	}
+	else
+	{
 		connected = false;
 	}
 }
@@ -27,8 +36,6 @@ StreamConnection::~StreamConnection()
 
 bool StreamConnection::Connect(SocketAddress addr)
 {
-	this->addr = addr;
-
 	//Try to initialize socket if it isn't already initialized
 	if (!socket.IsInitialized())
 	{
@@ -55,9 +62,9 @@ bool StreamConnection::Reconnect()
 	}
 
 	//Only try to reconnect if connect has already been called 
-	if (addr)
+	if (socket.GetAddress())
 	{
-		return Connect(addr);
+		return Connect(socket.GetAddress());
 	}
 	
 	return false;
@@ -100,7 +107,7 @@ bool StreamConnection::IsConnected()
 	return connected;
 }
 
-SocketAddress StreamConnection::GetAddress()
+StreamSocket StreamConnection::GetSocket()
 {
-	return addr;
+	return socket;
 }

@@ -1,5 +1,7 @@
 #include "StreamSocket.h"
 
+#include "StreamConnection.h"
+
 StreamSocket::StreamSocket()
 {
 	socket = INVALID_SOCKET;
@@ -9,8 +11,13 @@ StreamSocket::StreamSocket()
 StreamSocket::StreamSocket(SOCKET socket)
 {
 	this->socket = socket;
+	addr = SocketAddressFactory::CreateFromSocket(socket);
+}
 
-	//TODO: Get address from socket and put it in the SocketAddressInterface
+StreamSocket::StreamSocket(SOCKET socket, SocketAddress addr)
+{
+	this->socket = socket;
+	this->addr = addr;
 }
 
 StreamSocket::~StreamSocket()
@@ -79,7 +86,7 @@ bool StreamSocket::Listen()
 	return true;
 }
 
-SOCKET StreamSocket::Accept()
+StreamConnection StreamSocket::Accept()
 {
 	if (socket == INVALID_SOCKET)
 	{
@@ -87,20 +94,18 @@ SOCKET StreamSocket::Accept()
 	}
 
 	SOCKET clientSocket = INVALID_SOCKET;
-	sockaddr addr;
-	int addrLen = sizeof(addr);
+	struct sockaddr_storage addr;
+	socklen_t addrLen = sizeof(addr);
 
-	clientSocket = accept(socket, &addr, &addrLen);
+	clientSocket = accept(socket, (struct sockaddr*)&addr, &addrLen);
 	if (clientSocket == INVALID_SOCKET)
 	{
-		return INVALID_SOCKET;
+		return StreamConnection();
 	}
 
-	//TODO: This sockAddr is never returned out in anyway
-	//Implement so that this address can be returned with the socket.
-	SocketAddress sockAddr = SocketAddressFactory::Create(addr);
+	SocketAddress sockAddr = SocketAddressFactory::Create(*(struct sockaddr*)&addr);
 
-	return clientSocket;
+	return StreamConnection(clientSocket, sockAddr);
 }
 
 bool StreamSocket::Shutdown(int flag)
@@ -146,8 +151,7 @@ bool StreamSocket::IsInitialized()
 void StreamSocket::SetSocket(SOCKET socket)
 {
 	this->socket = socket;
-
-	//TODO: Get address from socket and put it in the SocketAddressInterface
+	addr = SocketAddressFactory::CreateFromSocket(socket);
 }
 
 SOCKET StreamSocket::GetSocket()
