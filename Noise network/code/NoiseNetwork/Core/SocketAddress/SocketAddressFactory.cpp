@@ -14,16 +14,16 @@ SocketAddress SocketAddressFactory::Create(const unsigned short family)
 		return (SocketAddress)new SocketAddressIPv6();
 		break;
 	default:
-		return NULL;
+		return nullptr;
 		break;
 	}
 }
 
 SocketAddress SocketAddressFactory::Create(const std::string ip, const unsigned short port)
 {
-	addrinfo* addrResult = NULL;
+	addrinfo* addrResult = nullptr;
 
-	int result = getaddrinfo(ip.c_str(), NULL, NULL, &addrResult);
+	int result = getaddrinfo(ip.c_str(), nullptr, nullptr, &addrResult);
 	if (result == 0)
 	{
 		//Check what family the ip address corresponds to
@@ -45,7 +45,7 @@ SocketAddress SocketAddressFactory::Create(const std::string ip, const unsigned 
 	}
 
 	//Did not match either IPv4 or IPv6
-	return NULL;
+	return nullptr;
 }
 
 SocketAddress SocketAddressFactory::Create(const sockaddr& addr)
@@ -59,7 +59,7 @@ SocketAddress SocketAddressFactory::Create(const sockaddr& addr)
 		return (SocketAddress) new SocketAddressIPv6(addr);
 		break;
 	default:
-		return NULL;
+		return nullptr;
 		break;
 	}
 }
@@ -72,7 +72,7 @@ SocketAddress SocketAddressFactory::Create(const sockaddr_in& addr)
 		return (SocketAddress) new SocketAddressIPv4(addr);
 		break;
 	default:
-		return NULL;
+		return nullptr;
 		break;
 	}
 }
@@ -85,7 +85,38 @@ SocketAddress SocketAddressFactory::Create(const sockaddr_in6& addr)
 		return (SocketAddress) new SocketAddressIPv6(addr);
 		break;
 	default:
-		return NULL;
+		return nullptr;
 		break;
 	}
+}
+
+SocketAddress SocketAddressFactory::CreateFromSocket(const SOCKET socket)
+{
+	if (socket != INVALID_SOCKET)
+	{
+		socklen_t len;
+		struct sockaddr_storage addr;
+		char ipstr[INET6_ADDRSTRLEN];
+		int port;
+
+		len = sizeof(addr);
+		int result = getpeername(socket, (struct sockaddr*)&addr, &len);
+
+		if (result == 0)
+		{
+			switch (addr.ss_family)
+			{
+			case AF_INET:
+				return (SocketAddress) new SocketAddressIPv4(*(struct sockaddr_in*)&addr);
+				break;
+			case AF_INET6:
+				return (SocketAddress) new SocketAddressIPv6(*(struct sockaddr_in6*)&addr);
+				break;
+			default:
+				return nullptr;
+				break;
+			}
+		}
+	}
+	return nullptr;
 }

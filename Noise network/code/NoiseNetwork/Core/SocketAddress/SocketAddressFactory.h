@@ -17,6 +17,7 @@ public:
 	static SocketAddress Create(const sockaddr& addr);
 	static SocketAddress Create(const sockaddr_in& addr);
 	static SocketAddress Create(const sockaddr_in6& addr);
+	static SocketAddress CreateFromSocket(const SOCKET socket);
 };
 
 #endif
