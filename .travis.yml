@@ -7,11 +7,12 @@ compiler:
 os:
 - linux
 - osx
+ruby: 2.2.0
 before_install:
 - echo $LANG
 - echo $LC_ALL
-- if [ $TRAVIS_OS_NAME == linux ]; then ./scripts/llvm.sh; fi
-- if [ $TRAVIS_OS_NAME == osx ]; then brew update && brew install llvm35 && brew link --force llvm35; fi
+#- if [ $TRAVIS_OS_NAME == linux ]; then ./scripts/llvm.sh; fi
+#- if [ $TRAVIS_OS_NAME == osx ]; then brew update && brew install llvm35 && brew link --force llvm35; fi
 - gem update --system
 - gem --version
 before_script:
