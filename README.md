@@ -1,3 +1,3 @@
 # Noise-network
 
-Travis-ci: https://travis-ci.org/Noise-filter/Noise-network.svg?branch=master
+Travis-ci: [![Build Status](https://travis-ci.org/Noise-filter/Noise-network.svg?branch=master)](https://travis-ci.org/Noise-filter/Noise-network)
