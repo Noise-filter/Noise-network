@@ -32,7 +32,7 @@ public:
 	template<class ForwardIteratorType>
 	static void Pack(ForwardIteratorType begin, ForwardIteratorType end, std::vector<unsigned char>& buffer)
 	{
-		unsigned int size = std::distance(begin, end);
+		unsigned int size = (unsigned int)std::distance(begin, end);
 		Pack(size, buffer);
 		while (begin != end)
 		{

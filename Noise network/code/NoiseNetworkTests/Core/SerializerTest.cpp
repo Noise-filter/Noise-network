@@ -207,8 +207,8 @@ namespace NoiseNetworkTests
 		{
 			ContainerType::const_iterator current(begin(expected)), end = std::end(expected);
 			ContainerType::const_iterator current2(begin(actual)), end2 = std::end(actual);
-			int size = expected.size();
-			int size2 = actual.size();
+			size_t size = expected.size();
+			size_t size2 = actual.size();
 			Assert::AreEqual(size, size2);
 			for (; current != end && current2 != end2; ++current, ++current2)
 			{

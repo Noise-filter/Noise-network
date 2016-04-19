@@ -103,7 +103,7 @@ void Serializer::Pack(char i[], std::vector<unsigned char>& buffer)
 
 void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int index, bool& i)
 {
-	i = (bool)buffer.at(index);
+	i = buffer.at(index) != 0;
 }
 
 void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int index, char& i)
