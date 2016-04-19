@@ -175,6 +175,7 @@
     <ClInclude Include="Extended\Http\HttpUtilities.h" />
     <ClInclude Include="Extended\Http\HttpVersion.h" />
     <ClInclude Include="Extended\Http\ParseException.h" />
+    <ClInclude Include="Core\Serializer.h" />
     <ClInclude Include="Utilities\StringUtils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +194,7 @@
     <ClCompile Include="Extended\Http\HttpRequest.cpp" />
     <ClCompile Include="Extended\Http\HttpResponse.cpp" />
     <ClCompile Include="Extended\Http\HttpVersion.cpp" />
+    <ClCompile Include="Core\Serializer.cpp" />
     <ClCompile Include="Utilities\StringUtils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
