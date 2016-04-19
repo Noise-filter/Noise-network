@@ -37,3 +37,36 @@ bool ShutdownWinSock()
 	return 1;
 #endif
 }
+
+int GetLastSystemError()
+{
+#ifdef _WIN32
+	return WSAGetLastError();
+#else
+	return errno;
+#endif
+}
+
+std::string GetErrorMessage(int errorCode)
+{
+	LPWSTR lpMessage;
+	std::string retVal("Succesful");
+
+	DWORD bufLen = FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+		NULL,
+		errorCode,
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+		(LPWSTR)&lpMessage,
+		0,
+		NULL);
+
+	if (bufLen)
+	{
+		retVal.assign(&lpMessage[0], &lpMessage[bufLen]);
+		LocalFree(lpMessage);
+		return retVal;
+	}
+
+	//Added this if bufLen is 0
+	return retVal;
+}
