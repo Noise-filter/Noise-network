@@ -29,6 +29,9 @@ notifications:
   email:
     recipients:
       - pontus.fransson92@gmail.com
+  
+  slack:
+    slack: noisenetwork:tFQLx2qxY6xfX05xHBZnfAAa
 	  
   webhooks:
     urls:
