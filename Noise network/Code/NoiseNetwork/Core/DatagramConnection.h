@@ -14,8 +14,8 @@ public:
 
 	void Disconnect();
 
-	int Send(std::vector<char>& buffer, int bufLength);
-	int Recv(SocketAddress addr, std::vector<char>& buffer, int bufLength);
+	int Send(std::vector<unsigned char>& buffer, int bufLength);
+	int Recv(SocketAddress addr, std::vector<unsigned char>& buffer, int bufLength);
 
 	bool IsConnected();
 	SocketAddress GetAddress();

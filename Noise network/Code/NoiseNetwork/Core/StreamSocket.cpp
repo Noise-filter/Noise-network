@@ -131,15 +131,15 @@ void StreamSocket::Close()
 	addr = nullptr;
 }
 
-int StreamSocket::Send(std::vector<char>& buffer, int bufLength)
+int StreamSocket::Send(std::vector<unsigned char>& buffer, int bufLength)
 {
-	int result = send(socket, &buffer[0], bufLength, 0);
+	int result = send(socket, (const char*)&buffer[0], bufLength, 0);
 	return result;
 }
 
-int StreamSocket::Recv(std::vector<char>& buffer, int bufLength)
+int StreamSocket::Recv(std::vector<unsigned char>& buffer, int bufLength)
 {
-	int result = recv(socket, &buffer[0], bufLength, 0);
+	int result = recv(socket, (char*)&buffer[0], bufLength, 0);
 	return result;
 }
 

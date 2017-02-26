@@ -35,7 +35,7 @@ void ClientExamples::SimpleSpamClient_ImplementedWithStreamConnection(std::strin
 	//The message which is sent
 	std::string message = bigMessage;
 
-	std::vector<char> buffer;
+	std::vector<unsigned char> buffer;
 
 	int result = 0;
 	do
@@ -60,7 +60,7 @@ void ClientExamples::SimpleSpamClient_ImplementedWithStreamConnection(std::strin
 		{
 			//Check if the same message was returned
 			std::string returnMessage;
-			returnMessage = buffer.data();
+			returnMessage = (char*)buffer.data();
 
 			if (message != returnMessage)
 			{

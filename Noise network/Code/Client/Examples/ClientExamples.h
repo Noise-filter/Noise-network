@@ -9,6 +9,8 @@ public:
 	static const int MAX_BUFFER_LENGTH = 1400;
 
 public:
+	static void PackingTest(std::string address, unsigned short port);
+
 	//Stream clients
 	static void SimpleMessageClient_ImplementedWithStreamSocket(std::string address, unsigned short port);
 	static void SimpleMessageClient_ImplementedWithStreamConnection(std::string address, unsigned short port);

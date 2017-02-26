@@ -17,8 +17,8 @@ public:
 
 	void Close();
 
-	int Send(const SocketAddress address, std::vector<char>& buffer, int bufLength);
-	int Recv(SocketAddress address, std::vector<char>& buffer, int bufLength);
+	int Send(const SocketAddress address, std::vector<unsigned char>& buffer, int bufLength);
+	int Recv(SocketAddress address, std::vector<unsigned char>& buffer, int bufLength);
 
 	bool IsInitialized();
 

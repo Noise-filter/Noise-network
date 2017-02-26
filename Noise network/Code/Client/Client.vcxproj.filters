@@ -44,5 +44,8 @@
     <ClInclude Include="Examples\ClientExamples.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Examples\Clients\PackableClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

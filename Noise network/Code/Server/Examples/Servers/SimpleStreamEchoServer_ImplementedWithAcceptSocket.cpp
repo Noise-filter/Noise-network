@@ -50,7 +50,7 @@ namespace Examples
 		//No longer need server socket
 		socket.Close();
 
-		std::vector<char> buffer;
+		std::vector<unsigned char> buffer;
 
 		int result = 0;
 		do
