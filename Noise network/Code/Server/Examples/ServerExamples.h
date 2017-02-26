@@ -3,6 +3,8 @@
 
 namespace Examples
 {
+	void PackingTest(unsigned short port);
+
 	//Stream servers
 	void SimpleStreamEchoServer_ImplementedWithSocket(unsigned short port);
 	void SimpleStreamEchoServer_ImplementedWithAcceptSocket(unsigned short port);

@@ -67,13 +67,13 @@ HttpResponse HttpClient::SendRequest(const HttpRequest& request)
 	if (connection.Connect(host))
 	{
 		string requestStr = toSend.GetRequestAsString();
-		vector<char> sendBuffer(requestStr.begin(), requestStr.end());
+		vector<unsigned char> sendBuffer(requestStr.begin(), requestStr.end());
 
 		if (!sendBuffer.empty())
 		{
 			if (connection.Send(sendBuffer, (int)sendBuffer.size()) != -1)
 			{
-				vector<char> recvBuffer(1024);
+				vector<unsigned char> recvBuffer(1024);
 				string receivedStr;
 				int bytesReceived = 0;
 				while ((bytesReceived = connection.Recv(recvBuffer, 1024)) > 0)

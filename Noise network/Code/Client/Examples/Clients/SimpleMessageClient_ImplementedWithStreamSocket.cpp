@@ -34,7 +34,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithStreamSocket(std::string
 	}
 
 	std::string text;
-	std::vector<char> buffer;
+	std::vector<unsigned char> buffer;
 
 	int result = 0;
 	do

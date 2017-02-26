@@ -40,8 +40,8 @@ namespace Examples
 
 		std::cout << "Waiting for messages" << std::endl;
 
-		std::vector<char> ackBuffer;
-		std::vector<char> buffer;
+		std::vector<unsigned char> ackBuffer;
+		std::vector<unsigned char> buffer;
 		SocketAddress from = SocketAddressFactory::Create(AF_INET);
 
 		std::ofstream outFile("C:/Users/Pontus/Downloads/asd.txt", std::ios::binary);
@@ -64,7 +64,7 @@ namespace Examples
 			{
 
 				//Parse package and stuff
-				outFile.write(&buffer[0], result);
+				outFile.write((const char*)&buffer[0], result);
 
 				//std::cout << "\nMessage recieved from: " << from->GetIP() << ":" << from->GetPort() << std::endl;
 				//std::cout << "Bytes received: " << result << std::endl;

@@ -31,7 +31,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramSocket(std::stri
 	}
 
 	std::string text;
-	std::vector<char> buffer;
+	std::vector<unsigned char> buffer;
 	SocketAddress serverAddr = SocketAddressFactory::Create(address, port);
 
 	int result = 0;

@@ -27,7 +27,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramConnection(std::
 	}
 
 	std::string text;
-	std::vector<char> buffer;
+	std::vector<unsigned char> buffer;
 
 	int result = 0;
 	do

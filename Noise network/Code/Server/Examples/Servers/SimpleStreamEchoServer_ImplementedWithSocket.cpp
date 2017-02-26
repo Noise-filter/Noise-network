@@ -8,6 +8,8 @@
 
 const int MAX_BUFFER_LENGTH = 512;
 
+#include "../Client/Examples/Clients/PackableClass.h"
+
 namespace Examples
 {
 	void SimpleStreamEchoServer_ImplementedWithSocket(unsigned short port)
@@ -64,7 +66,7 @@ namespace Examples
 		//No longer need server socket
 		socket.Close();
 
-		std::vector<char> buffer;
+		std::vector<unsigned char> buffer;
 
 		int result = 0;
 		do
@@ -75,9 +77,13 @@ namespace Examples
 			if (result > 0)
 			{
 				std::cout << "Bytes received: " << result << std::endl;
-				std::cout << "Message received: " << &buffer[0] << std::endl;
+				//std::cout << "Message received: " << &buffer[0] << std::endl;
+				PackableClass person;
+				person.unpack(buffer);
+				person.print();
+				buffer = person.pack();
 
-				result = client.Send(buffer, result);
+				result = client.Send(buffer, buffer.size());
 				if (result == SOCKET_ERROR)
 				{
 					std::cout << "Send failed with error: " << WSAGetLastError() << std::endl;

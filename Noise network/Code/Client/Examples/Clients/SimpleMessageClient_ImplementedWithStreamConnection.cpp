@@ -8,6 +8,8 @@
 
 #include "Core\SocketAddress.h"
 
+#include "PackableClass.h"
+
 void ClientExamples::SimpleMessageClient_ImplementedWithStreamConnection(std::string address, unsigned short port)
 {
 	if (InitWinSock())
@@ -28,23 +30,26 @@ void ClientExamples::SimpleMessageClient_ImplementedWithStreamConnection(std::st
 	}
 
 	std::string text;
-	std::vector<char> buffer;
+	std::vector<unsigned char> buffer;
 
+	PackableClass person;
+	
 	int result = 0;
 	do
 	{
 		std::cout << "> ";
-		getline(std::cin, text);
+		//getline(std::cin, text);
 
-		if (text.size() == 0)
-		{
-			break;
-		}
+		//if (text.size() == 0)
+		//{
+		//	break;
+		//}
 
-		buffer.clear();
-		buffer.assign(text.begin(), text.end());
+		//buffer.clear();
+		//buffer.assign(text.begin(), text.end());
+		buffer = person.pack();
 
-		result = con.Send(buffer, (int)text.size());
+		result = con.Send(buffer, (int)buffer.size());
 		if (result == SOCKET_ERROR)
 		{
 			std::cout << "Send failed with error: " << WSAGetLastError() << std::endl;
@@ -60,7 +65,10 @@ void ClientExamples::SimpleMessageClient_ImplementedWithStreamConnection(std::st
 		if (result > 0)
 		{
 			std::cout << "Bytes received: " << result << std::endl;
-			std::cout << "Message received: " << buffer.data() << std::endl;
+			//std::cout << "Message received: " << buffer.data() << std::endl;
+			PackableClass person;
+			person.unpack(buffer);
+			person.print();
 		}
 		else if (result == 0)
 		{
@@ -73,7 +81,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithStreamConnection(std::st
 			return;
 		}
 
-	} while (text.size() > 0);
+	} while (1);
 
 	result = con.Disconnect();
 	if (result == SOCKET_ERROR)

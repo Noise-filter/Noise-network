@@ -34,10 +34,10 @@ public:
 	void Close();
 
 	//Will note clear or resize the buffer
-	int Send(std::vector<char>& buffer, int bufLength);
+	int Send(std::vector<unsigned char>& buffer, int bufLength);
 
 	//Will not clear or resize the buffer
-	int Recv(std::vector<char>& buffer, int bufLength);
+	int Recv(std::vector<unsigned char>& buffer, int bufLength);
 
 	//Returns true if SOCKET is not an INVALID_SOCKET
 	bool IsInitialized();

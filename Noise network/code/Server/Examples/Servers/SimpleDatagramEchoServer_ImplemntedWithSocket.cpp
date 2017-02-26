@@ -41,7 +41,7 @@ namespace Examples
 
 		std::cout << "Waiting for messages" << std::endl;
 
-		std::vector<char> buffer;
+		std::vector<unsigned char> buffer;
 		SocketAddress from = SocketAddressFactory::Create(AF_INET);
 
 		int result = 0;

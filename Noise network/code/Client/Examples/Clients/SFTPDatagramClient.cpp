@@ -54,12 +54,12 @@ void sftpProtocol(std::string filename, DatagramConnection& socket)
 
 	int totalSent = 0;
 	int readSize = 1400;
-	std::vector<char> data;
+	std::vector<unsigned char> data;
 	data.resize(readSize);
 	SocketAddress addr = SocketAddressFactory::Create(AF_INET);
 	do
 	{
-		inFile.read(&data[0], readSize);
+		inFile.read((char*)&data[0], readSize);
 
 		int result = socket.Send(data, (int)inFile.gcount());
 		if (result == -1)

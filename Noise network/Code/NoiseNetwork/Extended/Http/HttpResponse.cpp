@@ -1,6 +1,7 @@
 #include "HttpResponse.h"
 
 #include <sstream>
+#include <iterator>
 
 #include "Utilities/StringUtils.h"
 #include "ParseException.h"

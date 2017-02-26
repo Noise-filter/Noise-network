@@ -82,7 +82,7 @@ bool StreamConnection::Disconnect()
 	return true;
 }
 
-int StreamConnection::Send(std::vector<char>& buffer, int bufLength)
+int StreamConnection::Send(std::vector<unsigned char>& buffer, int bufLength)
 {
 	if (connected)
 	{
@@ -92,7 +92,7 @@ int StreamConnection::Send(std::vector<char>& buffer, int bufLength)
 	return 0;
 }
 
-int StreamConnection::Recv(std::vector<char>& buffer, int bufLength)
+int StreamConnection::Recv(std::vector<unsigned char>& buffer, int bufLength)
 {
 	if (connected)
 	{

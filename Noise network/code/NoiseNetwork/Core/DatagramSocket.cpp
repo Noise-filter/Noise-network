@@ -42,16 +42,16 @@ void DatagramSocket::Close()
 	socket = INVALID_SOCKET;
 }
 
-int DatagramSocket::Send(const SocketAddress address, std::vector<char>& buffer, int bufLength)
+int DatagramSocket::Send(const SocketAddress address, std::vector<unsigned char>& buffer, int bufLength)
 {
-	int result = sendto(socket, &buffer[0], bufLength, 0, (sockaddr*)*address, sizeof(sockaddr_in));
+	int result = sendto(socket, (const char*)&buffer[0], bufLength, 0, (sockaddr*)*address, sizeof(sockaddr_in));
 	return result;
 }
 
-int DatagramSocket::Recv(SocketAddress address, std::vector<char>& buffer, int bufLength)
+int DatagramSocket::Recv(SocketAddress address, std::vector<unsigned char>& buffer, int bufLength)
 {
 	int fromLen = sizeof(sockaddr_in);
-	int result = recvfrom(socket, &buffer[0], bufLength, 0, (sockaddr*)*address, &fromLen);
+	int result = recvfrom(socket, (char*)&buffer[0], bufLength, 0, (sockaddr*)*address, &fromLen);
 	return result;
 }
 

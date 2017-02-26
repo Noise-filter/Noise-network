@@ -6,11 +6,9 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
 
-class Test{};
-
 namespace NoiseNetworkTests
 {
-	TEST_CLASS(Test)
+	TEST_CLASS(WinsockFunctionTest)
 	{
 	public:
 		TEST_CLASS_INITIALIZE(BeforeClass)

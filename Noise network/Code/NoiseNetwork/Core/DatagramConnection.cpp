@@ -38,7 +38,7 @@ void DatagramConnection::Disconnect()
 	socket.Close();
 }
 
-int DatagramConnection::Send(std::vector<char>& buffer, int bufLength)
+int DatagramConnection::Send(std::vector<unsigned char>& buffer, int bufLength)
 {
 	if (connected)
 	{
@@ -47,7 +47,7 @@ int DatagramConnection::Send(std::vector<char>& buffer, int bufLength)
 	return 0;
 }
 
-int DatagramConnection::Recv(SocketAddress addr, std::vector<char>& buffer, int bufLength)
+int DatagramConnection::Recv(SocketAddress addr, std::vector<unsigned char>& buffer, int bufLength)
 {
 	if (connected)
 	{

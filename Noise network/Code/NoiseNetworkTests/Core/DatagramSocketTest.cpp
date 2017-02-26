@@ -65,7 +65,7 @@ namespace NoiseNetworkTests
 			Assert::IsTrue(serverSocket.IsInitialized());
 
 			string message = "TESTING testing";
-			vector<char> buffer;
+			vector<unsigned char> buffer;
 			buffer.assign(message.begin(), message.end());
 
 			int result = socket.Send(serverAddress, buffer, (int)buffer.size());
@@ -83,7 +83,7 @@ namespace NoiseNetworkTests
 				Assert::Fail(L"Recv failed with error code: " + WSAGetLastError());
 			}
 
-			string resultString = buffer.data();
+			string resultString = (char*)buffer.data();
 			Assert::AreEqual(message, resultString);
 			Assert::AreEqual((int)message.size(), result);
 
