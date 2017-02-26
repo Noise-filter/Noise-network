@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="Core\DatagramSocketTest.cpp" />
     <ClCompile Include="Core\PackingTest.cpp" />
+    <ClCompile Include="Core\SerializerTest.cpp" />
     <ClCompile Include="Core\WinsockFunctionTest.cpp" />
     <ClCompile Include="Extended\Http\HttpClientTest.cpp" />
     <ClCompile Include="Extended\Http\HttpRequestTest.cpp" />

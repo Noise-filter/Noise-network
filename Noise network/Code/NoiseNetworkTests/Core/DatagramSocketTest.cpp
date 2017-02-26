@@ -4,7 +4,6 @@
 
 #include "Core\SocketAddress.h"
 #include "Core\DatagramSocket.h"
-#include <iostream>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
