@@ -3,6 +3,7 @@
 
 #include <map>
 #include <string>
+#include <array>
 
 typedef std::map<std::string, std::string> FieldTable;
 
@@ -19,7 +20,7 @@ enum HttpMethod
 	PATCH
 };
 
-static std::string HttpMethodString[] = { "GET", "HEAD", "POST", "PUT", "DELETE", "TRACE", "OPTIONS", "CONNECT", "PATCH" };
+static std::array<std::string, 9> HttpMethodString = { "GET", "HEAD", "POST", "PUT", "DELETE", "TRACE", "OPTIONS", "CONNECT", "PATCH" };
 
 /* 
  * These codes have been taken directly from http://httpstatus.es/

@@ -23,8 +23,12 @@ std::string HttpRequest::GetRequestAsString()
 {
 	std::ostringstream out;
 
-	std::string method = HttpMethodString[this->method];
-	if (method.empty())
+	std::string method;
+	if (this->method >= 0 && this->method < HttpMethodString.size()) 
+	{
+		method = HttpMethodString[this->method];
+	}
+	else 
 	{
 		throw ParseException();
 	}

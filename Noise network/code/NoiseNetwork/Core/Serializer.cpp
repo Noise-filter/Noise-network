@@ -204,13 +204,13 @@ void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int inde
 
 void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int index, std::string& i)
 {
-	unsigned int size;
+	auto size = i.size();
 	Unpack(buffer, index, size);
 	i.reserve(size);
 	for (unsigned int j = 0; j < size; ++j)
 	{
 		char c;
-		Unpack(buffer, index + j + 4, c);
+		Unpack(buffer, index + j + sizeof(size), c);
 		i.push_back(c);
 	}
 }
