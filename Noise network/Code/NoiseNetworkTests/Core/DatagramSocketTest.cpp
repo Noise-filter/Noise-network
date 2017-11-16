@@ -8,122 +8,125 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
 
-TEST_CLASS(DatagramSocketTest)
+namespace NoiseNetworkTests
 {
-public:
-	DatagramSocketTest()
+	TEST_CLASS(DatagramSocketTest)
 	{
-		serverAddress = SocketAddressFactory::Create(serverIp, serverPort);
-	}
-
-	~DatagramSocketTest()
-	{
-	}
-
-	TEST_METHOD_INITIALIZE(Before)
-	{
-
-	}
-
-	TEST_CLASS_INITIALIZE(BeforeClass)
-	{
-		InitWinSock();
-	}
-
-	TEST_CLASS_CLEANUP(AfterClass)
-	{
-		ShutdownWinSock();
-	}
-
-	TEST_METHOD(BindAndInitSocket)
-	{
-		DatagramSocket socket;
-		createSocket(socket, "0.0.0.0", 0);
-		Assert::IsTrue(socket.IsInitialized());
-
-		DatagramSocket serverSocket;
-		createSocket(serverSocket, "0.0.0.0", serverPort);
-		Assert::IsTrue(serverSocket.IsInitialized());
-
-		socket.Close();
-		serverSocket.Close();
-	}
-
-	TEST_METHOD(SendPacketBackAndForth)
-	{
-		SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", serverPort);
-
-		DatagramSocket socket;
-		createSocket(socket, "0.0.0.0", 0);
-		Assert::IsTrue(socket.IsInitialized());
-
-		DatagramSocket serverSocket;
-		createSocket(serverSocket, "0.0.0.0", serverPort);
-		Assert::IsTrue(serverSocket.IsInitialized());
-
-		string message = "TESTING testing";
-		vector<unsigned char> buffer;
-		buffer.assign(message.begin(), message.end());
-
-		int result = socket.Send(serverAddress, buffer, (int)buffer.size());
-		if (result == SOCKET_ERROR)
+	public:
+		DatagramSocketTest()
 		{
-			Assert::Fail(L"Send failed with error code: " + WSAGetLastError());
+			serverAddress = SocketAddressFactory::Create(serverIp, serverPort);
 		}
 
-		buffer.clear();
-		buffer.resize(1024);
-
-		result = serverSocket.Recv(bindAddress, buffer, 1024);
-		if (result == SOCKET_ERROR)
+		~DatagramSocketTest()
 		{
-			Assert::Fail(L"Recv failed with error code: " + WSAGetLastError());
 		}
 
-		string resultString = (char*)buffer.data();
-		Assert::AreEqual(message, resultString);
-		Assert::AreEqual((int)message.size(), result);
-
-		socket.Close();
-		serverSocket.Close();
-	}
-
-	TEST_METHOD(SocketIsNotInitialized)
-	{
-		DatagramSocket socket;
-		Assert::IsFalse(socket.IsInitialized());
-	}
-
-	TEST_METHOD(CallBindBeforeInitShouldReturnFalse)
-	{
-		DatagramSocket socket;
-		bool result = socket.Bind(SocketAddressFactory::Create("0.0.0.0", 0));
-
-		Assert::IsFalse(result);
-	}
-
-private:
-	void createSocket(DatagramSocket& socket, string ip = "0.0.0.0", unsigned short port = 0)
-	{
-		SocketAddress bindAddress = SocketAddressFactory::Create(ip, port);
-
-		if (!socket.Init(bindAddress->GetFamily()))
+		TEST_METHOD_INITIALIZE(Before)
 		{
-			Assert::Fail(L"socket.Init() failed");
+
 		}
 
-		if (!socket.Bind(bindAddress))
+		TEST_CLASS_INITIALIZE(BeforeClass)
 		{
-			Assert::Fail(L"socket.Bind() failed");
+			InitWinSock();
 		}
-	}
 
-private:
-	SocketAddress serverAddress;
-	string serverIp = "127.0.0.1";
-	unsigned short serverPort = 61000;
+		TEST_CLASS_CLEANUP(AfterClass)
+		{
+			ShutdownWinSock();
+		}
 
-};
+		TEST_METHOD(BindAndInitSocket)
+		{
+			DatagramSocket socket;
+			createSocket(socket, "0.0.0.0", 0);
+			Assert::IsTrue(socket.IsInitialized());
+
+			DatagramSocket serverSocket;
+			createSocket(serverSocket, "0.0.0.0", serverPort);
+			Assert::IsTrue(serverSocket.IsInitialized());
+
+			socket.Close();
+			serverSocket.Close();
+		}
+
+		TEST_METHOD(SendPacketBackAndForth)
+		{
+			SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", serverPort);
+
+			DatagramSocket socket;
+			createSocket(socket, "0.0.0.0", 0);
+			Assert::IsTrue(socket.IsInitialized());
+
+			DatagramSocket serverSocket;
+			createSocket(serverSocket, "0.0.0.0", serverPort);
+			Assert::IsTrue(serverSocket.IsInitialized());
+
+			string message = "TESTING testing";
+			vector<unsigned char> buffer;
+			buffer.assign(message.begin(), message.end());
+
+			int result = socket.Send(serverAddress, buffer, (int)buffer.size());
+			if (result == SOCKET_ERROR)
+			{
+				Assert::Fail(L"Send failed with error code: " + WSAGetLastError());
+			}
+
+			buffer.clear();
+			buffer.resize(1024);
+
+			result = serverSocket.Recv(bindAddress, buffer, 1024);
+			if (result == SOCKET_ERROR)
+			{
+				Assert::Fail(L"Recv failed with error code: " + WSAGetLastError());
+			}
+
+			string resultString = (char*)buffer.data();
+			Assert::AreEqual(message, resultString);
+			Assert::AreEqual((int)message.size(), result);
+
+			socket.Close();
+			serverSocket.Close();
+		}
+
+		TEST_METHOD(SocketIsNotInitialized)
+		{
+			DatagramSocket socket;
+			Assert::IsFalse(socket.IsInitialized());
+		}
+
+		TEST_METHOD(CallBindBeforeInitShouldReturnFalse)
+		{
+			DatagramSocket socket;
+			bool result = socket.Bind(SocketAddressFactory::Create("0.0.0.0", 0));
+
+			Assert::IsFalse(result);
+		}
+
+	private:
+		void createSocket(DatagramSocket& socket, string ip = "0.0.0.0", unsigned short port = 0)
+		{
+			SocketAddress bindAddress = SocketAddressFactory::Create(ip, port);
+
+			if (!socket.Init(bindAddress->GetFamily()))
+			{
+				Assert::Fail(L"socket.Init() failed");
+			}
+
+			if (!socket.Bind(bindAddress))
+			{
+				Assert::Fail(L"socket.Bind() failed");
+			}
+		}
+
+	private:
+		SocketAddress serverAddress;
+		string serverIp = "127.0.0.1";
+		unsigned short serverPort = 61000;
+
+	};
+}
 
 namespace Microsoft
 {
