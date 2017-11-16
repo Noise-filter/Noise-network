@@ -32,7 +32,7 @@ notifications:
   
   slack:
     slack: noisenetwork:tFQLx2qxY6xfX05xHBZnfAAa
-	  
+    
   webhooks:
     urls:
     - https://hooks.slack.com/services/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
