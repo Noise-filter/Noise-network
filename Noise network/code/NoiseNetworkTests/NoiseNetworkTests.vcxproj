@@ -22,7 +22,7 @@
     <ProjectGuid>{C59F864A-008E-4905-B51F-70F69D815A71}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>NoiseNetworkTests</RootNamespace>
-	<PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -165,6 +165,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Core\DatagramSocketTest.cpp" />
+    <ClCompile Include="Core\ThreadedAcceptServerTest.cpp" />
     <ClCompile Include="Core\PackingTest.cpp" />
     <ClCompile Include="Core\SerializerTest.cpp" />
     <ClCompile Include="Core\WinsockFunctionTest.cpp" />
