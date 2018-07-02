@@ -27,7 +27,7 @@ void ThreadedAcceptServer::Stop(bool wait)
 {
 	socket.Close();
 
-	if (wait)
+	if (wait && running)
 	{
 		if (thread.joinable())
 		{
@@ -70,7 +70,7 @@ void ThreadedAcceptServer::Accept()
 		StreamConnection client = socket.Accept();
 
 		//Add the client if it is a valid socket
-		if (!client.IsConnected())
+		if (client.IsConnected())
 		{
 			clientSockets.push(client);
 		}
@@ -93,7 +93,7 @@ bool ThreadedAcceptServer::CheckForAcceptError()
 
 	switch (errorCode)
 	{
-		//These errors should not make the thread to stop
+		//These errors should not make the thread stop
 	case WSAEWOULDBLOCK:
 	case WSAECONNRESET:
 		return true;

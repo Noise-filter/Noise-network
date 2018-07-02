@@ -24,7 +24,7 @@ std::string HttpRequest::GetRequestAsString()
 	std::ostringstream out;
 
 	std::string method;
-	if (this->method >= 0 && this->method < HttpMethodString.size()) 
+	if (this->method >= 0 && this->method < (int)HttpMethodString.size()) 
 	{
 		method = HttpMethodString[this->method];
 	}
