@@ -137,6 +137,22 @@ int StreamSocket::Send(std::vector<unsigned char>& buffer, int bufLength)
 	return result;
 }
 
+int StreamSocket::SendAll(std::vector<unsigned char>& buffer, int bufLength)
+{
+	int size = 0;
+	while (size < bufLength) {
+		int result = send(socket, (const char*)&buffer[size], bufLength - size, 0);
+
+		if (result > 0) {
+			size += result;
+		}
+		else {
+			return result;
+		}
+	}
+	return size;
+}
+
 int StreamSocket::Recv(std::vector<unsigned char>& buffer, int bufLength)
 {
 	int result = recv(socket, (char*)&buffer[0], bufLength, 0);

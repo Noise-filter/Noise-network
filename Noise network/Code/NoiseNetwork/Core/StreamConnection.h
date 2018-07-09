@@ -17,6 +17,8 @@ public:
 	bool Disconnect();
 
 	int Send(std::vector<unsigned char>& buffer, int bufLength);
+	int SendAll(std::vector<unsigned char>& buffer, int bufLength);
+
 	int Recv(std::vector<unsigned char>& buffer, int bufLength);
 
 	bool IsConnected();

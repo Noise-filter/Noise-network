@@ -36,6 +36,9 @@ public:
 	//Will note clear or resize the buffer
 	int Send(std::vector<unsigned char>& buffer, int bufLength);
 
+	//Will send until everything in the buffer is sent
+	int SendAll(std::vector<unsigned char>& buffer, int bufLength);
+
 	//Will not clear or resize the buffer
 	int Recv(std::vector<unsigned char>& buffer, int bufLength);
 

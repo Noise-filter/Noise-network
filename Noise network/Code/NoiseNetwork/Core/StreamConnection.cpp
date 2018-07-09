@@ -92,6 +92,16 @@ int StreamConnection::Send(std::vector<unsigned char>& buffer, int bufLength)
 	return 0;
 }
 
+int StreamConnection::SendAll(std::vector<unsigned char>& buffer, int bufLength)
+{
+	if (connected)
+	{
+		return socket.SendAll(buffer, bufLength);
+	}
+
+	return 0;
+}
+
 int StreamConnection::Recv(std::vector<unsigned char>& buffer, int bufLength)
 {
 	if (connected)
