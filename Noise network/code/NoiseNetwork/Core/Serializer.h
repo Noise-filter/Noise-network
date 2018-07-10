@@ -39,6 +39,17 @@ public:
 		}
 	}
 
+	template<class T>
+	static void Pack(std::vector<unsigned char>& buffer, const T& value) {
+		Pack(value, buffer);
+	}
+
+	template<class U, class... T>
+	static void Pack(std::vector<unsigned char>& buffer, const U& value, T&&... values) {
+		Pack(value, buffer);
+		Pack(buffer, std::forward<T>(values)...);
+	}
+
 	//Unpack
 	static unsigned int Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, bool& i);
 
@@ -66,16 +77,30 @@ public:
 		unsigned int newIndex = index;
 		size_t size;
 		newIndex = Unpack(buffer, newIndex, size);
+
+		i.resize(size);
 		for (unsigned int j = 0; j < size; j++)
 		{
-			typename ContainerType::value_type s;
-			newIndex = Unpack(buffer, newIndex, s);
-			i.insert(end(i), s);
+			typename ContainerType::value_type value;
+			newIndex = Unpack(buffer, newIndex, value);
+			i.at(j) = value;
 		}
 		return newIndex;
 	}
 
+
+	template <class U, class... T>
+	static unsigned int Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, U& value, T&... values) {
+		unsigned int i = UnpackTemplate(buffer, index, value);
+		return Unpack(buffer, i, values...);
+	}
+
 private:
+	template <class T>
+	static unsigned int UnpackTemplate(const std::vector<unsigned char>& buffer, const unsigned int index, T& value) {
+		return Unpack(buffer, index, value);
+	}
+
 	//Pack
 	static unsigned __int64 Pack754(long double f, unsigned bits, unsigned expbits);
 

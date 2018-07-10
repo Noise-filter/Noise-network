@@ -178,6 +178,43 @@ namespace NoiseNetworkTests
 			AreContainersEqual<vector<int>>(data, result);
 		}
 
+		TEST_METHOD(VariadicTemplates)
+		{
+			std::vector<unsigned char> buffer;
+			Serializer::Pack(buffer, std::string("hello how are you?"), 12, 1.12345, std::vector<int>{1, 6, 9});
+
+			string str;
+			int integer;
+			double doubleValue;
+			std::vector<int> numbers;
+			Serializer::Unpack(buffer, 0, str, integer, doubleValue, numbers);
+
+			Assert::AreEqual(std::string("hello how are you?"), str);
+			Assert::AreEqual(12, integer);
+			Assert::AreEqual(1.12345, doubleValue);
+			AreContainersEqual(std::vector<int>{1, 6, 9}, numbers);
+		}
+
+		TEST_METHOD(VariadicTemplates_SeperateUnpackCalls)
+		{
+			std::vector<unsigned char> buffer;
+			Serializer::Pack(buffer, std::string("hello how are you?"), 12, 1.12345, std::vector<int>{1, 6, 9});
+
+			string str;
+			int integer;
+			double doubleValue;
+			std::vector<int> numbers;
+			unsigned int index = Serializer::Unpack(buffer, 0, str);
+			index = Serializer::Unpack(buffer, index, integer);
+			index = Serializer::Unpack(buffer, index, doubleValue);
+			index = Serializer::Unpack(buffer, index, numbers);
+
+			Assert::AreEqual(std::string("hello how are you?"), str);
+			Assert::AreEqual(12, integer);
+			Assert::AreEqual(1.12345, doubleValue);
+			AreContainersEqual(std::vector<int>{1, 6, 9}, numbers);
+		}
+
 	private:
 		template<typename Type>
 		void TestSomeIntegerValues()
