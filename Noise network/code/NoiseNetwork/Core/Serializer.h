@@ -29,50 +29,50 @@ public:
 	static void Pack(const char i[], std::vector<unsigned char>& buffer);
 	static void Pack(char i[], std::vector<unsigned char>& buffer);
 
-	template<class ForwardIteratorType>
-	static void Pack(ForwardIteratorType begin, ForwardIteratorType end, std::vector<unsigned char>& buffer)
+	template<class Container>
+	static void Pack(Container container, std::vector<unsigned char>& buffer)
 	{
-		unsigned int size = (unsigned int)std::distance(begin, end);
+		size_t size = container.size();
 		Pack(size, buffer);
-		while (begin != end)
-		{
-			Pack(*begin, buffer);
-			++begin;
+		for (auto& e : container) {
+			Pack(e, buffer);
 		}
 	}
 
 	//Unpack
-	static void Unpack(const std::vector<unsigned char>& buffer, const int index, bool& i);
+	static unsigned int Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, bool& i);
 
-	static void Unpack(const std::vector<unsigned char>& buffer, const int index, char& i);
-	static void Unpack(const std::vector<unsigned char>& buffer, const int index, unsigned char& i);
+	static unsigned int Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, char& i);
+	static unsigned int Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, unsigned char& i);
 
-	static void Unpack(const std::vector<unsigned char>& buffer, const int index, short& i);
-	static void Unpack(const std::vector<unsigned char>& buffer, const int index, unsigned short& i);
+	static unsigned int Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, short& i);
+	static unsigned int Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, unsigned short& i);
 
-	static void Unpack(const std::vector<unsigned char>& buffer, const int index, int& i);
-	static void Unpack(const std::vector<unsigned char>& buffer, const int index, unsigned int& i);
+	static unsigned int Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, int& i);
+	static unsigned int Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, unsigned int& i);
 
-	static void Unpack(const std::vector<unsigned char>& buffer, const int index, long long& i);
-	static void Unpack(const std::vector<unsigned char>& buffer, const int index, unsigned long long& i);
+	static unsigned int Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, long long& i);
+	static unsigned int Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, unsigned long long& i);
 
-	static void Unpack(const std::vector<unsigned char>& buffer, const int index, float& i);
-	static void Unpack(const std::vector<unsigned char>& buffer, const int index, double& i);
+	static unsigned int Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, float& i);
+	static unsigned int Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, double& i);
 
-	static void Unpack(const std::vector<unsigned char>& buffer, const int index, std::string& i);
-	static void Unpack(const std::vector<unsigned char>& buffer, const int index, char i[]);
+	static unsigned int Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, std::string& i);
+	static unsigned int Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, char i[]);
 
 	template <class ContainerType>
-	static void Unpack(const std::vector<unsigned char>& buffer, const int index, ContainerType& i)
+	static unsigned int Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, ContainerType& i)
 	{
-		unsigned int size;
-		Unpack(buffer, index, size);
+		unsigned int newIndex = index;
+		size_t size;
+		newIndex = Unpack(buffer, newIndex, size);
 		for (unsigned int j = 0; j < size; j++)
 		{
 			typename ContainerType::value_type s;
-			Unpack(buffer, index + (j * sizeof(s)) + 4, s);
+			newIndex = Unpack(buffer, newIndex, s);
 			i.insert(end(i), s);
 		}
+		return newIndex;
 	}
 
 private:

@@ -36,9 +36,6 @@
     <ClCompile Include="Core\WinsockFunctionTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Core\PackingTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Core\SerializerTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

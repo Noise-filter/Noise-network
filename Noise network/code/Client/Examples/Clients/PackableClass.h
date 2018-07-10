@@ -5,7 +5,7 @@
 #include <string>
 
 #include "Core\Packable.h"
-#include "Core\Packing.h"
+#include "Core\Serializer.h"
 
 class PackableClass : public Packable
 {
@@ -22,26 +22,19 @@ public:
 
 	virtual std::vector<unsigned char> pack()
 	{
-		std::vector<unsigned char> buffer = Packing::pack(name);
-
-		std::vector<unsigned char> temp = Packing::pack(age);
-		buffer.insert(std::end(buffer), std::begin(temp), std::end(temp));
-
-		temp = Packing::pack(length);
-		buffer.insert(std::end(buffer), std::begin(temp), std::end(temp));
-
+		std::vector<unsigned char> buffer;
+		Serializer::Pack(name, buffer);
+		Serializer::Pack(age, buffer);
+		Serializer::Pack(length, buffer);
 		return buffer;
 	}
 
 	virtual void unpack(std::vector<unsigned char> bytes)
 	{
 		int index = 0;
-		name = Packing::unpackStr(&bytes[index]);
-		index += 2 + name.size();
-		age = Packing::unpackS(&bytes[index]);
-		index += 2;
-		length = Packing::unpackf(&bytes[index]);
-		index += 4;
+		index = Serializer::Unpack(bytes, index, name);
+		index = Serializer::Unpack(bytes, index, age);
+		index = Serializer::Unpack(bytes, index, length);
 	}
 
 	void print()

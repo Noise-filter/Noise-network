@@ -83,8 +83,9 @@ void Serializer::Pack(const double i, std::vector<unsigned char>& buffer)
 
 void Serializer::Pack(const std::string i, std::vector<unsigned char>& buffer)
 {
+	buffer.reserve(buffer.size() + 4 + i.size());
 	Pack(i.size(), buffer);
-	for_each(begin(i), end(i), [&buffer](char c) { Pack(c, buffer); });
+	buffer.insert(buffer.end(), i.begin(), i.end());
 }
 
 void Serializer::Pack(const char i[], std::vector<unsigned char>& buffer)
@@ -98,15 +99,16 @@ void Serializer::Pack(const char i[], std::vector<unsigned char>& buffer)
 
 void Serializer::Pack(char i[], std::vector<unsigned char>& buffer)
 {
-	Pack((const char*)i, buffer);
+	Pack(const_cast<const char*>(i), buffer);
 }
 
-void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int index, bool& i)
+unsigned int Serializer::Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, bool& i)
 {
 	i = buffer.at(index) != 0;
+	return index + sizeof(i);
 }
 
-void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int index, char& i)
+unsigned int Serializer::Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, char& i)
 {
 	if (buffer.at(index) <= 0x7f)
 	{
@@ -116,14 +118,16 @@ void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int inde
 	{
 		i = (-1 - (unsigned char)(0xffu - buffer.at(index)));
 	}
+	return index + sizeof(i);
 }
 
-void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int index, unsigned char& i)
+unsigned int Serializer::Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, unsigned char& i)
 {
 	i = buffer.at(index);
+	return index + sizeof(i);
 }
 
-void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int index, short& i)
+unsigned int Serializer::Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, short& i)
 {
 	i = ((short)buffer.at(index) << 8) | buffer.at(index + 1);
 
@@ -131,14 +135,16 @@ void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int inde
 	{
 		i = -1 - (unsigned short)(0xffffu - i);
 	}
+	return index + sizeof(i);
 }
 
-void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int index, unsigned short& i)
+unsigned int Serializer::Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, unsigned short& i)
 {
 	i = ((unsigned int)buffer.at(index) << 8) | buffer.at(index + 1);
+	return index + sizeof(i);
 }
 
-void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int index, int& i)
+unsigned int Serializer::Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, int& i)
 {
 	i = ((int)buffer.at(index) << 24) |
 		((int)buffer.at(index + 1) << 16) |
@@ -149,17 +155,19 @@ void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int inde
 	{
 		i = -1 - (int)(0xffffffffu - i);
 	}
+	return index + sizeof(i);
 }
 
-void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int index, unsigned int& i)
+unsigned int Serializer::Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, unsigned int& i)
 {
 	i = ((unsigned int)buffer.at(index) << 24) |
 		((unsigned int)buffer.at(index + 1) << 16) |
 		((unsigned int)buffer.at(index + 2) << 8) |
 		((unsigned int)buffer.at(index + 3));
+	return index + sizeof(i);
 }
 
-void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int index, long long& i)
+unsigned int Serializer::Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, long long& i)
 {
 	i = ((long long)buffer.at(index) << 56) |
 		((long long)buffer.at(index + 1) << 48) |
@@ -174,9 +182,10 @@ void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int inde
 	{
 		i = -1 - (__int64)(0xffffffffffffffffu - i);
 	}
+	return index + sizeof(i);
 }
 
-void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int index, unsigned long long& i)
+unsigned int Serializer::Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, unsigned long long& i)
 {
 	i = ((unsigned long long)buffer.at(index) << 56) |
 		((unsigned long long)buffer.at(index + 1) << 48) |
@@ -186,43 +195,51 @@ void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int inde
 		((unsigned long long)buffer.at(index + 5) << 16) |
 		((unsigned long long)buffer.at(index + 6) << 8) |
 		((unsigned long long)buffer.at(index + 7));
+	return index + sizeof(i);
 }
 
-void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int index, float& i)
+unsigned int Serializer::Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, float& i)
 {
 	unsigned int tempFloat;
 	Unpack(buffer, index, tempFloat);
 	i = (float)Unpack754(tempFloat, 32, 8);
+	return index + sizeof(i);
 }
 
-void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int index, double& i)
+unsigned int Serializer::Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, double& i)
 {
 	unsigned __int64 tempDouble;
 	Unpack(buffer, index, tempDouble);
 	i = Unpack754(tempDouble, 64, 11);
+	return index + sizeof(i);
 }
 
-void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int index, std::string& i)
+unsigned int Serializer::Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, std::string& i)
 {
-	auto size = i.size();
-	Unpack(buffer, index, size);
-	i.reserve(size);
+	unsigned int newIndex = index;
+	size_t size = 0;
+	newIndex = Unpack(buffer, newIndex, size);
+
+	i.resize(size);
 	for (unsigned int j = 0; j < size; ++j)
 	{
 		char c;
-		Unpack(buffer, index + j + sizeof(size), c);
-		i.push_back(c);
+		newIndex = Unpack(buffer, newIndex, c);
+		i.at(j) = c;
 	}
+	return newIndex;
 }
 
-void Serializer::Unpack(const std::vector<unsigned char>& buffer, const int index, char i[])
+unsigned int Serializer::Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, char i[])
 {
+	unsigned int newIndex = index;
 	char c = 'a';
 	for (unsigned int j = 0; c != '\0'; ++j)
 	{
-		Unpack(buffer, index + j, c);
+		newIndex = Unpack(buffer, newIndex, c);
 		i[j] = c;
 	}
+	return newIndex;
 }
 
 //Private
