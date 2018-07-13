@@ -22,5 +22,5 @@ public:
 		return errorCode;
 	}
 
-	static const int PACKAGE_ID = 1;
+	static const int PACKAGE_ID = -1;
 };
