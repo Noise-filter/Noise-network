@@ -18,8 +18,10 @@ public:
 
 	int Send(std::vector<unsigned char>& buffer, int bufLength);
 	int SendAll(std::vector<unsigned char>& buffer, int bufLength);
+	int SendAll(const BasePackage& package);
 
 	int Recv(std::vector<unsigned char>& buffer, int bufLength);
+	std::unique_ptr<BasePackage> RecvAll();
 
 	bool IsConnected();
 
@@ -29,6 +31,8 @@ private:
 	StreamSocket socket;
 
 	bool connected;
+
+	std::vector<unsigned char> recvBuffer;
 
 };
 

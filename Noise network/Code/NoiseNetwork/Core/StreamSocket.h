@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "SocketAddress.h"
+#include "Package\BasePackage.h"
 
 class StreamConnection;
 
@@ -38,6 +39,7 @@ public:
 
 	//Will send until everything in the buffer is sent
 	int SendAll(std::vector<unsigned char>& buffer, int bufLength);
+	int SendAll(const BasePackage& package);
 
 	//Will not clear or resize the buffer
 	int Recv(std::vector<unsigned char>& buffer, int bufLength);

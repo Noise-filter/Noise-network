@@ -1,5 +1,13 @@
 #include "StreamConnection.h"
 
+#include <chrono>
+#include <tuple>
+#include "Package\PackageFactory.h"
+#include "WinsockFunctions.h"
+
+using namespace std::chrono;
+using namespace std::chrono_literals;
+
 StreamConnection::StreamConnection()
 {
 	connected = false;
@@ -36,6 +44,7 @@ StreamConnection::~StreamConnection()
 
 bool StreamConnection::Connect(SocketAddress addr)
 {
+	recvBuffer.clear();
 	//Try to initialize socket if it isn't already initialized
 	if (!socket.IsInitialized())
 	{
@@ -64,6 +73,7 @@ bool StreamConnection::Reconnect()
 	//Only try to reconnect if connect has already been called 
 	if (socket.GetAddress())
 	{
+		recvBuffer.clear();
 		return Connect(socket.GetAddress());
 	}
 	
@@ -77,6 +87,7 @@ bool StreamConnection::Disconnect()
 		socket.Shutdown(SD_SEND);
 		socket.Close();
 		connected = false;
+		recvBuffer.clear();
 	}
 
 	return true;
@@ -102,6 +113,16 @@ int StreamConnection::SendAll(std::vector<unsigned char>& buffer, int bufLength)
 	return 0;
 }
 
+int StreamConnection::SendAll(const BasePackage& package)
+{
+	if (connected)
+	{
+		return socket.SendAll(package);
+	}
+
+	return 0;
+}
+
 int StreamConnection::Recv(std::vector<unsigned char>& buffer, int bufLength)
 {
 	if (connected)
@@ -110,6 +131,47 @@ int StreamConnection::Recv(std::vector<unsigned char>& buffer, int bufLength)
 	}
 
 	return 0;
+}
+
+std::unique_ptr<BasePackage> StreamConnection::RecvAll()
+{
+	if (connected)
+	{
+		// Check recvBuffer for package first
+		while (true) {
+			if (recvBuffer.size() >= 4) {
+				unsigned int size = 0;
+				unsigned int index = Serializer::Unpack(recvBuffer, 0, size);
+
+				if (size != 0 && size <= recvBuffer.size()) {
+					// Unpack a package from recvBuffer
+					std::vector<unsigned char> msgBuffer = { begin(recvBuffer), begin(recvBuffer) + size };
+					recvBuffer.erase(begin(recvBuffer), begin(recvBuffer) + size);
+					int id;
+					index = Serializer::Unpack(msgBuffer, index, id);
+
+					//Get correct package type based on id
+					auto package = PackageFactory::getInstance().create(id);
+
+					//Call unpack and return the Package
+					index = 0;
+					package->unpack(msgBuffer, index);
+					return package;
+				}
+			}
+
+			std::vector<unsigned char> buffer(512);
+			int result = Recv(buffer, 512);
+
+			if (result > 0) {
+				recvBuffer.insert(end(recvBuffer), begin(buffer), begin(buffer) + result);
+			}
+			else {
+				return std::make_unique<ErrorPackage>(GetLastSystemError());
+			}
+		}
+	}
+	return std::make_unique<ErrorPackage>(PackageErrors::NOT_CONNECTED);
 }
 
 bool StreamConnection::IsConnected()

@@ -50,7 +50,6 @@ bool StreamSocket::Connect(SocketAddress addr)
 
 	this->addr = addr;
 
-	//StreamConnection successful!
 	return true;
 }
 
@@ -151,6 +150,18 @@ int StreamSocket::SendAll(std::vector<unsigned char>& buffer, int bufLength)
 		}
 	}
 	return size;
+}
+
+int StreamSocket::SendAll(const BasePackage& package)
+{
+	auto buffer = package.pack();
+	std::vector<unsigned char> sizeBuffer;
+	Serializer::Pack(buffer.size(), sizeBuffer);
+	buffer.at(0) = sizeBuffer.at(0);
+	buffer.at(1) = sizeBuffer.at(1);
+	buffer.at(2) = sizeBuffer.at(2);
+	buffer.at(3) = sizeBuffer.at(3);
+	return SendAll(buffer, buffer.size());
 }
 
 int StreamSocket::Recv(std::vector<unsigned char>& buffer, int bufLength)

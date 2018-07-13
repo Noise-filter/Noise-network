@@ -9,6 +9,7 @@
 const int MAX_BUFFER_LENGTH = 512;
 
 #include "../Client/Examples/Clients/PackableClass.h"
+#include "Core\Package\PackageFactory.h"
 
 namespace Examples
 {
@@ -20,11 +21,11 @@ namespace Examples
 		}
 
 		std::cout << "Hello World!" << std::endl;
-
-		StreamSocket socket;
+		
+		PackageFactory::getInstance().registerPackage(0, []() { return new PackableClass; });
 
 		SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", port);
-
+		StreamSocket socket;
 		if (!socket.Init(bindAddress->GetFamily()))
 		{
 			std::cout << "Error initializing socket" << std::endl;
@@ -60,30 +61,23 @@ namespace Examples
 			ShutdownWinSock();
 			return;
 		}
-
-		std::cout << "Client connected: " << client.GetSocket().GetSocket() << std::endl;
-
 		//No longer need server socket
 		socket.Close();
 
-		std::vector<unsigned char> buffer;
+		std::cout << "Client connected: " << client.GetSocket().GetSocket() << std::endl;
 
 		int result = 0;
 		do
 		{
-			buffer.clear();
-			buffer.resize(MAX_BUFFER_LENGTH);
-			result = client.Recv(buffer, MAX_BUFFER_LENGTH);
-			if (result > 0)
+			auto package = client.RecvAll();
+			if (package->getId() >= 0)
 			{
 				std::cout << "Bytes received: " << result << std::endl;
-				//std::cout << "Message received: " << &buffer[0] << std::endl;
-				PackableClass person;
-				person.unpack(buffer);
-				person.print();
-				buffer = person.pack();
 
-				result = client.Send(buffer, buffer.size());
+				auto person = dynamic_cast<PackableClass*>(package.get());
+				person->print();
+
+				result = client.SendAll(*person);
 				if (result == SOCKET_ERROR)
 				{
 					std::cout << "Send failed with error: " << WSAGetLastError() << std::endl;
@@ -93,13 +87,11 @@ namespace Examples
 					std::cout << "Bytes send: " << result << std::endl;
 				}
 			}
-			else if (result == 0)
-			{
-				std::cout << "StreamConnection closing..." << std::endl;
-			}
 			else
 			{
-				std::cout << "Recv failed with error: " << WSAGetLastError() << std::endl;
+				auto errorPackage = dynamic_cast<ErrorPackage*>(package.get());
+				std::cout << "Recv failed with error: " << errorPackage->getErrorCode() << std::endl;
+				std::cout << "StreamConnection closing..." << std::endl;
 				client.Disconnect();
 			}
 

@@ -7,6 +7,7 @@
 #include "Core\StreamConnection.h"
 
 #include "Core\SocketAddress.h"
+#include "Core\Package\PackageFactory.h"
 
 #include "PackableClass.h"
 
@@ -19,37 +20,21 @@ void ClientExamples::SimpleMessageClient_ImplementedWithStreamConnection(std::st
 
 	std::cout << "Hello World!" << std::endl;
 
-	StreamConnection con;
+	PackageFactory::getInstance().registerPackage(0, []() { return new PackableClass; });
 
 	SocketAddress addr = SocketAddressFactory::Create(address, port);
-
+	StreamConnection con;
 	if (!con.Connect(addr))
 	{
 		std::cout << "Error connecting" << std::endl;
 		return;
 	}
 
-	std::string text;
-	std::vector<unsigned char> buffer;
-
-	PackableClass person;
-	
 	int result = 0;
 	do
 	{
-		std::cout << "> ";
-		//getline(std::cin, text);
-
-		//if (text.size() == 0)
-		//{
-		//	break;
-		//}
-
-		//buffer.clear();
-		//buffer.assign(text.begin(), text.end());
-		buffer = person.pack();
-
-		result = con.Send(buffer, (int)buffer.size());
+		PackableClass person;
+		result = con.SendAll(person);
 		if (result == SOCKET_ERROR)
 		{
 			std::cout << "Send failed with error: " << WSAGetLastError() << std::endl;
@@ -58,29 +43,19 @@ void ClientExamples::SimpleMessageClient_ImplementedWithStreamConnection(std::st
 
 		std::cout << "Bytes sent: " << result << std::endl;
 
-		buffer.clear();
-		buffer.resize(MAX_BUFFER_LENGTH);
-
-		result = con.Recv(buffer, MAX_BUFFER_LENGTH);
-		if (result > 0)
-		{
-			std::cout << "Bytes received: " << result << std::endl;
-			//std::cout << "Message received: " << buffer.data() << std::endl;
-			PackableClass person;
-			person.unpack(buffer);
-			person.print();
-		}
-		else if (result == 0)
-		{
-			std::cout << "Connection closed" << std::endl;
+		auto package = con.RecvAll();
+		switch (package->getId()) {
+		case ErrorPackage::PACKAGE_ID: {
+			auto errorPackage = dynamic_cast<ErrorPackage*>(package.get());
+			int errorCode = errorPackage->getErrorCode();
+			std::cout << "Recv failed with error: " << errorCode << std::endl;
 			return;
+		} break;
+		default:
+			std::cout << "Bytes received: " << package->getSize() << std::endl;
+			dynamic_cast<PackableClass*>(package.get())->print();
+			break;
 		}
-		else
-		{
-			std::cout << "Recv failed with error: " << WSAGetLastError() << std::endl;
-			return;
-		}
-
 	} while (1);
 
 	result = con.Disconnect();

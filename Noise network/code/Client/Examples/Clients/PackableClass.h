@@ -4,13 +4,12 @@
 #include <iostream>
 #include <string>
 
-#include "Core\Packable.h"
-#include "Core\Serializer.h"
+#include "Core\Package\BasePackage.h"
 
-class PackableClass : public Packable
+class PackableClass : public BasePackage
 {
 public:
-	PackableClass()
+	PackableClass() : BasePackage(0)
 	{
 		name = "Pontus Fredrik Fransson";
 		age = 18;
@@ -21,24 +20,17 @@ public:
 	virtual ~PackableClass()
 	{}
 
-	virtual std::vector<unsigned char> pack()
+	virtual std::vector<unsigned char> pack() const
 	{
-		std::vector<unsigned char> buffer;
+		auto buffer = BasePackage::pack();
 		Serializer::Pack(buffer, name, age, length, numbers);
-
-		//Serializer::Pack(name, buffer);
-		//Serializer::Pack(age, buffer);
-		//Serializer::Pack(length, buffer);
 		return buffer;
 	}
 
-	virtual void unpack(const std::vector<unsigned char>& bytes)
+	virtual void unpack(const std::vector<unsigned char>& bytes, unsigned int& index)
 	{
-		int index = 0;
+		BasePackage::unpack(bytes, index);
 		Serializer::Unpack(bytes, index, name, age, length, numbers);
-		//index = Serializer::Unpack(bytes, index, name);
-		//index = Serializer::Unpack(bytes, index, age);
-		//index = Serializer::Unpack(bytes, index, length);
 	}
 
 	void print()

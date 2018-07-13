@@ -157,11 +157,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\AcceptSocket.h" />
+    <ClInclude Include="Core\Package\BasePackage.h" />
     <ClInclude Include="Core\Buffer.h" />
     <ClInclude Include="Core\DatagramConnection.h" />
     <ClInclude Include="Core\DatagramSocket.h" />
+    <ClInclude Include="Core\Package\ErrorPackage.h" />
     <ClInclude Include="Core\IOCompletionPort.h" />
-    <ClInclude Include="Core\Packable.h" />
+    <ClInclude Include="Core\Package\Packable.h" />
+    <ClInclude Include="Core\Package\PackageFactory.h" />
     <ClInclude Include="Core\SelectServer.h" />
     <ClInclude Include="Core\SocketAddress.h" />
     <ClInclude Include="Core\SocketAddress\SocketAddressFactory.h" />
