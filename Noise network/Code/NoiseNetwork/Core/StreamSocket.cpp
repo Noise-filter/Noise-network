@@ -156,7 +156,7 @@ int StreamSocket::SendAll(const BasePackage& package)
 {
 	auto buffer = package.pack();
 	std::vector<unsigned char> sizeBuffer;
-	Serializer::Pack(buffer.size(), sizeBuffer);
+	Serializer::Pack((unsigned int)buffer.size(), sizeBuffer);
 	buffer.at(0) = sizeBuffer.at(0);
 	buffer.at(1) = sizeBuffer.at(1);
 	buffer.at(2) = sizeBuffer.at(2);
