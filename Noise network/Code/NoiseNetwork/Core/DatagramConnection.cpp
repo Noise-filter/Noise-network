@@ -6,11 +6,7 @@ DatagramConnection::DatagramConnection()
 	connected = false;
 }
 
-DatagramConnection::~DatagramConnection()
-{
-}
-
-bool DatagramConnection::Connect(SocketAddress addr, SocketAddress bindAddress)
+bool DatagramConnection::Connect(const std::shared_ptr<SocketAddressInterface>& addr, SocketAddressInterface& bindAddress)
 {
 	this->addr = addr;
 
@@ -42,16 +38,16 @@ int DatagramConnection::Send(std::vector<unsigned char>& buffer, int bufLength)
 {
 	if (connected)
 	{
-		return socket.Send(addr, buffer, bufLength);
+		return socket.Send(*addr, buffer, bufLength);
 	}
 	return 0;
 }
 
-int DatagramConnection::Recv(SocketAddress addr, std::vector<unsigned char>& buffer, int bufLength)
+int DatagramConnection::Recv(std::vector<unsigned char>& buffer, int bufLength)
 {
 	if (connected)
 	{
-		return socket.Recv(addr, buffer, bufLength);
+		return socket.Recv(*addr, buffer, bufLength);
 	}
 	return 0;
 }
@@ -61,7 +57,7 @@ bool DatagramConnection::IsConnected()
 	return connected;
 }
 
-SocketAddress DatagramConnection::GetAddress()
+const SocketAddressInterface& DatagramConnection::GetAddress()
 {
-	return addr;
+	return *addr;
 }

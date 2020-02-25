@@ -15,12 +15,11 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramConnection(std::
 
 	std::cout << "Hello World!" << std::endl;
 
-	DatagramConnection socket;
-	SocketAddress serverAddr = SocketAddressFactory::Create(address, port);
-	SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", 0);
-	SocketAddress recvAddr = SocketAddressFactory::Create(AF_INET);
+	DatagramConnection client;
+	auto serverAddr = SocketAddressFactory::Create(address, port);
+	auto bindAddress = SocketAddressFactory::Create("0.0.0.0", 0);
 
-	if (!socket.Connect(serverAddr, bindAddress))
+	if (!client.Connect(std::move(serverAddr), *bindAddress))
 	{
 		std::cout << "Error initializing socket" << std::endl;
 		return;
@@ -43,7 +42,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramConnection(std::
 		buffer.clear();
 		buffer.assign(text.begin(), text.end());
 
-		result = socket.Send(buffer, (int)text.size());
+		result = client.Send(buffer, (int)text.size());
 		if (result == SOCKET_ERROR)
 		{
 			std::cout << "Send failed with error: " << WSAGetLastError() << std::endl;
@@ -55,7 +54,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramConnection(std::
 		buffer.clear();
 		buffer.resize(MAX_BUFFER_LENGTH);
 
-		result = socket.Recv(recvAddr, buffer, MAX_BUFFER_LENGTH);
+		result = client.Recv(buffer, MAX_BUFFER_LENGTH);
 		if (result > 0)
 		{
 			std::cout << "Bytes received: " << result << std::endl;
@@ -74,7 +73,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramConnection(std::
 
 	} while (text.size() > 0);
 
-	socket.Disconnect();
+	client.Disconnect();
 
 	ShutdownWinSock();
 }

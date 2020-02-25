@@ -24,23 +24,19 @@ SocketAddressIPv4::SocketAddressIPv4(const std::string ip, const unsigned short 
 	inet_pton(AF_INET, ip.c_str(), &sin_addr);
 }
 
-SocketAddressIPv4::~SocketAddressIPv4()
-{
-}
-
-short SocketAddressIPv4::GetFamily()
+short SocketAddressIPv4::GetFamily() const
 {
 	return sin_family;
 }
 
-std::string SocketAddressIPv4::GetIP()
+std::string SocketAddressIPv4::GetIP() const
 {
 	char str[INET_ADDRSTRLEN];
 	inet_ntop(AF_INET, &sin_addr, str, INET_ADDRSTRLEN);
 	return str;
 }
 
-unsigned short SocketAddressIPv4::GetPort()
+unsigned short SocketAddressIPv4::GetPort() const
 {
 	return ntohs(sin_port);
 }

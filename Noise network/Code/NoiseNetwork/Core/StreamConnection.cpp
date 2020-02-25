@@ -1,12 +1,7 @@
 #include "StreamConnection.h"
 
-#include <chrono>
-#include <tuple>
 #include "Package\PackageFactory.h"
 #include "WinsockFunctions.h"
-
-using namespace std::chrono;
-using namespace std::chrono_literals;
 
 StreamConnection::StreamConnection()
 {
@@ -26,7 +21,7 @@ StreamConnection::StreamConnection(SOCKET socket)
 	}
 }
 
-StreamConnection::StreamConnection(SOCKET socket, SocketAddress addr)
+StreamConnection::StreamConnection(SOCKET socket, std::shared_ptr<SocketAddressInterface> addr)
 {
 	this->socket = StreamSocket(socket, addr);
 	if (socket != INVALID_SOCKET)
@@ -39,10 +34,7 @@ StreamConnection::StreamConnection(SOCKET socket, SocketAddress addr)
 	}
 }
 
-StreamConnection::~StreamConnection()
-{}
-
-bool StreamConnection::Connect(SocketAddress addr)
+bool StreamConnection::Connect(std::shared_ptr<SocketAddressInterface> addr)
 {
 	recvBuffer.clear();
 	//Try to initialize socket if it isn't already initialized
@@ -117,7 +109,14 @@ int StreamConnection::SendAll(const BasePackage& package)
 {
 	if (connected)
 	{
-		return socket.SendAll(package);
+		auto buffer = package.pack();
+		std::vector<unsigned char> sizeBuffer;
+		Serializer::Pack((unsigned int)buffer.size(), sizeBuffer);
+		buffer.at(0) = sizeBuffer.at(0);
+		buffer.at(1) = sizeBuffer.at(1);
+		buffer.at(2) = sizeBuffer.at(2);
+		buffer.at(3) = sizeBuffer.at(3);
+		return SendAll(buffer, (int)buffer.size());
 	}
 
 	return 0;
@@ -147,6 +146,7 @@ std::unique_ptr<BasePackage> StreamConnection::RecvAll()
 					// Unpack a package from recvBuffer
 					std::vector<unsigned char> msgBuffer = { begin(recvBuffer), begin(recvBuffer) + size };
 					recvBuffer.erase(begin(recvBuffer), begin(recvBuffer) + size);
+					//recvBuffer = {begin(recvBuffer) + size, end(recvBuffer)};
 					int id;
 					index = Serializer::Unpack(msgBuffer, index, id);
 
@@ -167,7 +167,7 @@ std::unique_ptr<BasePackage> StreamConnection::RecvAll()
 				recvBuffer.insert(end(recvBuffer), begin(buffer), begin(buffer) + result);
 			}
 			else {
-				return std::make_unique<ErrorPackage>(GetLastSystemError());
+				return std::make_unique<ErrorPackage>();
 			}
 		}
 	}

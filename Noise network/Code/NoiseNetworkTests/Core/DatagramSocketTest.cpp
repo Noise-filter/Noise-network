@@ -53,7 +53,7 @@ namespace NoiseNetworkTests
 
 		TEST_METHOD(SendPacketBackAndForth)
 		{
-			SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", serverPort);
+			auto bindAddress = SocketAddressFactory::Create("0.0.0.0", serverPort);
 
 			DatagramSocket socket;
 			createSocket(socket, "0.0.0.0", 0);
@@ -67,7 +67,8 @@ namespace NoiseNetworkTests
 			vector<unsigned char> buffer;
 			buffer.assign(message.begin(), message.end());
 
-			int result = socket.Send(serverAddress, buffer, (int)buffer.size());
+			int result = socket.Send(*serverAddress, buffer, (int)buffer.size());
+			auto asd = GetLastSystemError();
 			if (result == SOCKET_ERROR)
 			{
 				Assert::Fail(L"Send failed with error code: " + WSAGetLastError());
@@ -76,7 +77,7 @@ namespace NoiseNetworkTests
 			buffer.clear();
 			buffer.resize(1024);
 
-			result = serverSocket.Recv(bindAddress, buffer, 1024);
+			result = serverSocket.Recv(*bindAddress, buffer, 1024);
 			if (result == SOCKET_ERROR)
 			{
 				Assert::Fail(L"Recv failed with error code: " + WSAGetLastError());
@@ -99,29 +100,28 @@ namespace NoiseNetworkTests
 		TEST_METHOD(CallBindBeforeInitShouldReturnFalse)
 		{
 			DatagramSocket socket;
-			bool result = socket.Bind(SocketAddressFactory::Create("0.0.0.0", 0));
-
+			bool result = socket.Bind(*SocketAddressFactory::Create("0.0.0.0", 0).get());
 			Assert::IsFalse(result);
 		}
 
 	private:
 		void createSocket(DatagramSocket& socket, string ip = "0.0.0.0", unsigned short port = 0)
 		{
-			SocketAddress bindAddress = SocketAddressFactory::Create(ip, port);
+			auto bindAddress = SocketAddressFactory::Create(ip, port);
 
 			if (!socket.Init(bindAddress->GetFamily()))
 			{
 				Assert::Fail(L"socket.Init() failed");
 			}
 
-			if (!socket.Bind(bindAddress))
+			if (!socket.Bind(*bindAddress))
 			{
 				Assert::Fail(L"socket.Bind() failed");
 			}
 		}
 
 	private:
-		SocketAddress serverAddress;
+		std::unique_ptr<SocketAddressInterface> serverAddress;
 		string serverIp = "127.0.0.1";
 		unsigned short serverPort = 61000;
 

@@ -20,7 +20,7 @@ namespace Examples
 		std::cout << "Hello World!" << std::endl;
 
 		DatagramSocket socket;
-		SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", port);
+		auto bindAddress = SocketAddressFactory::Create("0.0.0.0", port);
 
 		if (!socket.Init(bindAddress->GetFamily()))
 		{
@@ -30,7 +30,7 @@ namespace Examples
 			return;
 		}
 
-		if (!socket.Bind(bindAddress))
+		if (!socket.Bind(*bindAddress))
 		{
 			std::cout << "Error binding socket" << std::endl;
 			socket.Close();
@@ -42,7 +42,7 @@ namespace Examples
 
 		std::vector<unsigned char> ackBuffer;
 		std::vector<unsigned char> buffer;
-		SocketAddress from = SocketAddressFactory::Create(AF_INET);
+		auto from = SocketAddressFactory::Create(AF_INET);
 
 		std::ofstream outFile("C:/Users/Pontus/Downloads/asd.txt", std::ios::binary);
 		if (!outFile)
@@ -59,7 +59,7 @@ namespace Examples
 			buffer.clear();
 			buffer.resize(MAX_BUFFER_LENGTH);
 
-			result = socket.Recv(from, buffer, MAX_BUFFER_LENGTH);
+			result = socket.Recv(*from, buffer, MAX_BUFFER_LENGTH);
 			if (result > 0)
 			{
 
@@ -70,7 +70,7 @@ namespace Examples
 				//std::cout << "Bytes received: " << result << std::endl;
 				//std::cout << "Message received: " << &buffer[0] << std::endl;
 				
-				result = socket.Send(from, ackBuffer, (int)ackBuffer.size());
+				result = socket.Send(*from, ackBuffer, (int)ackBuffer.size());
 				if (result == SOCKET_ERROR)
 				{
 					std::cout << "Send failed with error: " << WSAGetLastError() << std::endl;

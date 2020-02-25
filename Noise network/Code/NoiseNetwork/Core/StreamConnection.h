@@ -8,10 +8,9 @@ class StreamConnection
 public:
 	StreamConnection();
 	StreamConnection(SOCKET socket);
-	StreamConnection(SOCKET socket, SocketAddress addr);
-	~StreamConnection();
+	StreamConnection(SOCKET socket, std::shared_ptr<SocketAddressInterface> addr);
 
-	bool Connect(SocketAddress addr);
+	bool Connect(std::shared_ptr<SocketAddressInterface> addr);
 
 	bool Reconnect();
 	bool Disconnect();

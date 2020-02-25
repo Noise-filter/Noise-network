@@ -21,7 +21,7 @@ namespace Examples
 		std::cout << "Hello World!" << std::endl;
 
 		DatagramSocket socket;
-		SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", port);
+		auto bindAddress = SocketAddressFactory::Create("0.0.0.0", port);
 
 		if (!socket.Init(bindAddress->GetFamily()))
 		{
@@ -31,7 +31,7 @@ namespace Examples
 			return;
 		}
 
-		if (!socket.Bind(bindAddress))
+		if (!socket.Bind(*bindAddress))
 		{
 			std::cout << "Error binding socket" << std::endl;
 			socket.Close();
@@ -42,7 +42,7 @@ namespace Examples
 		std::cout << "Waiting for messages" << std::endl;
 
 		std::vector<unsigned char> buffer;
-		SocketAddress from = SocketAddressFactory::Create(AF_INET);
+		auto from = SocketAddressFactory::Create(AF_INET);
 
 		int result = 0;
 		do
@@ -50,14 +50,14 @@ namespace Examples
 			buffer.clear();
 			buffer.resize(MAX_BUFFER_LENGTH);
 
-			result = socket.Recv(from, buffer, MAX_BUFFER_LENGTH);
+			result = socket.Recv(*from, buffer, MAX_BUFFER_LENGTH);
 			if (result > 0)
 			{
 				/*std::cout << "\nMessage recieved from: " << from->GetIP() << ":" << from->GetPort() << std::endl;
 				std::cout << "Bytes received: " << result << std::endl;
 				std::cout << "Message received: " << &buffer[0] << std::endl;
 				*/
-				result = socket.Send(from, buffer, result);
+				result = socket.Send(*from, buffer, result);
 				if (result == SOCKET_ERROR)
 				{
 					std::cout << "Send failed with error: " << WSAGetLastError() << std::endl;

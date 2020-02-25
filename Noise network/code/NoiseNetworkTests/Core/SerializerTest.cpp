@@ -274,12 +274,6 @@ namespace Microsoft
 			{
 				RETURN_WIDE_STRING(t);
 			}
-
-			template<>
-			static std::wstring ToString<long long>(const long long& t)
-			{
-				RETURN_WIDE_STRING(t);
-			}
 		}
 	}
 }

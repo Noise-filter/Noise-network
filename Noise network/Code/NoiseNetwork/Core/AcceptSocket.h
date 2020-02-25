@@ -15,10 +15,7 @@ class StreamSocket;
 class AcceptSocket
 {
 public:
-	AcceptSocket();
-	~AcceptSocket();
-
-	bool Init(SocketAddress bindAddress);
+	bool Init(SocketAddressInterface& bindAddress);
 	void Close();
 
 	StreamConnection Accept();

@@ -28,9 +28,9 @@ namespace NoiseNetworkTests
 			std::string ip("0.0.0.0");
 			unsigned short port = 0;
 			short family = AF_INET;
-			SocketAddress addr = SocketAddressFactory::Create(family);
+			auto addr = SocketAddressFactory::Create(family);
 
-			AssertSocketAddress(addr, SocketAddressIPv4(), ip, port, family);
+			AssertSocketAddress<SocketAddressIPv4>(*addr, ip, port, family);
 		}
 
 		TEST_METHOD(CreateIPv6FromFamily)
@@ -38,9 +38,9 @@ namespace NoiseNetworkTests
 			std::string ip("::");
 			unsigned short port = 0;
 			short family = AF_INET6;
-			SocketAddress addr = SocketAddressFactory::Create(family);
+			auto addr = SocketAddressFactory::Create(family);
 
-			AssertSocketAddress(addr, SocketAddressIPv6(), ip, port, family);
+			AssertSocketAddress<SocketAddressIPv6>(*addr, ip, port, family);
 		}
 
 		TEST_METHOD(CreateBroadcastAddress)
@@ -48,15 +48,14 @@ namespace NoiseNetworkTests
 			std::string ip("255.255.255.255");
 			unsigned short port = 0;
 			short family = AF_INET;
-			SocketAddress addr = SocketAddressFactory::Create(ip, port);
+			auto addr = SocketAddressFactory::Create(ip, port);
 
-			AssertSocketAddress(addr, SocketAddressIPv4(), ip, port, family);
+			AssertSocketAddress<SocketAddressIPv4>(*addr, ip, port, family);
 		}
 
 		TEST_METHOD(CreateFromInvalidFamily)
 		{
-			SocketAddress addr = SocketAddressFactory::Create(0);
-
+			auto addr = SocketAddressFactory::Create(0);
 			Assert::IsNull(addr.get());
 		}
 
@@ -66,9 +65,9 @@ namespace NoiseNetworkTests
 			unsigned short port = 12345;
 			short family = AF_INET;
 
-			SocketAddress addr = SocketAddressFactory::Create(ip, port);
+			auto addr = SocketAddressFactory::Create(ip, port);
 
-			AssertSocketAddress(addr, SocketAddressIPv4(), ip, port, family);
+			AssertSocketAddress<SocketAddressIPv4>(*addr, ip, port, family);
 		}
 
 		TEST_METHOD(CreateIPv6FromAddress)
@@ -77,17 +76,15 @@ namespace NoiseNetworkTests
 			unsigned short port = 12345;
 			short family = AF_INET6;
 
-			SocketAddress addr = SocketAddressFactory::Create(ip, port);
+			auto addr = SocketAddressFactory::Create(ip, port);
 
-			AssertSocketAddress(addr, SocketAddressIPv6(), ip, port, family);
+			AssertSocketAddress<SocketAddressIPv6>(*addr, ip, port, family);
 		}
 
 		TEST_METHOD(CreateWithInvalidIP)
 		{
 			std::string ip("not an ip");
-
-			SocketAddress addr = SocketAddressFactory::Create(ip);
-
+			auto addr = SocketAddressFactory::Create(ip);
 			Assert::IsNull(addr.get());
 		}
 
@@ -102,9 +99,9 @@ namespace NoiseNetworkTests
 			sa.sin_port = htons(port);
 			sa.sin_family = family;
 
-			SocketAddress addr = SocketAddressFactory::Create(sa);
+			auto addr = SocketAddressFactory::Create(sa);
 
-			AssertSocketAddress(addr, SocketAddressIPv4(), ip, port, family);
+			AssertSocketAddress<SocketAddressIPv4>(*addr, ip, port, family);
 		}
 
 		TEST_METHOD(CreateFromSockaddr_inInvalidFamily)
@@ -118,7 +115,7 @@ namespace NoiseNetworkTests
 			sa.sin_port = htons(port);
 			sa.sin_family = family;
 
-			SocketAddress addr = SocketAddressFactory::Create(sa);
+			auto addr = SocketAddressFactory::Create(sa);
 
 			Assert::IsNull(addr.get());
 		}
@@ -134,9 +131,9 @@ namespace NoiseNetworkTests
 			sa6.sin6_port = htons(port);
 			sa6.sin6_family = family;
 
-			SocketAddress addr = SocketAddressFactory::Create(sa6);
+			auto addr = SocketAddressFactory::Create(sa6);
 
-			AssertSocketAddress(addr, SocketAddressIPv6(), ip, port, family);
+			AssertSocketAddress<SocketAddressIPv6>(*addr, ip, port, family);
 		}
 
 		TEST_METHOD(CreateFromSockaddr_in6InvalidFamily)
@@ -150,7 +147,7 @@ namespace NoiseNetworkTests
 			sa6.sin6_port = htons(port);
 			sa6.sin6_family = family;
 
-			SocketAddress addr = SocketAddressFactory::Create(sa6);
+			auto addr = SocketAddressFactory::Create(sa6);
 
 			Assert::IsNull(addr.get());
 		}
@@ -163,9 +160,9 @@ namespace NoiseNetworkTests
 			addrinfo* addrResult = NULL;
 
 			int result = getaddrinfo(ip.c_str(), NULL, NULL, &addrResult);
-			SocketAddress addr = SocketAddressFactory::Create(*addrResult->ai_addr);
+			auto addr = SocketAddressFactory::Create(*addrResult->ai_addr);
 
-			AssertSocketAddress(addr, SocketAddressIPv4(), ip, port, family);
+			AssertSocketAddress<SocketAddressIPv4>(*addr, ip, port, family);
 		}
 
 		TEST_METHOD(CreateIPv6FromSockaddr)
@@ -176,9 +173,9 @@ namespace NoiseNetworkTests
 			addrinfo* addrResult = NULL;
 
 			int result = getaddrinfo(ip.c_str(), NULL, NULL, &addrResult);
-			SocketAddress addr = SocketAddressFactory::Create(*addrResult->ai_addr);
+			auto addr = SocketAddressFactory::Create(*addrResult->ai_addr);
 
-			AssertSocketAddress(addr, SocketAddressIPv6(), ip, port, family);
+			AssertSocketAddress<SocketAddressIPv6>(*addr, ip, port, family);
 		}
 
 		TEST_METHOD(CreateSockaddr_InvalidFamily)
@@ -191,32 +188,32 @@ namespace NoiseNetworkTests
 			int result = getaddrinfo(ip.c_str(), NULL, NULL, &addrResult);
 			addrResult->ai_addr->sa_family = family;
 
-			SocketAddress addr = SocketAddressFactory::Create(*addrResult->ai_addr);
+			auto addr = SocketAddressFactory::Create(*addrResult->ai_addr);
 
 			Assert::IsNull(addr.get());
 		}
 
 		TEST_METHOD(CreateFromSocket_InvalidSocket)
 		{
-			SocketAddress addr = SocketAddressFactory::CreateFromSocket(INVALID_SOCKET);
+			auto addr = SocketAddressFactory::CreateFromSocket(INVALID_SOCKET);
 			Assert::IsNull(addr.get());
 		}
 
 		TEST_METHOD(CreateFromSocket_NotValidSocket)
 		{
-			SocketAddress addr = SocketAddressFactory::CreateFromSocket(-5);
+			auto addr = SocketAddressFactory::CreateFromSocket(-5);
 			Assert::IsNull(addr.get());
 		}
 
 	private:
 		//Helper function
 		template<class T>
-		void AssertSocketAddress(SocketAddress addr, T obj, std::string ip, unsigned short port, short family)
+		void AssertSocketAddress(const SocketAddressInterface& addr, std::string ip, unsigned short port, short family)
 		{
-			Assert::AreEqual(typeid(T), typeid(*addr));
-			Assert::AreEqual(ip, addr->GetIP());
-			Assert::AreEqual(port, addr->GetPort());
-			Assert::AreEqual(family, addr->GetFamily());
+			Assert::AreEqual(typeid(T), typeid(addr));
+			Assert::AreEqual(ip, addr.GetIP());
+			Assert::AreEqual(port, addr.GetPort());
+			Assert::AreEqual(family, addr.GetFamily());
 		}
 	};
 }

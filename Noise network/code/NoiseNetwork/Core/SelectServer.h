@@ -16,7 +16,6 @@ private:
 	FD_SET readSet;
 	FD_SET masterSet;
 
-
 };
 
 #endif

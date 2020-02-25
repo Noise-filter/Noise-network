@@ -43,8 +43,6 @@ namespace NoiseNetworkTests
 				Assert::Fail();
 			}
 		}
-	private:
-
 	};
 }
 namespace Microsoft

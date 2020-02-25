@@ -21,11 +21,11 @@ namespace Examples
 
 		AcceptSocket socket;
 
-		SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", port);
+		auto bindAddress = SocketAddressFactory::Create("0.0.0.0", port);
 
 		//Initialize the AcceptSocket
 		//It's that easy
-		if (!socket.Init(bindAddress))
+		if (!socket.Init(*bindAddress))
 		{
 			std::cout << "Error initializing accept socket" << std::endl;
 			socket.Close();

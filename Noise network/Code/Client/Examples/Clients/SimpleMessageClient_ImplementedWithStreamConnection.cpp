@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <chrono>
 
 #include "Core\WinsockFunctions.h"
 #include "Core\StreamConnection.h"
@@ -10,6 +11,10 @@
 #include "Core\Package\PackageFactory.h"
 
 #include "PackableClass.h"
+
+constexpr auto bits(long long bytes, long long time) -> long long;
+constexpr long long kiloBits(long long bytes, long long time);
+constexpr long long megaBits(long long bytes, long long time);
 
 void ClientExamples::SimpleMessageClient_ImplementedWithStreamConnection(std::string address, unsigned short port)
 {
@@ -20,20 +25,26 @@ void ClientExamples::SimpleMessageClient_ImplementedWithStreamConnection(std::st
 
 	std::cout << "Hello World!" << std::endl;
 
-	PackageFactory::getInstance().registerPackage(0, []() { return new PackableClass; });
+	PackageFactory::getInstance().registerPackage(0, []() { return std::make_unique<PackableClass>(); });
 
-	SocketAddress addr = SocketAddressFactory::Create(address, port);
+	auto addr = SocketAddressFactory::Create(address, port);
 	StreamConnection con;
-	if (!con.Connect(addr))
+	if (!con.Connect(std::move(addr)))
 	{
 		std::cout << "Error connecting" << std::endl;
 		return;
 	}
 
+	using namespace std::chrono_literals;
+	long long bytesSent{ 0 };
+	long long bytesRecived{ 0 };
+	auto currentTime{ std::chrono::steady_clock::now() };
+	auto startTime = currentTime;
+
 	int result = 0;
+	PackableClass person;
 	do
 	{
-		PackableClass person;
 		result = con.SendAll(person);
 		if (result == SOCKET_ERROR)
 		{
@@ -41,20 +52,36 @@ void ClientExamples::SimpleMessageClient_ImplementedWithStreamConnection(std::st
 			break;
 		}
 
-		std::cout << "Bytes sent: " << result << std::endl;
+		bytesSent += result;
+		//std::cout << "Bytes sent: " << result << std::endl;
 
 		auto package = con.RecvAll();
 		switch (package->getId()) {
 		case ErrorPackage::PACKAGE_ID: {
-			auto errorPackage = dynamic_cast<ErrorPackage*>(package.get());
-			int errorCode = errorPackage->getErrorCode();
-			std::cout << "Recv failed with error: " << errorCode << std::endl;
+			auto errorPackage = static_cast<ErrorPackage*>(package.get());
+			auto errorCode = errorPackage->getErrorCode();
+			std::cout << "Recv failed with error: " << static_cast<typename std::underlying_type<PackageErrors>::type>(errorCode) << std::endl;
 			return;
 		} break;
 		default:
-			std::cout << "Bytes received: " << package->getSize() << std::endl;
-			dynamic_cast<PackableClass*>(package.get())->print();
+			if (result != package->getSize()) {
+				std::cout << "Error sent size doesn't match recived size" << std::endl;
+			}
+			bytesRecived += package->getSize();
+			//std::cout << "Bytes received: " << package->getSize() << std::endl;
+			//static_cast<PackableClass*>(package.get())->print();
 			break;
+		}
+		auto newTime = std::chrono::steady_clock::now();
+		auto delta = newTime - currentTime;
+		if (delta >= 1s) {
+			currentTime = newTime;
+			auto time = std::chrono::duration_cast<std::chrono::seconds>(currentTime - startTime).count();
+			std::cout << bits(bytesSent, time) << " b/s " << 
+				kiloBits(bytesSent, time) << "Kb/s " << 
+				megaBits(bytesSent, time) << " Mb/s" << std::endl;
+			bytesSent = bytesRecived = 0;
+			startTime = currentTime;
 		}
 	} while (1);
 
@@ -65,4 +92,16 @@ void ClientExamples::SimpleMessageClient_ImplementedWithStreamConnection(std::st
 	}
 
 	ShutdownWinSock();
+}
+
+constexpr auto bits(long long bytes, long long time) -> long long {
+	return (bytes * 8) / time;
+}
+
+constexpr long long kiloBits(long long bytes, long long time) {
+	return ((bytes * 8) / time) / 1000;
+}
+
+constexpr long long megaBits(long long bytes, long long time) {
+	return ((bytes * 8) / time) / 1000000;
 }

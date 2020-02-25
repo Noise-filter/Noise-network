@@ -16,7 +16,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramSocket(std::stri
 	std::cout << "Hello World!" << std::endl;
 
 	DatagramSocket socket;
-	SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", 0);
+	auto bindAddress = SocketAddressFactory::Create("0.0.0.0", 0);
 
 	if (!socket.Init(bindAddress->GetFamily()))
 	{
@@ -24,7 +24,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramSocket(std::stri
 		return;
 	}
 
-	if (!socket.Bind(bindAddress))
+	if (!socket.Bind(*bindAddress))
 	{
 		std::cout << "Error binding" << std::endl;
 		return;
@@ -32,7 +32,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramSocket(std::stri
 
 	std::string text;
 	std::vector<unsigned char> buffer;
-	SocketAddress serverAddr = SocketAddressFactory::Create(address, port);
+	auto serverAddr = SocketAddressFactory::Create(address, port);
 
 	int result = 0;
 	do
@@ -48,7 +48,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramSocket(std::stri
 		buffer.clear();
 		buffer.assign(text.begin(), text.end());
 
-		result = socket.Send(serverAddr, buffer, (int)text.size());
+		result = socket.Send(*serverAddr, buffer, (int)text.size());
 		if (result == SOCKET_ERROR)
 		{
 			std::cout << "Send failed with error: " << WSAGetLastError() << std::endl;
@@ -60,7 +60,7 @@ void ClientExamples::SimpleMessageClient_ImplementedWithDatagramSocket(std::stri
 		buffer.clear();
 		buffer.resize(MAX_BUFFER_LENGTH);
 
-		result = socket.Recv(serverAddr, buffer, MAX_BUFFER_LENGTH);
+		result = socket.Recv(*serverAddr, buffer, MAX_BUFFER_LENGTH);
 		if (result > 0)
 		{
 			std::cout << "Bytes received: " << result << std::endl;

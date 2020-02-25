@@ -25,9 +25,9 @@ void ClientExamples::SimpleMessageClient_ImplementedWithStreamSocket(std::string
 		return;
 	}
 
-	SocketAddress addr = SocketAddressFactory::Create(address, port);
+	auto addr = SocketAddressFactory::Create(address, port);
 
-	if (!socket.Connect(addr))
+	if (!socket.Connect(std::move(addr)))
 	{
 		std::cout << "Error connecting" << std::endl;
 		return;

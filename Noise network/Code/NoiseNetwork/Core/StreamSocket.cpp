@@ -14,14 +14,10 @@ StreamSocket::StreamSocket(SOCKET socket)
 	addr = SocketAddressFactory::CreateFromSocket(socket);
 }
 
-StreamSocket::StreamSocket(SOCKET socket, SocketAddress addr)
+StreamSocket::StreamSocket(SOCKET socket, const std::shared_ptr<SocketAddressInterface>& addr)
 {
 	this->socket = socket;
 	this->addr = addr;
-}
-
-StreamSocket::~StreamSocket()
-{
 }
 
 bool StreamSocket::Init(int family)
@@ -35,7 +31,7 @@ bool StreamSocket::Init(int family)
 	return true;
 }
 
-bool StreamSocket::Connect(SocketAddress addr)
+bool StreamSocket::Connect(const std::shared_ptr<SocketAddressInterface>& addr)
 {
 	if (socket == INVALID_SOCKET)
 	{
@@ -53,14 +49,14 @@ bool StreamSocket::Connect(SocketAddress addr)
 	return true;
 }
 
-bool StreamSocket::Bind(SocketAddress addr)
+bool StreamSocket::Bind(SocketAddressInterface& addr)
 {
 	if (socket == INVALID_SOCKET)
 	{
 		return false;
 	}
 
-	int result = bind(socket, (sockaddr*)*addr, sizeof((sockaddr)*addr));
+	int result = bind(socket, (sockaddr*)addr, sizeof((sockaddr)addr));
 	if (result == SOCKET_ERROR)
 	{
 		return false;
@@ -102,9 +98,9 @@ StreamConnection StreamSocket::Accept()
 		return StreamConnection();
 	}
 
-	SocketAddress sockAddr = SocketAddressFactory::Create(*(struct sockaddr*)&addr);
+	std::unique_ptr<SocketAddressInterface> sockAddr = SocketAddressFactory::Create(*(struct sockaddr*)&addr);
 
-	return StreamConnection(clientSocket, sockAddr);
+	return StreamConnection(clientSocket, std::move(sockAddr));
 }
 
 bool StreamSocket::Shutdown(int flag)
@@ -152,18 +148,6 @@ int StreamSocket::SendAll(std::vector<unsigned char>& buffer, int bufLength)
 	return size;
 }
 
-int StreamSocket::SendAll(const BasePackage& package)
-{
-	auto buffer = package.pack();
-	std::vector<unsigned char> sizeBuffer;
-	Serializer::Pack((unsigned int)buffer.size(), sizeBuffer);
-	buffer.at(0) = sizeBuffer.at(0);
-	buffer.at(1) = sizeBuffer.at(1);
-	buffer.at(2) = sizeBuffer.at(2);
-	buffer.at(3) = sizeBuffer.at(3);
-	return SendAll(buffer, buffer.size());
-}
-
 int StreamSocket::Recv(std::vector<unsigned char>& buffer, int bufLength)
 {
 	int result = recv(socket, (char*)&buffer[0], bufLength, 0);
@@ -186,7 +170,7 @@ SOCKET StreamSocket::GetSocket()
 	return socket;
 }
 
-SocketAddress StreamSocket::GetAddress()
+std::shared_ptr<SocketAddressInterface> StreamSocket::GetAddress()
 {
 	return addr;
 }

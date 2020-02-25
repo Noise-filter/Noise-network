@@ -10,23 +10,23 @@ class HttpClient
 {
 public:
 	HttpClient();
-	HttpClient(SocketAddress host);
+	HttpClient(const std::shared_ptr<SocketAddressInterface>& host);
 	HttpClient(const std::string& httpAddress, unsigned short port = 0);
 	~HttpClient();
 
-	void SetHost(SocketAddress host);
+	void SetHost(const std::shared_ptr<SocketAddressInterface>& host);
 	void SetHost(const std::string& httpAddress, unsigned short port = 0);
 	HttpResponse SendRequest(const HttpRequest& request);
 
-	SocketAddress GetHost();
-	std::string GetHostname();
+	std::shared_ptr<SocketAddressInterface> GetHost() const;
+	std::string GetHostname() const;
 
 private:
 	HttpRequest CorrectRequest(const HttpRequest& request);
 
 private:
 	StreamConnection connection;
-	SocketAddress host;
+	std::shared_ptr<SocketAddressInterface> host;
 	std::string hostName;
 
 };

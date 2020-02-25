@@ -16,11 +16,11 @@ void ClientExamples::SimpleSpamClient_ImplementedWithDatagramConnection(std::str
 	std::cout << "Hello World!" << std::endl;
 
 	DatagramConnection socket;
-	SocketAddress serverAddr = SocketAddressFactory::Create(address, port);
-	SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", port + 1);
-	SocketAddress recvAddr = SocketAddressFactory::Create(AF_INET);
+	auto serverAddr = SocketAddressFactory::Create(address, port);
+	auto bindAddress = SocketAddressFactory::Create("0.0.0.0", port + 1);
+	auto recvAddr = SocketAddressFactory::Create(AF_INET);
 
-	if (!socket.Connect(serverAddr, bindAddress))
+	if (!socket.Connect(std::move(serverAddr), *bindAddress))
 	{
 		std::cout << "Error initializing socket" << std::endl;
 		return;
@@ -52,7 +52,7 @@ void ClientExamples::SimpleSpamClient_ImplementedWithDatagramConnection(std::str
 		buffer.clear();
 		buffer.resize(MAX_BUFFER_LENGTH);
 
-		result = socket.Recv(recvAddr, buffer, MAX_BUFFER_LENGTH);
+		result = socket.Recv(buffer, MAX_BUFFER_LENGTH);
 		if (result > 0)
 		{
 			//Check if the same message was returned

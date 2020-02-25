@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Packable.h"
-#include "Serializer.h"
+#include "../Serializer.h"
 
 class BasePackage : Packable {
 private:
@@ -10,12 +10,10 @@ private:
 	// Timestamp?
 
 public:
-	BasePackage(int id) : id(id) {
+	constexpr BasePackage(int id) : id(id) {
 	}
 
-	virtual ~BasePackage() {
-
-	}
+	virtual ~BasePackage() = default;
 
 	virtual std::vector<unsigned char> pack() const {
 		std::vector<unsigned char> buffer;
@@ -27,11 +25,13 @@ public:
 		index = Serializer::Unpack(bytes, index, size, id);
 	}
 
-	int getSize() {
+	constexpr int getSize() {
 		return size;
 	}
 
-	int getId() {
+	constexpr int getId() {
 		return id;
 	}
+
+	virtual BasePackage* createInstance() = 0;
 };

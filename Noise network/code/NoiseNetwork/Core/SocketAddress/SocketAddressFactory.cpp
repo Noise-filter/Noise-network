@@ -3,15 +3,15 @@
 #include "SocketAddressIPv4.h"
 #include "SocketAddressIPv6.h"
 
-SocketAddress SocketAddressFactory::Create(const unsigned short family)
+auto SocketAddressFactory::Create(const unsigned short family) -> std::unique_ptr<SocketAddressInterface>
 {
 	switch (family)
 	{
 	case AF_INET:
-		return (SocketAddress)new SocketAddressIPv4();
+		return std::make_unique<SocketAddressIPv4>(SocketAddressIPv4());
 		break;
 	case AF_INET6:
-		return (SocketAddress)new SocketAddressIPv6();
+		return std::make_unique<SocketAddressIPv6>(SocketAddressIPv6());
 		break;
 	default:
 		return nullptr;
@@ -19,7 +19,7 @@ SocketAddress SocketAddressFactory::Create(const unsigned short family)
 	}
 }
 
-SocketAddress SocketAddressFactory::Create(const std::string ip, const unsigned short port)
+auto SocketAddressFactory::Create(const std::string ip, const unsigned short port) -> std::unique_ptr<SocketAddressInterface>
 {
 	addrinfo* addrResult = nullptr;
 
@@ -33,13 +33,13 @@ SocketAddress SocketAddressFactory::Create(const std::string ip, const unsigned 
 			sockaddr_in sa;
 			sa = *(sockaddr_in*)(addrResult->ai_addr);
 			sa.sin_port = htons(port);
-			return (SocketAddress) new SocketAddressIPv4(sa);
+			return std::make_unique<SocketAddressIPv4>(SocketAddressIPv4(sa));
 			break;
 		case AF_INET6:
 			sockaddr_in6 sa6;
 			sa6 = *(sockaddr_in6*)(addrResult->ai_addr);
 			sa6.sin6_port = htons(port);
-			return (SocketAddress) new SocketAddressIPv6(sa6);
+			return std::make_unique<SocketAddressIPv6>(SocketAddressIPv6(sa6));
 			break;
 		}
 	}
@@ -48,15 +48,15 @@ SocketAddress SocketAddressFactory::Create(const std::string ip, const unsigned 
 	return nullptr;
 }
 
-SocketAddress SocketAddressFactory::Create(const sockaddr& addr)
+auto SocketAddressFactory::Create(const sockaddr& addr) -> std::unique_ptr<SocketAddressInterface>
 {
 	switch (addr.sa_family)
 	{
 	case AF_INET:
-		return (SocketAddress) new SocketAddressIPv4(addr);
+		return std::make_unique<SocketAddressIPv4>(SocketAddressIPv4(addr));
 		break;
 	case AF_INET6:
-		return (SocketAddress) new SocketAddressIPv6(addr);
+		return std::make_unique<SocketAddressIPv6>(SocketAddressIPv6(addr));
 		break;
 	default:
 		return nullptr;
@@ -64,12 +64,12 @@ SocketAddress SocketAddressFactory::Create(const sockaddr& addr)
 	}
 }
 
-SocketAddress SocketAddressFactory::Create(const sockaddr_in& addr)
+auto SocketAddressFactory::Create(const sockaddr_in& addr) -> std::unique_ptr<SocketAddressInterface>
 {
 	switch (addr.sin_family)
 	{
 	case AF_INET:
-		return (SocketAddress) new SocketAddressIPv4(addr);
+		return std::make_unique<SocketAddressIPv4>(SocketAddressIPv4(addr));
 		break;
 	default:
 		return nullptr;
@@ -77,12 +77,12 @@ SocketAddress SocketAddressFactory::Create(const sockaddr_in& addr)
 	}
 }
 
-SocketAddress SocketAddressFactory::Create(const sockaddr_in6& addr)
+auto SocketAddressFactory::Create(const sockaddr_in6& addr) -> std::unique_ptr<SocketAddressInterface>
 {
 	switch (addr.sin6_family)
 	{
 	case AF_INET6:
-		return (SocketAddress) new SocketAddressIPv6(addr);
+		return std::make_unique<SocketAddressIPv6>(SocketAddressIPv6(addr));
 		break;
 	default:
 		return nullptr;
@@ -90,7 +90,7 @@ SocketAddress SocketAddressFactory::Create(const sockaddr_in6& addr)
 	}
 }
 
-SocketAddress SocketAddressFactory::CreateFromSocket(const SOCKET socket)
+auto SocketAddressFactory::CreateFromSocket(const SOCKET socket) -> std::unique_ptr<SocketAddressInterface>
 {
 	if (socket != INVALID_SOCKET)
 	{
@@ -105,10 +105,10 @@ SocketAddress SocketAddressFactory::CreateFromSocket(const SOCKET socket)
 			switch (addr.ss_family)
 			{
 			case AF_INET:
-				return (SocketAddress) new SocketAddressIPv4(*(struct sockaddr_in*)&addr);
+				return std::make_unique<SocketAddressIPv4>(SocketAddressIPv4(*(struct sockaddr_in*)&addr));
 				break;
 			case AF_INET6:
-				return (SocketAddress) new SocketAddressIPv6(*(struct sockaddr_in6*)&addr);
+				return std::make_unique<SocketAddressIPv6>(SocketAddressIPv6(*(struct sockaddr_in6*)&addr));
 				break;
 			default:
 				return nullptr;

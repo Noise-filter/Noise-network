@@ -9,24 +9,19 @@ class DatagramSocket
 {
 public:
 	DatagramSocket();
-	virtual ~DatagramSocket();
 
 	bool Init(int family);
 
-	bool Bind(SocketAddress bindAddress);
+	bool Bind(SocketAddressInterface& bindAddress);
 
 	void Close();
 
-	int Send(const SocketAddress address, std::vector<unsigned char>& buffer, int bufLength);
-	int Recv(SocketAddress address, std::vector<unsigned char>& buffer, int bufLength);
+	int Send(SocketAddressInterface& address, std::vector<unsigned char>& buffer, int bufLength);
+	int Recv(SocketAddressInterface& address, std::vector<unsigned char>& buffer, int bufLength);
 
 	bool IsInitialized();
 
 	SOCKET GetSocket();
-
-private:
-	DatagramSocket(const DatagramSocket&);
-	void operator =(const DatagramSocket&);
 
 private:
 	SOCKET socket;

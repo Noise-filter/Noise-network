@@ -13,14 +13,12 @@
 class SocketAddressInterface
 {
 public:
-	virtual ~SocketAddressInterface() {}
-
 	//Returns the ip address in decimal dotted or hexadecimal format based on which family is used (IPv4 or IPv6)
-	virtual std::string GetIP() = 0;
-	virtual unsigned short GetPort() = 0;
+	virtual std::string GetIP() const = 0;
+	virtual unsigned short GetPort() const = 0;
 
 	//Returns the ip family being used 
-	virtual short GetFamily() = 0;
+	virtual short GetFamily() const = 0;
 
 	//Sets the ip address in decimal dotted or hexadecimal format based on which family is used (IPv4 or IPv6)
 	virtual void SetIP(std::string ip) = 0;
@@ -32,10 +30,5 @@ public:
 	virtual operator SOCKADDR() = 0;
 	virtual operator LPSOCKADDR() = 0;
 };
-
-//memory include for std::shared_ptr
-#include <memory>
-
-typedef std::shared_ptr<SocketAddressInterface> SocketAddress;
 
 #endif

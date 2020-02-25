@@ -40,7 +40,7 @@ namespace NoiseNetworkTests
 		TEST_METHOD(InitAndStop)
 		{
 			ThreadedAcceptServer server;
-			if (!server.Init(SocketAddressFactory::Create("0.0.0.0")))
+			if (!server.Init(*SocketAddressFactory::Create("0.0.0.0")))
 			{
 				Assert::Fail();
 			}
@@ -55,7 +55,7 @@ namespace NoiseNetworkTests
 		TEST_METHOD(InitStartStop)
 		{
 			ThreadedAcceptServer server;
-			if (!server.Init(SocketAddressFactory::Create("0.0.0.0")))
+			if (!server.Init(*SocketAddressFactory::Create("0.0.0.0")))
 			{
 				Assert::Fail();
 			}

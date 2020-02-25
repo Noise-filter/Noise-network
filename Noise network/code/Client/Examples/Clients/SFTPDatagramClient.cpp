@@ -19,12 +19,11 @@ void ClientExamples::SFTPDatagramClient(std::string address, unsigned short port
 	std::cout << "Hello World!" << std::endl;
 
 	DatagramConnection socket;
-	SocketAddress serverAddr = SocketAddressFactory::Create(address, port);
-	SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", 0);
-	SocketAddress recvAddr = SocketAddressFactory::Create(AF_INET);
+	auto serverAddr = SocketAddressFactory::Create(address, port);
+	auto bindAddress = SocketAddressFactory::Create("0.0.0.0", 0);
+	auto recvAddr = SocketAddressFactory::Create(AF_INET);
 
-
-	if (!socket.Connect(serverAddr, bindAddress))
+	if (!socket.Connect(std::move(serverAddr), *bindAddress))
 	{
 		std::cout << "Error initializing socket" << std::endl;
 		return;
@@ -56,7 +55,6 @@ void sftpProtocol(std::string filename, DatagramConnection& socket)
 	int readSize = 1400;
 	std::vector<unsigned char> data;
 	data.resize(readSize);
-	SocketAddress addr = SocketAddressFactory::Create(AF_INET);
 	do
 	{
 		inFile.read((char*)&data[0], readSize);
@@ -81,7 +79,7 @@ void sftpProtocol(std::string filename, DatagramConnection& socket)
 		//std::cout << "Sent: " << result << std::endl;
 		//std::cout << "Total: " << totalSent << std::endl;
 
-		result = socket.Recv(addr, data, 1);
+		result = socket.Recv(data, 1);
 
 		//outFile.write(&data[0], inFile.gcount());
 	} while (!inFile.eof());

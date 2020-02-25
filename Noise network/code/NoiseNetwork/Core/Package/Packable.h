@@ -9,7 +9,7 @@
 class Packable
 {
 public:
-	virtual ~Packable() {}
+	virtual ~Packable() = default;
 	virtual std::vector<unsigned char> pack() const = 0;
 	virtual void unpack(const std::vector<unsigned char>& bytes, unsigned int& index) = 0;
 };

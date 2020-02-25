@@ -21,9 +21,9 @@ void ClientExamples::SimpleSpamClient_ImplementedWithStreamConnection(std::strin
 
 	StreamConnection con;
 
-	SocketAddress addr = SocketAddressFactory::Create(address, port);
+	auto addr = SocketAddressFactory::Create(address, port);
 
-	if (!con.Connect(addr))
+	if (!con.Connect(std::move(addr)))
 	{
 		std::cout << "Error connecting" << std::endl;
 		return;

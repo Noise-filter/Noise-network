@@ -24,23 +24,19 @@ SocketAddressIPv6::SocketAddressIPv6(const std::string ip, const unsigned short 
 	inet_pton(AF_INET6, ip.c_str(), &sin6_addr);
 }
 
-SocketAddressIPv6::~SocketAddressIPv6()
-{
-}
-
-short SocketAddressIPv6::GetFamily()
+short SocketAddressIPv6::GetFamily() const
 {
 	return sin6_family;
 }
 
-std::string SocketAddressIPv6::GetIP()
+std::string SocketAddressIPv6::GetIP() const
 {
 	char str[INET6_ADDRSTRLEN];
 	inet_ntop(AF_INET6, &sin6_addr, str, INET6_ADDRSTRLEN);
 	return str;
 }
 
-unsigned short SocketAddressIPv6::GetPort()
+unsigned short SocketAddressIPv6::GetPort() const
 {
 	return ntohs(sin6_port);
 }

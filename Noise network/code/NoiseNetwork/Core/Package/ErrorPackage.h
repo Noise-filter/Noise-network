@@ -2,7 +2,9 @@
 
 #include "BasePackage.h"
 
-enum PackageErrors {
+#include <ostream>
+
+enum class PackageErrors {
 	PACKAGE_NOT_REGISTERED = -100,
 	NOT_CONNECTED,
 
@@ -10,17 +12,21 @@ enum PackageErrors {
 
 class ErrorPackage : public BasePackage {
 private:
-	int errorCode;
+	PackageErrors errorCode;
 
 public:
-	ErrorPackage(int error = 0) : BasePackage(PACKAGE_ID), errorCode(error) {
+	constexpr ErrorPackage(PackageErrors error = PackageErrors::PACKAGE_NOT_REGISTERED) : BasePackage(PACKAGE_ID), errorCode(error) {
 	}
 
-	virtual ~ErrorPackage() { }
+	virtual ~ErrorPackage() = default;
 
-	int getErrorCode() {
+	constexpr PackageErrors getErrorCode() {
 		return errorCode;
 	}
 
-	static const int PACKAGE_ID = -1;
+	virtual BasePackage* createInstance() {
+		return new ErrorPackage;
+	}
+
+	static constexpr int PACKAGE_ID = -1;
 };

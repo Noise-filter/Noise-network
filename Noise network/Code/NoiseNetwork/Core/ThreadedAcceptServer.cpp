@@ -11,7 +11,7 @@ ThreadedAcceptServer::~ThreadedAcceptServer()
 }
 
 //Initializes the socket
-bool ThreadedAcceptServer::Init(SocketAddress bindAddress)
+bool ThreadedAcceptServer::Init(SocketAddressInterface& bindAddress)
 {
 	return socket.Init(bindAddress);
 }

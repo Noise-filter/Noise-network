@@ -2,18 +2,9 @@
 
 #include "StreamConnection.h"
 
-AcceptSocket::AcceptSocket()
+bool AcceptSocket::Init(SocketAddressInterface& bindAddress)
 {
-	
-}
-
-AcceptSocket::~AcceptSocket()
-{
-}
-
-bool AcceptSocket::Init(SocketAddress bindAddress)
-{
-	bool result = socket.Init(bindAddress->GetFamily());
+	bool result = socket.Init(bindAddress.GetFamily());
 	if (!result)
 	{
 		return result;

@@ -8,7 +8,7 @@ HttpClient::HttpClient()
 {
 }
 
-HttpClient::HttpClient(SocketAddress host)
+HttpClient::HttpClient(const std::shared_ptr<SocketAddressInterface>& host)
 {
 	SetHost(host);
 }
@@ -21,7 +21,7 @@ HttpClient::HttpClient(const std::string& httpAddress, unsigned short port)
 HttpClient::~HttpClient()
 {}
 
-void HttpClient::SetHost(SocketAddress host)
+void HttpClient::SetHost(const std::shared_ptr<SocketAddressInterface>& host)
 {
 	this->host = host;
 }
@@ -123,12 +123,12 @@ HttpRequest HttpClient::CorrectRequest(const HttpRequest& request)
 	return toSend;
 }
 
-SocketAddress HttpClient::GetHost()
+std::shared_ptr<SocketAddressInterface> HttpClient::GetHost() const
 {
 	return host;
 }
 
-std::string HttpClient::GetHostname()
+std::string HttpClient::GetHostname() const
 {
 	return hostName;
 }

@@ -3,7 +3,7 @@
 
 #include <string>
 
-std::string toLowerCase(std::string str);
-std::string toUpperCase(std::string str);
+[[nodiscard]] std::string toLowerCase(std::string str);
+[[nodiscard]] std::string toUpperCase(std::string str);
 
 #endif

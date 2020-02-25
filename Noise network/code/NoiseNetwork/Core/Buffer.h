@@ -3,16 +3,14 @@
 
 #include <vector>
 
-#include "Packable.h"
-#include "Packing.h"
+#include "Package/Packable.h"
 
 class Buffer
 {
 public:
-	Buffer();
-	virtual ~Buffer();
+	virtual ~Buffer() = default;
 
-	template <class T>
+	template <class T, typename std::enable_if<std::is_base_of<Packable, T>::value>::type* = nullptr>
 	void pack(T object)
 	{
 		std::vector<unsigned char> asd = Packing::pack(object);

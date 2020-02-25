@@ -17,9 +17,6 @@ public:
 		numbers.assign({1, 2, 3});
 	}
 
-	virtual ~PackableClass()
-	{}
-
 	virtual std::vector<unsigned char> pack() const
 	{
 		auto buffer = BasePackage::pack();
@@ -41,6 +38,10 @@ public:
 		}
 		std::cout << std::endl;
 	}
+
+	virtual BasePackage* createInstance() {
+		return new PackableClass;
+	};
 
 private:
 	std::string name;

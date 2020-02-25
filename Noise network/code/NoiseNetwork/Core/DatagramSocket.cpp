@@ -5,10 +5,6 @@ DatagramSocket::DatagramSocket()
 	socket = INVALID_SOCKET;
 }
 
-DatagramSocket::~DatagramSocket()
-{
-}
-
 bool DatagramSocket::Init(int family)
 {
 	socket = ::socket(family, SOCK_DGRAM, IPPROTO_UDP);
@@ -20,14 +16,14 @@ bool DatagramSocket::Init(int family)
 	return true;
 }
 
-bool DatagramSocket::Bind(SocketAddress bindAddress)
+bool DatagramSocket::Bind(SocketAddressInterface& bindAddress)
 {
 	if (socket == INVALID_SOCKET)
 	{
 		return false;
 	}
 
-	int result = bind(socket, (sockaddr*)*bindAddress, sizeof(sockaddr_in));
+	int result = bind(socket, (sockaddr*)bindAddress, sizeof(sockaddr_in));
 	if (result == SOCKET_ERROR)
 	{
 		return false;
@@ -42,16 +38,16 @@ void DatagramSocket::Close()
 	socket = INVALID_SOCKET;
 }
 
-int DatagramSocket::Send(const SocketAddress address, std::vector<unsigned char>& buffer, int bufLength)
+int DatagramSocket::Send(SocketAddressInterface& address, std::vector<unsigned char>& buffer, int bufLength)
 {
-	int result = sendto(socket, (const char*)&buffer[0], bufLength, 0, (sockaddr*)*address, sizeof(sockaddr_in));
+	int result = sendto(socket, (const char*)&buffer[0], bufLength, 0, (sockaddr*)address, sizeof(sockaddr_in));
 	return result;
 }
 
-int DatagramSocket::Recv(SocketAddress address, std::vector<unsigned char>& buffer, int bufLength)
+int DatagramSocket::Recv(SocketAddressInterface& address, std::vector<unsigned char>& buffer, int bufLength)
 {
 	int fromLen = sizeof(sockaddr_in);
-	int result = recvfrom(socket, (char*)&buffer[0], bufLength, 0, (sockaddr*)*address, &fromLen);
+	int result = recvfrom(socket, (char*)&buffer[0], bufLength, 0, (sockaddr*)address, &fromLen);
 	return result;
 }
 

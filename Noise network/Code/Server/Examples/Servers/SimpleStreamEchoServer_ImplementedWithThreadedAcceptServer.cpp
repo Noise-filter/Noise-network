@@ -22,11 +22,11 @@ namespace Examples
 
 		ThreadedAcceptServer acceptServer;
 
-		SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", port);
+		auto bindAddress = SocketAddressFactory::Create("0.0.0.0", port);
 
 		//Initialize the AcceptSocket
 		//It's that easy
-		if (!acceptServer.Init(bindAddress))
+		if (!acceptServer.Init(*bindAddress))
 		{
 			cout << "Error initializing accept socket" << std::endl;
 			acceptServer.Stop();
@@ -66,8 +66,8 @@ namespace Examples
 			result = client.Recv(buffer, MAX_BUFFER_LENGTH);
 			if (result > 0)
 			{
-				cout << "Bytes received: " << result << std::endl;
-				cout << "Message received: " << &buffer[0] << std::endl;
+				//cout << "Bytes received: " << result << std::endl;
+				//cout << "Message received: " << &buffer[0] << std::endl;
 
 				result = client.Send(buffer, result);
 				if (result == SOCKET_ERROR)
@@ -76,7 +76,7 @@ namespace Examples
 				}
 				else
 				{
-					cout << "Bytes send: " << result << std::endl;
+					//cout << "Bytes send: " << result << std::endl;
 				}
 			}
 			else if (result == 0)

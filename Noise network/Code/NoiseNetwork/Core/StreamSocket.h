@@ -3,6 +3,7 @@
 
 #include "WinsockIncludes.h"
 #include <vector>
+#include <memory>
 
 #include "SocketAddress.h"
 #include "Package\BasePackage.h"
@@ -14,15 +15,14 @@ class StreamSocket
 public:
 	StreamSocket();
 	StreamSocket(SOCKET socket);
-	StreamSocket(SOCKET socket, SocketAddress addr);
-	virtual ~StreamSocket();
+	StreamSocket(SOCKET socket, const std::shared_ptr<SocketAddressInterface>& addr);
 
 	//Creates a SOCKET
 	bool Init(int family);
 
-	bool Connect(SocketAddress addr);
+	bool Connect(const std::shared_ptr<SocketAddressInterface>& addr);
 
-	bool Bind(SocketAddress addr);
+	bool Bind(SocketAddressInterface& addr);
 	bool Listen();
 	StreamConnection Accept();
 
@@ -39,7 +39,6 @@ public:
 
 	//Will send until everything in the buffer is sent
 	int SendAll(std::vector<unsigned char>& buffer, int bufLength);
-	int SendAll(const BasePackage& package);
 
 	//Will not clear or resize the buffer
 	int Recv(std::vector<unsigned char>& buffer, int bufLength);
@@ -50,11 +49,11 @@ public:
 	void SetSocket(SOCKET socket);
 
 	SOCKET GetSocket();
-	SocketAddress GetAddress();
+	std::shared_ptr<SocketAddressInterface> GetAddress();
 
 private:
 	SOCKET socket;
-	SocketAddress addr;
+	std::shared_ptr<SocketAddressInterface> addr;
 
 };
 

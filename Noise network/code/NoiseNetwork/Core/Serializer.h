@@ -88,7 +88,6 @@ public:
 		return newIndex;
 	}
 
-
 	template <class U, class... T>
 	static unsigned int Unpack(const std::vector<unsigned char>& buffer, const unsigned int index, U& value, T&... values) {
 		unsigned int i = UnpackTemplate(buffer, index, value);

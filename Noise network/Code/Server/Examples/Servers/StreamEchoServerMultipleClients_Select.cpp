@@ -7,7 +7,7 @@
 
 using namespace std;
 
-const int MAX_BUFFER_LENGTH = 512;
+const int MAX_BUFFER_LENGTH = 3000;
 
 namespace Examples
 {
@@ -22,11 +22,10 @@ namespace Examples
 
 		ThreadedAcceptServer acceptServer;
 
-		SocketAddress bindAddress = SocketAddressFactory::Create("0.0.0.0", port);
+		auto bindAddress = SocketAddressFactory::Create("0.0.0.0", port);
 
 		//Initialize the AcceptSocket
-		//It's that easy
-		if (!acceptServer.Init(bindAddress))
+		if (!acceptServer.Init(*bindAddress))
 		{
 			cout << "Error initializing accept socket" << std::endl;
 			acceptServer.Stop();
@@ -57,7 +56,6 @@ namespace Examples
 		int result = 0;
 		do
 		{
-			FD_ZERO(&readSet);
 			readSet = masterSet;
 
 			if (readSet.fd_count > 0)
@@ -73,14 +71,13 @@ namespace Examples
 			{
 				clientSocket = readSet.fd_array[i];
 
-				buffer.clear();
-				buffer.resize(MAX_BUFFER_LENGTH);
+				vector<unsigned char> buffer(MAX_BUFFER_LENGTH);
 
 				result = recv(clientSocket, (char*)&buffer[0], MAX_BUFFER_LENGTH, 0);
 				if (result > 0)
 				{
 					//cout << "Bytes: " << result;
-					cout << " Client: " << clientSocket << " Message: " << &buffer[0] << std::endl;
+					//cout << " Client: " << clientSocket << " Message: " << &buffer[0] << std::endl;
 
 					result = send(clientSocket, (const char*)&buffer[0], result, 0);
 					if (result == SOCKET_ERROR)
@@ -114,7 +111,7 @@ namespace Examples
 			if (acceptServer.WaitingClients())
 			{
 				//TODO: This must be fixed. Write my own select server maybe?
-				//clientSocket = acceptServer.GetConnectedClient();
+				clientSocket = acceptServer.GetConnectedClient().GetSocket().GetSocket();
 				FD_SET(clientSocket, &masterSet);
 				clientCounter++;
 				cout << "Client connected: " << clientSocket << ' ' << clientCounter << std::endl;
