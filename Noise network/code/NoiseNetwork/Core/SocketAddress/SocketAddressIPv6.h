@@ -12,7 +12,7 @@ public:
 	SocketAddressIPv6();
 	SocketAddressIPv6(const SOCKADDR& addr);
 	SocketAddressIPv6(const SOCKADDR_IN6& addr);
-	SocketAddressIPv6(const std::string ip, const unsigned short port = 0);
+	SocketAddressIPv6(const std::string& ip, const unsigned short port = 0);
 
 	virtual std::string GetIP() const;
 	virtual unsigned short GetPort() const;
@@ -21,7 +21,7 @@ public:
 	virtual short GetFamily() const;
 
 	virtual void SetPort(unsigned short port);
-	virtual void SetIP(std::string ip);
+	virtual void SetIP(const std::string& ip);
 
 	virtual const SocketAddressIPv6& operator=(const SOCKADDR& addr);
 	virtual const SocketAddressIPv6& operator=(const SOCKADDR_IN6& addr);

@@ -64,8 +64,8 @@ namespace NoiseNetworkTests
 
 			server.Start();
 			Assert::IsTrue(server.IsInitialized());
-			Assert::IsTrue(server.IsStarted());
 			Sleep(500);
+			Assert::IsTrue(server.IsStarted());
 
 			server.Stop(true);
 			Assert::IsFalse(server.IsInitialized());

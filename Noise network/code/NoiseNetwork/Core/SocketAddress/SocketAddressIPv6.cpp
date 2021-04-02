@@ -17,7 +17,7 @@ SocketAddressIPv6::SocketAddressIPv6(const SOCKADDR_IN6& addr)
 	memcpy((SOCKADDR_IN6*)this, &addr, sizeof(SOCKADDR_IN6));
 }
 
-SocketAddressIPv6::SocketAddressIPv6(const std::string ip, const unsigned short port)
+SocketAddressIPv6::SocketAddressIPv6(const std::string& ip, const unsigned short port)
 {
 	sin6_family = AF_INET6;
 	sin6_port = htons(port);
@@ -46,7 +46,7 @@ void SocketAddressIPv6::SetPort(unsigned short port)
 	sin6_port = htons(port);
 }
 
-void SocketAddressIPv6::SetIP(std::string ip)
+void SocketAddressIPv6::SetIP(const std::string& ip)
 {
 	inet_pton(AF_INET6, ip.c_str(), &sin6_addr);
 }

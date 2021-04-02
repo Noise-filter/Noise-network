@@ -8,18 +8,15 @@ auto SocketAddressFactory::Create(const unsigned short family) -> std::unique_pt
 	switch (family)
 	{
 	case AF_INET:
-		return std::make_unique<SocketAddressIPv4>(SocketAddressIPv4());
-		break;
+		return std::make_unique<SocketAddressIPv4>();
 	case AF_INET6:
-		return std::make_unique<SocketAddressIPv6>(SocketAddressIPv6());
-		break;
+		return std::make_unique<SocketAddressIPv6>();
 	default:
 		return nullptr;
-		break;
 	}
 }
 
-auto SocketAddressFactory::Create(const std::string ip, const unsigned short port) -> std::unique_ptr<SocketAddressInterface>
+auto SocketAddressFactory::Create(const std::string& ip, const unsigned short port) -> std::unique_ptr<SocketAddressInterface>
 {
 	addrinfo* addrResult = nullptr;
 
@@ -33,14 +30,12 @@ auto SocketAddressFactory::Create(const std::string ip, const unsigned short por
 			sockaddr_in sa;
 			sa = *(sockaddr_in*)(addrResult->ai_addr);
 			sa.sin_port = htons(port);
-			return std::make_unique<SocketAddressIPv4>(SocketAddressIPv4(sa));
-			break;
+			return std::make_unique<SocketAddressIPv4>(sa);
 		case AF_INET6:
 			sockaddr_in6 sa6;
 			sa6 = *(sockaddr_in6*)(addrResult->ai_addr);
 			sa6.sin6_port = htons(port);
-			return std::make_unique<SocketAddressIPv6>(SocketAddressIPv6(sa6));
-			break;
+			return std::make_unique<SocketAddressIPv6>(sa6);
 		}
 	}
 
@@ -53,14 +48,11 @@ auto SocketAddressFactory::Create(const sockaddr& addr) -> std::unique_ptr<Socke
 	switch (addr.sa_family)
 	{
 	case AF_INET:
-		return std::make_unique<SocketAddressIPv4>(SocketAddressIPv4(addr));
-		break;
+		return std::make_unique<SocketAddressIPv4>(addr);
 	case AF_INET6:
-		return std::make_unique<SocketAddressIPv6>(SocketAddressIPv6(addr));
-		break;
+		return std::make_unique<SocketAddressIPv6>(addr);
 	default:
 		return nullptr;
-		break;
 	}
 }
 
@@ -69,11 +61,9 @@ auto SocketAddressFactory::Create(const sockaddr_in& addr) -> std::unique_ptr<So
 	switch (addr.sin_family)
 	{
 	case AF_INET:
-		return std::make_unique<SocketAddressIPv4>(SocketAddressIPv4(addr));
-		break;
+		return std::make_unique<SocketAddressIPv4>(addr);
 	default:
 		return nullptr;
-		break;
 	}
 }
 
@@ -82,11 +72,9 @@ auto SocketAddressFactory::Create(const sockaddr_in6& addr) -> std::unique_ptr<S
 	switch (addr.sin6_family)
 	{
 	case AF_INET6:
-		return std::make_unique<SocketAddressIPv6>(SocketAddressIPv6(addr));
-		break;
+		return std::make_unique<SocketAddressIPv6>(addr);
 	default:
 		return nullptr;
-		break;
 	}
 }
 
@@ -105,14 +93,11 @@ auto SocketAddressFactory::CreateFromSocket(const SOCKET socket) -> std::unique_
 			switch (addr.ss_family)
 			{
 			case AF_INET:
-				return std::make_unique<SocketAddressIPv4>(SocketAddressIPv4(*(struct sockaddr_in*)&addr));
-				break;
+				return std::make_unique<SocketAddressIPv4>(*(struct sockaddr_in*)&addr);
 			case AF_INET6:
-				return std::make_unique<SocketAddressIPv6>(SocketAddressIPv6(*(struct sockaddr_in6*)&addr));
-				break;
+				return std::make_unique<SocketAddressIPv6>(*(struct sockaddr_in6*)&addr);
 			default:
 				return nullptr;
-				break;
 			}
 		}
 	}

@@ -12,7 +12,7 @@ public:
 	SocketAddressIPv4();
 	SocketAddressIPv4(const SOCKADDR& addr);
 	SocketAddressIPv4(const SOCKADDR_IN& addr);
-	SocketAddressIPv4(const std::string ip, const unsigned short port = 0);
+	SocketAddressIPv4(const std::string& ip, const unsigned short port = 0);
 
 	virtual std::string GetIP() const;
 	virtual unsigned short GetPort() const;
@@ -21,7 +21,7 @@ public:
 	virtual short GetFamily() const;
 
 	virtual void SetPort(unsigned short port);
-	virtual void SetIP(std::string ip);
+	virtual void SetIP(const std::string& ip);
 
 	virtual const SocketAddressIPv4& operator=(const SOCKADDR& addr);
 	virtual const SocketAddressIPv4& operator=(const SOCKADDR_IN& addr);

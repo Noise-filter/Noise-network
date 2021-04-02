@@ -9,7 +9,7 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace NoiseNetworkTests
-{		
+{
 	TEST_CLASS(SocketAddressFactoryTest)
 	{
 	public:

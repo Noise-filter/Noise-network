@@ -21,7 +21,7 @@ public:
 	virtual short GetFamily() const = 0;
 
 	//Sets the ip address in decimal dotted or hexadecimal format based on which family is used (IPv4 or IPv6)
-	virtual void SetIP(std::string ip) = 0;
+	virtual void SetIP(const std::string& ip) = 0;
 	virtual void SetPort(unsigned short port) = 0;
 
 	//Returns the ip address in decimal dotted or hexadecimal format based on which family is used (IPv4 or IPv6)

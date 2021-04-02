@@ -17,7 +17,7 @@ SocketAddressIPv4::SocketAddressIPv4(const SOCKADDR_IN& addr)
 	memcpy((SOCKADDR_IN*)this, &addr, sizeof(SOCKADDR_IN)); 
 }
 
-SocketAddressIPv4::SocketAddressIPv4(const std::string ip, const unsigned short port)
+SocketAddressIPv4::SocketAddressIPv4(const std::string& ip, const unsigned short port)
 {
 	sin_family = AF_INET;
 	sin_port = htons(port);
@@ -46,7 +46,7 @@ void SocketAddressIPv4::SetPort(unsigned short port)
 	sin_port = htons(port);
 }
 
-void SocketAddressIPv4::SetIP(std::string ip)
+void SocketAddressIPv4::SetIP(const std::string& ip)
 {
 	inet_pton(AF_INET, ip.c_str(), &sin_addr);
 }
